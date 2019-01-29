@@ -1,6 +1,6 @@
 # graph-relational-benchmark
 
-One Paragraph of project description goes here
+This project enables you to benchmark graph and relational databases to compare their performance.
 
 ## Getting Started
 
@@ -104,6 +104,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Oskar Damkjaer, for helping with the readme.
