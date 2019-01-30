@@ -1,5 +1,6 @@
 from faker import Faker
 import random
+import json
 
 country = {
     "en_GB": "United Kingdom",
@@ -87,47 +88,58 @@ def get_deal(fake, p_idx=None, co_idx=None):
         "probability": random.random()
     }
 
+if __name__ == "__main__":
+    output = {
+        "companies": [],
+        "persons": [],
+        "offices": [],
+        "coworkers": [],
+        "deals": []
+    }
 
-for i, lang in enumerate(['en_GB','dk_DK','fi_FI','sv_SE','no_NO']):
-    fake = Faker(lang)
+    for i, lang in enumerate(['en_GB','dk_DK','fi_FI','sv_SE','no_NO']):
+        fake = Faker(lang)
 
-    companies = 6
-    peoples = 5
-    offices = 1
-    coworkers = 50
-    deals = 20
+        companies = 6
+        persons = 5
+        offices = 1
+        coworkers = 50
+        deals = 20
 
-    for j in range(companies):
-        co_idx = i * companies + j
-        # print(get_company(fake, co_idx))
+        for j in range(companies):
+            co_idx = i * companies + j
+            output["companies"].append(get_company(fake, co_idx))
 
-        for k in range(peoples):
-            p_idx = co_idx * peoples + k
-            # print(get_person(fake, p_idx, co_idx))
+            for k in range(persons):
+                p_idx = co_idx * persons + k
+                output["persons"].append(get_person(fake, p_idx, co_idx))
 
-    for j in range(offices):
-        off_idx = i * offices + j
-        # print(get_office(fake, off_idx))
+        for j in range(offices):
+            off_idx = i * offices + j
+            output["offices"].append(get_office(fake, off_idx))
 
-        for k in range(coworkers):
-            co_idx = off_idx * coworkers + k
-            # print(get_coworker(fake, co_idx, off_idx))
+            for k in range(coworkers):
+                co_idx = off_idx * coworkers + k
+                output["coworkers"].append(get_coworker(fake, co_idx, off_idx))
 
-    random.seed(i)
+        random.seed(i)
 
-    p_tot = companies * peoples
-    p_start = i * p_tot
-    p_end = p_start + p_tot
-    p_list = list(range(p_start, p_end))
-    random.shuffle(p_list)
+        p_tot = companies * persons
+        p_start = i * p_tot
+        p_end = p_start + p_tot
+        p_list = list(range(p_start, p_end))
+        random.shuffle(p_list)
 
-    co_tot = offices * coworkers
-    co_start = i * co_tot
-    co_end = co_start + co_tot
-    co_list = list(range(co_start, co_end))
-    random.shuffle(co_list)
+        co_tot = offices * coworkers
+        co_start = i * co_tot
+        co_end = co_start + co_tot
+        co_list = list(range(co_start, co_end))
+        random.shuffle(co_list)
 
-    for j in range(deals):
-        p_idx = p_list.pop()
-        co_idx = co_list.pop()
-        # print(get_deal(fake, p_idx, co_idx))
+        for j in range(deals):
+            p_idx = p_list.pop()
+            co_idx = co_list.pop()
+            output["deals"].append(get_deal(fake, p_idx, co_idx))
+
+    with open('output.json', 'w') as f_out:
+        json.dump(output, f_out)

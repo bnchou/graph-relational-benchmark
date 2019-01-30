@@ -1,7 +1,7 @@
 // Neo4j db import location: %userprofile%\.Neo4jDesktop\neo4jDatabases\database-XXXXXXX\installation-3.X.X\import
 
 // Cypher-shell script command:
-// > cat .\initial.cypher | cypher-shell -u neo4j -p password --format verbose
+// > cat .\load_csv.cypher | cypher-shell -u neo4j -p password --format verbose
 
 MATCH ()-[r]-() DELETE r;
 MATCH (n) DELETE n;

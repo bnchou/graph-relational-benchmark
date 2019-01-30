@@ -111,3 +111,6 @@ yarn-error.log*
 
 # Mac
 .DS_Store
+
+# Output
+output.json
