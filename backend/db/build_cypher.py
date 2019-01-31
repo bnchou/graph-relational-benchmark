@@ -11,7 +11,8 @@ label = {
     "offices": "Office",
     "coworkers": "Coworker",
     "deals": "Deal",
-    "documents": "Document"
+    "documents": "Document",
+    "histories": "History"
 }
 
 if __name__ == "__main__":
@@ -59,4 +60,20 @@ if __name__ == "__main__":
         MATCH (document:Document), (deal:Deal)
         WHERE document.deal_id = deal.id
         CREATE (document)-[:ATTACHED_TO]->(deal);
+
+        MATCH (history:History), (person:Person)
+        WHERE history.person_id = person.id
+        CREATE (history)<-[:ATTENDED]-(person);
+
+        MATCH (history:History), (coworker:Coworker)
+        WHERE history.coworker_id = coworker.id
+        CREATE (history)<-[:ATTENDED]-(coworker);
+
+        MATCH (history:History), (document:Document)
+        WHERE history.document_id = document.id
+        CREATE (history)<-[:ATTACHED_TO]-(document);
+
+        MATCH (history:History), (deal:Deal)
+        WHERE history.deal_id = deal.id
+        CREATE (history)<-[:PART_OF]-(deal);
     ''')

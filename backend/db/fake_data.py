@@ -89,13 +89,31 @@ def get_deal(fake, index=None, p_idx=None, co_idx=None):
 
 def get_document(fake, index=None, p_idx=None, d_idx=None):
     fake.seed(index)
+    date = fake.date(pattern="%y%m%d")
+    domain = fake.domain_word()
+    ext = fake.file_extension(category="text")
 
     return {
         "id": index,
-        "description": fake.paragraph(nb_sentences=1),
-        "type": fake.file_extension(),
+        "description": '{}{}.{}'.format(domain, date, ext),
+        "type": ext,
         "deal_id": d_idx,
         "person_id": p_idx
+    }
+
+def get_history(fake, index=None, p_idx=None, co_idx=None, d_idx=None, doc_idx=None):
+    fake.seed(index)
+    random.seed(index)
+
+    return {
+        "id": index,
+        "type": random.choice(["Comment", "Visit", "Email", "Call"]),
+        "date": fake.date(pattern="%Y-%m-%d"),
+        "notes": fake.paragraph(),
+        "person_id": p_idx,
+        "coworker_id": co_idx,
+        "deal_id": d_idx,
+        "document_id": doc_idx
     }
 
 if __name__ == "__main__":
@@ -105,7 +123,8 @@ if __name__ == "__main__":
         "offices": [],
         "coworkers": [],
         "deals": [],
-        "documents": []
+        "documents": [],
+        "histories": []
     }
 
     for i, lang in enumerate(['en_GB','dk_DK','fi_FI','sv_SE','no_NO']):
@@ -155,6 +174,9 @@ if __name__ == "__main__":
             for k in range(documents):
                 doc_idx = d_idx * documents + k
                 output["documents"].append(get_document(fake, doc_idx, p_idx, d_idx))
+
+                h_idx = doc_idx
+                output["histories"].append(get_history(fake, h_idx, p_idx, co_idx, d_idx, doc_idx))
 
     with open('output.json', 'w') as f_out:
         json.dump(output, f_out)
