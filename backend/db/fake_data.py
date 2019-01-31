@@ -68,24 +68,34 @@ def get_coworker(fake, index=None, off_idx=None):
     company_domain = "lime.tech"
 
     return {
+        "id": index,
         "name": ' '.join([first_name, last_name]),
         "phone": fake.phone_number(),
         "email": '@'.join([username, company_domain]),
         "office_id": off_idx
     }
 
-def unique_key(key1, key2):
-    return ((key1 + key2) * (key1 + key2 + 1)) // 2 + key2
-
-def get_deal(fake, p_idx=None, co_idx=None):
-    index = unique_key(p_idx, co_idx)
+def get_deal(fake, index=None, p_idx=None, co_idx=None):
     fake.seed(index)
-    random.seed(index)
 
     return {
+        "id": index,
         "name": fake.catch_phrase(),
         "value": random.randint(50000, 1000000),
-        "probability": random.random()
+        "probability": random.random(),
+        "person_id": p_idx,
+        "coworker_id": co_idx
+    }
+
+def get_document(fake, index=None, p_idx=None, d_idx=None):
+    fake.seed(index)
+
+    return {
+        "id": index,
+        "description": fake.paragraph(nb_sentences=1),
+        "type": fake.file_extension(),
+        "deal_id": d_idx,
+        "person_id": p_idx
     }
 
 if __name__ == "__main__":
@@ -94,7 +104,8 @@ if __name__ == "__main__":
         "persons": [],
         "offices": [],
         "coworkers": [],
-        "deals": []
+        "deals": [],
+        "documents": []
     }
 
     for i, lang in enumerate(['en_GB','dk_DK','fi_FI','sv_SE','no_NO']):
@@ -105,6 +116,7 @@ if __name__ == "__main__":
         offices = 1
         coworkers = 50
         deals = 20
+        documents = 2
 
         for j in range(companies):
             co_idx = i * companies + j
@@ -133,13 +145,16 @@ if __name__ == "__main__":
         co_tot = offices * coworkers
         co_start = i * co_tot
         co_end = co_start + co_tot
-        co_list = list(range(co_start, co_end))
-        random.shuffle(co_list)
 
         for j in range(deals):
             p_idx = p_list.pop()
-            co_idx = co_list.pop()
-            output["deals"].append(get_deal(fake, p_idx, co_idx))
+            co_idx = random.randint(co_start, co_end)
+            d_idx = i * deals + j
+            output["deals"].append(get_deal(fake, d_idx, p_idx, co_idx))
+            
+            for k in range(documents):
+                doc_idx = d_idx * documents + k
+                output["documents"].append(get_document(fake, doc_idx, p_idx, d_idx))
 
     with open('output.json', 'w') as f_out:
         json.dump(output, f_out)
