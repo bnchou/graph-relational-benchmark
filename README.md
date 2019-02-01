@@ -14,6 +14,15 @@ What things you need to install the software and how to install them
 Give examples
 ```
 
+# Running scripts manually
+To populate the graph database with data, run the following script while standing in the root directory
+
+```
+> py fake_data.py
+> py build_cypher.py | cypher-shell -u neo4j -p password --format verbose
+```
+
+
 # frontend
 
 ## Project setup
