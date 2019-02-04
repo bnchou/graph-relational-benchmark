@@ -1,3 +1,5 @@
+-- Run with > sqlcmd -i create_db.sql
+
 CREATE DATABASE LimeDB;
 
 USE master;  
