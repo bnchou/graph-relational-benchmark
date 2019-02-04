@@ -15,14 +15,14 @@ Give examples
 ```
 
 # Running scripts manually
-To populate the graph database with fake data, run the following script while standing in the root directory
+To populate the graph database with fake data, run the following script while standing in the backend/db directory
 
 ```
 > py fake_data.py
 > py build_cypher.py | cypher-shell -u neo4j -p password --format verbose
 ```
 
-To populate the relational database with fake data, run the following script while standing in the root directory
+To populate the relational database with fake data, run the following script while standing in the backend/db directory
 
 ```
 > sqlcmd -i create_db.sql
