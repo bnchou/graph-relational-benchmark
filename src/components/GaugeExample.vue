@@ -4,6 +4,7 @@
 
 <script>
 import VeGauge from "v-charts/lib/gauge.common";
+
 export default {
   components: { VeGauge },
   data() {

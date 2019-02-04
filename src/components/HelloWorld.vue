@@ -1,11 +1,7 @@
 <template>
-  <div class="hello">
+  <div>
     <h1>{{ title }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,
-      <br>check out the
-      <a href="https://cli.vuejs.org" target="_blank">vue-cli documentation</a>.
-    </p>
+    <p>This project enables you to benchmark graph and relational databases to compare their performance.</p>
     <h3>Packages</h3>
     <ul>
       <li>
@@ -24,22 +20,41 @@
         <a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a>
       </li>
     </ul>
+    <el-row :gutter="20">
+      <el-col :sm="8">
+        <h3>Graph example</h3>
+        <LineExample/>
+      </el-col>
+      <el-col :sm="8">
+        <h3>Gauge example</h3>
+        <GaugeExample/>
+      </el-col>
+      <el-col :sm="8">
+        <h3>Pie example</h3>
+        <PieExample/>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
+import LineExample from "@/components/LineExample.vue";
+import GaugeExample from "@/components/GaugeExample.vue";
+import PieExample from "@/components/PieExample.vue";
+
 export default {
-  name: "HelloWorld",
   props: {
     title: String
+  },
+  components: {
+    LineExample,
+    GaugeExample,
+    PieExample
   }
 };
 </script>
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
 ul {
   list-style-type: none;
   padding: 0;
