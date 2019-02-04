@@ -113,4 +113,4 @@ yarn-error.log*
 .DS_Store
 
 # Output
-output.json
+output.*

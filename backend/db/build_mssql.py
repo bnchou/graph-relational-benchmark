@@ -1,5 +1,5 @@
 # MS SQL script command
-# > py build_mssql.py | mssql ...
+# > py build_mssql.py
 
 import json
 import sys
@@ -30,15 +30,20 @@ if __name__ == "__main__":
     data = json.loads(f.read())
     f.close()
 
+    lines = []
+
     for key in data:
         header, queries, label = [], [], data[key]
         keys = list(label[0].keys())
         p = ', '.join(keys)
-        print('INSERT INTO {} ({})'.format(key, p))
+        lines.append('INSERT INTO {} ({})'.format(key, p))
         for entry in label:
             values = []
             for k in entry:
                 values.append(entry[k])
             value = ','.join(to_value(v) for v in values)
             queries.append('({})'.format(value))
-        print('VALUES {};\n'.format(',\n  '.join(queries)))
+        lines.append('VALUES {};\n'.format(',\n  '.join(queries)))
+
+    with open('output.sql', 'w') as f_out:
+        f_out.write('\n'.join(lines))

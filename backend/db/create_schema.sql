@@ -19,46 +19,47 @@ GO
 
 CREATE TABLE Companies (
     id INT NOT NULL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    phone VARCHAR(20),
-    website VARCHAR(200),
-    address VARCHAR(50),
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(25),
+    website VARCHAR(255),
+    address VARCHAR(255),
     postcode VARCHAR(10),
-    city VARCHAR(20),
+    city VARCHAR(50),
     country VARCHAR(50)
 );
 GO
 
 CREATE TABLE Persons (
     id INT NOT NULL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    position VARCHAR(30),
-    email VARCHAR(20),
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(25),
+    position VARCHAR(50),
+    email VARCHAR(255),
     company_id INT REFERENCES Companies (id)
 );
 GO
 
 CREATE TABLE Offices (
     id INT NOT NULL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
-    phone VARCHAR(20),
-    address VARCHAR(30),
-    country VARCHAR(20)
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(25),
+    address VARCHAR(255),
+    country VARCHAR(50)
 );
 GO
 
 CREATE TABLE Coworkers (
     id INT NOT NULL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
-    phone VARCHAR(20),
-    email VARCHAR(20),
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(25),
+    email VARCHAR(255),
     office_id INT REFERENCES Offices (id)
 );
 GO
 
 CREATE TABLE Deals (
     id INT NOT NULL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     value INT,
     probability FLOAT,
     person_id INT REFERENCES Persons (id),
@@ -69,7 +70,7 @@ GO
 CREATE TABLE Documents (
     id INT NOT NULL PRIMARY KEY,
     description TEXT,
-    type VARCHAR(4),
+    type VARCHAR(25),
     deal_id INT REFERENCES Deals (id),
     person_id INT REFERENCES Persons (id)
 );
@@ -77,8 +78,8 @@ GO
 
 CREATE TABLE Histories (
     id INT NOT NULL PRIMARY KEY,
-    type VARCHAR(15),
-    creation_date DATE,
+    type VARCHAR(25),
+    date DATE,
     notes TEXT,
     person_id INT REFERENCES Persons (id),
     coworker_id INT REFERENCES Coworkers (id),
