@@ -1,5 +1,5 @@
-# Cypher-shell script command
-# > py build_cypher.py | cypher-shell -u neo4j -p password --format verbose
+# MS SQL script command
+# > py build_mssql.py | mssql ...
 
 import json
 import sys
