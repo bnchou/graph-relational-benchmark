@@ -4,10 +4,8 @@
       <el-menu-item>
         <logo></logo>
       </el-menu-item>
-      <el-menu-item index="/hello">Hello</el-menu-item>
-      <el-menu-item index="/projects">Projects</el-menu-item>
-      <el-menu-item index="/about">About</el-menu-item>
-      <el-menu-item index="/contact">Contact</el-menu-item>
+      <el-menu-item class="item" index="/github">Github</el-menu-item>
+      <el-menu-item class="item" index="/docs">Docs</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -21,3 +19,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.item {
+  float: right;
+}
+</style>
