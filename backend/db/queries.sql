@@ -1,31 +1,31 @@
--- Fetch history on deal id: 1
+-- Fetch histories on deal id: 1
 
-SELECT history.id, history.date, coworker.id, coworker.name, history.type, person.id, (person.firstname + ' ' + person.lastname), document.id, document.comment, history.note
-FROM history
-LEFT JOIN deal ON history.deal = deal.id 
-LEFT JOIN coworker ON history.coworker = coworker.id 
-LEFT JOIN person ON history.person = person.id 
-LEFT JOIN document ON history.document = document.id 
-LEFT JOIN file ON document.document = file.id 
-WHERE (history.id IN (
-    SELECT history.id AS id 
-    FROM history 
-    LEFT JOIN deal ON history.deal = deal.id 
-    WHERE  (deal.id = 1)
-    ) AND deal.id = 1
+SELECT histories.id, histories.date, coworkers.id, coworkers.name, histories.type, persons.id, persons.name , documents.id, documents.description, histories.notes
+FROM histories
+LEFT JOIN deals ON histories.deal_id = deals.id 
+LEFT JOIN coworkers ON histories.coworker_id = coworkers.id 
+LEFT JOIN persons ON histories.person_id = persons.id 
+LEFT JOIN documents ON histories.document_id = documents.id 
+-- LEFT JOIN file ON document.document = file.id 
+WHERE (histories.id IN (
+    SELECT histories.id AS id 
+    FROM histories 
+    LEFT JOIN deals ON histories.deal_id = deals.id 
+    WHERE  (deals.id = 1)
+    ) AND deals.id = 1
 )
 
 
 -- Fetch documents on person id: 1
 
-SELECT document.id, document.createdtime, document.comment, coworker.id, coworker.name, document.type, document.document
-FROM document 
-LEFT JOIN person ON document.person = person.id 
-LEFT JOIN coworker ON document.coworker = coworker.id
-LEFT JOIN file ON document.document = file.id 
-WHERE ( (document.id IN (SELECT document.id AS id 
-    FROM document 
-    LEFT JOIN person ON document.person = person.id 
-    LEFT JOIN file ON document.document = file.id 
-    WHERE  (person.id = 1)) AND person.id = 1)
+SELECT documents.id, documents.description, persons.id, persons.name, documents.type
+FROM documents 
+LEFT JOIN persons ON documents.person_id = persons.id 
+-- LEFT JOIN coworkers ON documents.coworker_id = coworkers.id
+-- LEFT JOIN file ON document.document = file.id 
+WHERE ( (documents.id IN (SELECT documents.id AS id 
+    FROM documents 
+    LEFT JOIN persons ON documents.person_id = persons.id 
+ --    LEFT JOIN file ON document.document = file.id 
+    WHERE  (persons.id = 1)) AND persons.id = 1)
 )
