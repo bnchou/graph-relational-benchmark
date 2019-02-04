@@ -7,17 +7,17 @@ USE LimeDB;
 
 -- Some column names need to be renamed as they are keywords in t-sql (?)
 
-DROP TABLE IF EXISTS Histories;
-DROP TABLE IF EXISTS Documents;
-DROP TABLE IF EXISTS Deals;
-DROP TABLE IF EXISTS Persons;
-DROP TABLE IF EXISTS Coworkers;
-DROP TABLE IF EXISTS Offices;
-DROP TABLE IF EXISTS Companies;
+DROP TABLE IF EXISTS histories;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS deals;
+DROP TABLE IF EXISTS persons;
+DROP TABLE IF EXISTS coworkers;
+DROP TABLE IF EXISTS offices;
+DROP TABLE IF EXISTS companies;
 
 GO
 
-CREATE TABLE Companies (
+CREATE TABLE companies (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(25),
@@ -29,7 +29,7 @@ CREATE TABLE Companies (
 );
 GO
 
-CREATE TABLE Persons (
+CREATE TABLE persons (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(25),
@@ -39,7 +39,7 @@ CREATE TABLE Persons (
 );
 GO
 
-CREATE TABLE Offices (
+CREATE TABLE offices (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(25),
@@ -48,7 +48,7 @@ CREATE TABLE Offices (
 );
 GO
 
-CREATE TABLE Coworkers (
+CREATE TABLE coworkers (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(25),
@@ -57,7 +57,7 @@ CREATE TABLE Coworkers (
 );
 GO
 
-CREATE TABLE Deals (
+CREATE TABLE deals (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     value INT,
@@ -67,7 +67,7 @@ CREATE TABLE Deals (
 );
 GO
 
-CREATE TABLE Documents (
+CREATE TABLE documents (
     id INT NOT NULL PRIMARY KEY,
     description TEXT,
     type VARCHAR(25),
@@ -76,7 +76,7 @@ CREATE TABLE Documents (
 );
 GO
 
-CREATE TABLE Histories (
+CREATE TABLE histories (
     id INT NOT NULL PRIMARY KEY,
     type VARCHAR(25),
     date DATE,
