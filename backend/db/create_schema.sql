@@ -19,19 +19,19 @@ GO
 
 CREATE TABLE Companies (
     id INT NOT NULL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
+    name VARCHAR(100) NOT NULL,
     phone VARCHAR(20),
-    website VARCHAR(2000),
+    website VARCHAR(200),
     address VARCHAR(50),
     postcode VARCHAR(10),
     city VARCHAR(20),
-    country VARCHAR(20)
+    country VARCHAR(50)
 );
 GO
 
 CREATE TABLE Persons (
     id INT NOT NULL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     position VARCHAR(30),
     email VARCHAR(20),
     company_id INT REFERENCES Companies (id)
