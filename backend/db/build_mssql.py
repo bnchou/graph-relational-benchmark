@@ -32,6 +32,8 @@ if __name__ == "__main__":
 
     lines = []
 
+    lines.append('USE LimeDB; \n')
+
     for key in data:
         header, queries, label = [], [], data[key]
         keys = list(label[0].keys())
