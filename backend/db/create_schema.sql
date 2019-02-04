@@ -1,11 +1,11 @@
 USE LimeDB;
 
+-- -- Run with > sqlcmd -i create_schema.sql
+
 -- SWITCH ALL VARCHARS TO NVARCHAR FOR UNICODE
 
 -- GO Signals end of batch (send to server)
 -- Decide whether each table creations should be sent separately or all at once.
-
--- Some column names need to be renamed as they are keywords in t-sql (?)
 
 DROP TABLE IF EXISTS histories;
 DROP TABLE IF EXISTS documents;
