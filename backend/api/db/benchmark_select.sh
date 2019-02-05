@@ -6,7 +6,7 @@ cat "out/cypher/match_queries.cypher" | cypher-shell -u neo4j -p password --form
 
 END1=$(date +%s%3N)
 
-sqlcmd -d LimeDB -i out//sql/select_queries.sql
+sqlcmd -d LimeDB -i out/sql/select_queries.sql
 
 END2=$(date +%s%3N)
 
