@@ -5,7 +5,7 @@ py build_mssql.py "out/output.json" "out/output.sql"
 
 START=$(date +%s%3N)
 
-sqlcmd -i "out/create_schema.sql"
+sqlcmd -i "out/sql/create_schema.sql"
 sqlcmd -i "out/output.sql"
 
 END=$(date +%s%3N)
