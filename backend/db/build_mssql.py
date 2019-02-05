@@ -22,11 +22,12 @@ def to_value(value):
         return str(value)
 
 if __name__ == "__main__":
-    filename = "output.json"
-    if(len(sys.argv) > 1):
-        filename = sys.argv[1]
+    f1 = "output.json"
+    f2 = "output.sql"
+    if(len(sys.argv) > 2):
+        [f1, f2] = sys.argv[1:3]
 
-    f = open(filename)
+    f = open(f1)
     data = json.loads(f.read())
     f.close()
 
@@ -47,5 +48,5 @@ if __name__ == "__main__":
             queries.append('({})'.format(value))
         lines.append('VALUES {};\n'.format(',\n  '.join(queries)))
 
-    with open('output.sql', 'w') as f_out:
+    with open(f2, 'w') as f_out:
         f_out.write('\n'.join(lines))

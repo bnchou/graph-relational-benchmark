@@ -1,12 +1,12 @@
 #!/bin/bash
 
-py fake_data.py
+py fake_data.py "out/output.json"
+py build_mssql.py "out/output.json" "out/output.sql"
 
 START=$(date +%s%3N)
 
-sqlcmd -i create_schema.sql
-py build_mssql.py
-sqlcmd -i output.sql
+sqlcmd -i "out/create_schema.sql"
+sqlcmd -i "out/output.sql"
 
 END=$(date +%s%3N)
 

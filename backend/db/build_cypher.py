@@ -16,16 +16,19 @@ label = {
 }
 
 if __name__ == "__main__":
-    filename = "output.json"
-    if(len(sys.argv) > 1):
-        filename = sys.argv[1]
+    f1 = "output.json"
+    f2 = "output.cypher"
+    if(len(sys.argv) > 2):
+        [f1, f2] = sys.argv[1:3]
 
-    f = open(filename)
+    f = open(f1)
     data = json.loads(f.read())
     f.close()
 
-    print('MATCH ()-[r]-() DELETE r;')
-    print('MATCH (n) DELETE n;')
+    lines = []
+
+    lines.append('MATCH ()-[r]-() DELETE r;')
+    lines.append('MATCH (n) DELETE n;')
 
     queries = []
 
@@ -34,9 +37,9 @@ if __name__ == "__main__":
             props = re.sub(r'(?<!: )"(\S*?)"', '\\1', json.dumps(node))
             queries.append('(:{} {})'.format(label[key], props))
 
-    print('CREATE {};'.format(','.join(queries)))
+    lines.append('CREATE {};'.format(','.join(queries)))
 
-    print('''
+    lines.append('''
         MATCH (person:Person), (company:Company)
         WHERE person.company_id = company.id
         CREATE (person)-[:WORKS_AT]->(company);
@@ -77,3 +80,6 @@ if __name__ == "__main__":
         WHERE history.deal_id = deal.id
         CREATE (history)<-[:PART_OF]-(deal);
     ''')
+
+    with open(f2, 'w') as f_out:
+        f_out.write('\n'.join(lines))

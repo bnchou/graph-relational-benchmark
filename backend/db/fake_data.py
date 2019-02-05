@@ -1,6 +1,7 @@
 from faker import Faker
 import random
 import json
+import sys
 
 country = {
     "en_GB": "United Kingdom",
@@ -127,6 +128,10 @@ if __name__ == "__main__":
         "histories": []
     }
 
+    filename = "output.json"
+    if(len(sys.argv) > 1):
+        filename = sys.argv[1]
+
     for i, lang in enumerate(['en_GB','dk_DK','fi_FI','sv_SE','no_NO']):
         fake = Faker(lang)
 
@@ -178,5 +183,5 @@ if __name__ == "__main__":
                 h_idx = doc_idx
                 output["histories"].append(get_history(fake, h_idx, p_idx, co_idx, d_idx, doc_idx))
 
-    with open('output.json', 'w') as f_out:
+    with open(filename, 'w') as f_out:
         json.dump(output, f_out)
