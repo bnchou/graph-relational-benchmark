@@ -79,6 +79,13 @@ if __name__ == "__main__":
         MATCH (history:History), (deal:Deal)
         WHERE history.deal_id = deal.id
         CREATE (history)<-[:PART_OF]-(deal);
+
+        CREATE INDEX ON :Company(name);
+        CREATE INDEX ON :Person(name);
+        CREATE INDEX ON :Office(name);
+        CREATE INDEX ON :Coworker(name);
+        CREATE INDEX ON :Deal(name);
+        CREATE INDEX ON :Document(id);
     ''')
 
     with open(f2, 'w') as f_out:
