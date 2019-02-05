@@ -9,4 +9,4 @@ cat "out/output.cypher" | cypher-shell -u neo4j -p password --format verbose
 
 END=$(date +%s%3N)
 
-echo Time: $(($END - $START)) ms
+echo {\"time\": $(($END - $START))} > "out/output.txt"
