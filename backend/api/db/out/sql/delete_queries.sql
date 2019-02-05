@@ -1,0 +1,2 @@
+DELETE FROM histories
+WHERE histories.date BETWEEN '1970-01-01' AND '1999-01-01'

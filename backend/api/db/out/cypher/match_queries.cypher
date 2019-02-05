@@ -1,3 +1,19 @@
+MATCH (c: Company)
+RETURN c;
+
+MATCH (p: Person)-[:WORKS_AT]->(c:Company)
+RETURN p.name, c.name;
+
+
+// Filter to show all persons and corresponding companies that have deals with probability > 0.9
+// ''Depth'' = 2
+
+PROFILE
+MATCH (p:Person)-[:RESPONSIBLE_FOR]->(d: Deal)
+MATCH (p)-[WORKS_AT]->(c: Company)
+WHERE d.probability > 0.9
+RETURN p.name, p.position, p.email, p.phone, d.name, c.name;
+
 // Fetch history on deal id: 1
 
 MATCH (deal:Deal {id: 1})-[:PART_OF]->(history:History)<-[:ATTACHED_TO]-(document:Document)
@@ -16,3 +32,4 @@ MATCH (company:Company)<-[:WORKS_AT]-(:Person)-[:RESPONSIBLE_FOR]->(deal:Deal)-[
 WHERE deal.probability > 0.5
 RETURN DISTINCT company.name,deal.name,deal.value,deal.probability,history.date,document.description,company.country
 ORDER BY history.date DESC
+

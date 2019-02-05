@@ -1,3 +1,24 @@
+Use LimeDB;
+
+
+SELECT * FROM companies;
+
+-- Displays all p in the system and their respective companies
+
+SELECT p.name, companies.name
+FROM persons AS p
+LEFT JOIN companies ON p.company_id = companies.id;
+
+
+-- Filter to show all persons and corresponding companies that have deals with probability > 0.9
+-- ''Depth'' = 2
+
+SELECT p.name, p.position, p.email, p.phone, deals.name, companies.name
+FROM persons AS p
+LEFT JOIN deals ON p.id = deals.person_id
+LEFT JOIN companies ON p.company_id = companies.id
+WHERE deals.probability > 0.9
+
 -- Fetch histories on deal id: 1
 
 SELECT histories.id, histories.date, coworkers.id, coworkers.name, histories.type, persons.id, persons.name , documents.id, documents.description, histories.notes
@@ -6,7 +27,6 @@ LEFT JOIN deals ON histories.deal_id = deals.id
 LEFT JOIN coworkers ON histories.coworker_id = coworkers.id 
 LEFT JOIN persons ON histories.person_id = persons.id 
 LEFT JOIN documents ON histories.document_id = documents.id 
--- LEFT JOIN file ON document.document = file.id 
 WHERE (histories.id IN (
     SELECT histories.id AS id 
     FROM histories 
@@ -21,11 +41,8 @@ WHERE (histories.id IN (
 SELECT documents.id, documents.description, persons.id, persons.name, documents.type
 FROM documents 
 LEFT JOIN persons ON documents.person_id = persons.id 
--- LEFT JOIN coworkers ON documents.coworker_id = coworkers.id
--- LEFT JOIN file ON document.document = file.id 
 WHERE ( (documents.id IN (SELECT documents.id AS id 
     FROM documents 
     LEFT JOIN persons ON documents.person_id = persons.id 
- --    LEFT JOIN file ON document.document = file.id 
     WHERE  (persons.id = 1)) AND persons.id = 1)
 )
