@@ -33,6 +33,24 @@
         <h3>Pie example</h3>
         <PieExample/>
       </el-col>
+      <el-col :sm="8">
+        <h3>Fetch cypher api</h3>
+        <el-button
+          @click="handle(0, () => insert('cypher'))"
+          :loading="buttons[0].loading"
+          :disabled="buttons[0].disabled"
+        >Fetch</el-button>
+        {{ cypher.time }} ms
+      </el-col>
+      <el-col :sm="8">
+        <h3>Fetch mssql api</h3>
+        <el-button
+          @click="handle(1, () => insert('mssql'))"
+          :loading="buttons[1].loading"
+          :disabled="buttons[1].disabled"
+        >Fetch</el-button>
+        {{ mssql.time }} ms
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -46,10 +64,34 @@ export default {
   props: {
     title: String
   },
+  data: function() {
+    return {
+      cypher: {},
+      mssql: {},
+      buttons: [
+        { loading: false, disabled: false },
+        { loading: false, disabled: false }
+      ]
+    };
+  },
   components: {
     LineExample,
     GaugeExample,
     PieExample
+  },
+  methods: {
+    insert: async function(adapter) {
+      const res = await fetch(`/api/${adapter}/insert`);
+      const json = await res.json();
+      this[adapter] = json;
+    },
+    handle: async function(id, func) {
+      this.buttons[id].loading = true;
+      this.buttons.filter(b => b.id !== id).forEach(b => (b.disabled = true));
+      await func();
+      this.buttons[id].loading = false;
+      this.buttons.filter(b => b.id !== id).forEach(b => (b.disabled = false));
+    }
   }
 };
 </script>
