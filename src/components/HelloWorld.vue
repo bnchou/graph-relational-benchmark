@@ -33,23 +33,37 @@
         <h3>Pie example</h3>
         <PieExample/>
       </el-col>
-      <el-col :sm="8">
-        <h3>Fetch cypher api</h3>
-        <el-button
-          @click="handle(0, () => insert('cypher'))"
-          :loading="buttons[0].loading"
-          :disabled="buttons[0].disabled"
-        >Fetch</el-button>
-        {{ cypher.time }} ms
-      </el-col>
-      <el-col :sm="8">
-        <h3>Fetch mssql api</h3>
-        <el-button
-          @click="handle(1, () => insert('mssql'))"
-          :loading="buttons[1].loading"
-          :disabled="buttons[1].disabled"
-        >Fetch</el-button>
-        {{ mssql.time }} ms
+      <el-col>
+        <h3>Large data insert</h3>
+        <el-table :data="tableData">
+          <el-table-column prop="query" label="Query"></el-table-column>
+          <el-table-column label="Neo4j" width="140">
+            <template slot-scope="scope">
+              <el-tag size="medium">{{ scope.row.cypher }} ms</el-tag>
+              <el-button
+                circle
+                type="text"
+                icon="el-icon-refresh"
+                @click="handle('cypher', scope.row.id, scope.row.stmt)"
+                :loading="cypher.loading[scope.row.id]"
+                :disabled="isDisabled"
+              ></el-button>
+            </template>
+          </el-table-column>
+          <el-table-column label="MS SQL" width="140">
+            <template slot-scope="scope">
+              <el-tag size="medium">{{ scope.row.mssql }} ms</el-tag>
+              <el-button
+                circle
+                type="text"
+                icon="el-icon-refresh"
+                @click="handle('mssql', scope.row.id, scope.row.stmt)"
+                :loading="mssql.loading[scope.row.id]"
+                :disabled="isDisabled"
+              ></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-col>
     </el-row>
   </div>
@@ -66,11 +80,31 @@ export default {
   },
   data: function() {
     return {
-      cypher: {},
-      mssql: {},
-      buttons: [
-        { loading: false, disabled: false },
-        { loading: false, disabled: false }
+      cypher: { loading: {} },
+      mssql: { loading: {} },
+      isDisabled: false,
+      tableData: [
+        {
+          id: 0,
+          query: "Large insert statement",
+          stmt: "insert",
+          cypher: -1,
+          mssql: -1
+        },
+        {
+          id: 1,
+          query: "Flat select statement",
+          stmt: "flat_select",
+          cypher: -1,
+          mssql: -1
+        },
+        {
+          id: 2,
+          query: "Nested select statement",
+          stmt: "nested_select",
+          cypher: -1,
+          mssql: -1
+        }
       ]
     };
   },
@@ -80,17 +114,16 @@ export default {
     PieExample
   },
   methods: {
-    insert: async function(adapter) {
-      const res = await fetch(`/api/${adapter}/insert`);
+    handle: async function(adapter, id, stmt) {
+      this.$set(this[adapter].loading, id, true);
+      this.isDisabled = true;
+
+      const res = await fetch(`/api/${adapter}/${stmt}`);
       const json = await res.json();
-      this[adapter] = json;
-    },
-    handle: async function(id, func) {
-      this.buttons[id].loading = true;
-      this.buttons.filter(b => b.id !== id).forEach(b => (b.disabled = true));
-      await func();
-      this.buttons[id].loading = false;
-      this.buttons.filter(b => b.id !== id).forEach(b => (b.disabled = false));
+      this.tableData[id][adapter] = json.data;
+
+      this.$set(this[adapter].loading, id, false);
+      this.isDisabled = false;
     }
   }
 };
