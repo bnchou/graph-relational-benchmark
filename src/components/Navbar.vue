@@ -1,7 +1,7 @@
 <template>
   <div id="menu">
-    <el-menu mode="horizontal" index="/">
-      <el-menu-item>
+    <el-menu mode="horizontal">
+      <el-menu-item index="/">
         <logo></logo>
       </el-menu-item>
       <el-menu-item class="item" index="/github">Github</el-menu-item>

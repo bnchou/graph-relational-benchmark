@@ -10,4 +10,4 @@ sqlcmd -i "out/output.sql"
 
 END=$(date +%s%3N)
 
-echo {\"time\": $(($END - $START))} > "out/output.txt"
+echo {\"data\": $(($END - $START))} > "out/output.txt"
