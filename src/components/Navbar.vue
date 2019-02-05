@@ -1,6 +1,6 @@
 <template>
   <div id="menu">
-    <el-menu mode="horizontal">
+    <el-menu mode="horizontal" index="/">
       <el-menu-item>
         <logo></logo>
       </el-menu-item>
