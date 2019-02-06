@@ -33,7 +33,7 @@ CREATE TABLE persons (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(25),
-    position VARCHAR(50),
+    position VARCHAR(75),
     email VARCHAR(255),
     company_id INT REFERENCES Companies (id)
 );

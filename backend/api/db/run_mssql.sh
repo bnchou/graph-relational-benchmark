@@ -1,6 +1,7 @@
 #!/bin/bash
 
 py fake_data.py "out/output.json"
+py build_csv.py "out/output.json" "out/temp"
 py build_mssql.py "out/output.json" "out/output.sql"
 
 START=$(date +%s%3N)
