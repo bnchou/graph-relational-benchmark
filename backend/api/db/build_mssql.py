@@ -4,6 +4,7 @@
 import json
 import sys
 import re
+import os
 
 label = {
     "companies": "Company",
@@ -25,8 +26,6 @@ if __name__ == "__main__":
     data = json.loads(f.read())
     f.close()
 
-    path = 'C:\\Users\\victor.winberg\\Documents\\Graph Relational Benchmark\\backend\\api\\db'
-
     lines = []
 
     lines.append('''\
@@ -38,7 +37,7 @@ if __name__ == "__main__":
         header, queries, label = [], [], data[key]
         keys = list(label[0].keys())
         p = ', '.join(keys)
-        lines.append('''\
+        lines.append('''
             BULK INSERT {}
             FROM '{}\\out\\temp\{}.csv'
             WITH
@@ -47,7 +46,7 @@ if __name__ == "__main__":
                 FIELDTERMINATOR = '~',
                 ROWTERMINATOR ='\\n'
             );
-        '''.format(key, path, key))
+        '''.format(key, os.getcwd(), key))
         queries.append('~'.join(keys))
         for entry in label:
             values = []
