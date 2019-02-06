@@ -41,8 +41,8 @@ def get_person(fake, index=None, co_idx=None):
     return {
         "id": index,
         "name": ' '.join([first_name, last_name]),
-        "position": fake.job(),
         "phone": fake.phone_number(),
+        "position": fake.job(),
         "email": '@'.join([username, company["website"]]),
         "company_id": co_idx
     }
@@ -135,11 +135,11 @@ if __name__ == "__main__":
     for i, lang in enumerate(['en_GB','dk_DK','fi_FI','sv_SE','no_NO']):
         fake = Faker(lang)
 
-        companies = 6
+        companies = 10
         persons = 5
-        offices = 1
+        offices = 2
         coworkers = 50
-        deals = 20
+        deals = 40
         documents = 2
 
         for j in range(companies):

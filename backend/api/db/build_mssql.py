@@ -15,12 +15,6 @@ label = {
     "histories": "History"
 }
 
-def to_value(value):
-    if type(value) == str:
-        return '"{}"'.format(value)
-    else:
-        return str(value)
-
 if __name__ == "__main__":
     f1 = "output.json"
     f2 = "output.sql"
@@ -31,22 +25,39 @@ if __name__ == "__main__":
     data = json.loads(f.read())
     f.close()
 
+    path = 'C:\\Users\\victor.winberg\\Documents\\Graph Relational Benchmark\\backend\\api\\db'
+
     lines = []
 
-    lines.append('USE LimeDB; \n')
+    lines.append('''\
+        USE LimeDB;
+        -- DECLARE @path varchar(50);
+        -- SET @path = '';''')
 
     for key in data:
         header, queries, label = [], [], data[key]
         keys = list(label[0].keys())
         p = ', '.join(keys)
-        lines.append('INSERT INTO {} ({})'.format(key, p))
+        lines.append('''\
+            BULK INSERT {}
+            FROM '{}\\out\\temp\{}.csv'
+            WITH
+            (
+                FIRSTROW = 2,
+                FIELDTERMINATOR = '~',
+                ROWTERMINATOR ='\\n'
+            );
+        '''.format(key, path, key))
+        queries.append('~'.join(keys))
         for entry in label:
             values = []
             for k in entry:
                 values.append(entry[k])
-            value = ','.join(to_value(v) for v in values)
-            queries.append('({})'.format(value))
-        lines.append('VALUES {};\n'.format(',\n  '.join(queries)))
+            value = '~'.join(str(v) for v in values)
+            queries.append(value)
+
+        with open('out/temp/{}.csv'.format(key), 'w') as f_out:
+            f_out.write('\n'.join(queries))
 
     with open(f2, 'w') as f_out:
         f_out.write('\n'.join(lines))
