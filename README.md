@@ -15,52 +15,55 @@ Give examples
 ```
 
 # Running scripts manually
+
 To populate the graph database with fake data, run the following script while standing in the backend/db directory
 
+> **! Important**: Remove (comment out) the config option: `dbms.directories.import=import` from Neo4j -> Database -> Settings
+
 ```
-> py fake_data.py
-> py build_cypher.py | cypher-shell -u neo4j -p password --format verbose
+> ./run_cypher.sh
 ```
 
 To populate the relational database with fake data, run the following script while standing in the backend/db directory
 
 ```
-> sqlcmd -i create_db.sql
-> sqlcmd -i create_schema.sql
-> py build_mssql.py
-> sqlcmd -i output.sql
-
+> ./run_mssql.sh
 ```
-
 
 # frontend
 
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Run your tests
+
 ```
 npm run test
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Installing
@@ -107,13 +110,13 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Vue.js](https://vuejs.org/) - The front-end web framework used
-* [Django](https://www.djangoproject.com/) - The back-end web framework used
+- [Vue.js](https://vuejs.org/) - The front-end web framework used
+- [Django](https://www.djangoproject.com/) - The back-end web framework used
 
 ## Authors
 
-* **Jan Zubac** - [JanZubac](https://github.com/JanZubac)
-* **Victor Winberg** - [VictorWinberg](https://github.com/VictorWinberg)
+- **Jan Zubac** - [JanZubac](https://github.com/JanZubac)
+- **Victor Winberg** - [VictorWinberg](https://github.com/VictorWinberg)
 
 See also the list of [contributors](https://github.com/VictorWinberg/graph-relational-benchmark/graphs/contributors) who participated in this project.
 
@@ -123,4 +126,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Oskar Damkjaer, for helping with the readme.
+- Oskar Damkjaer, for helping with the readme.
