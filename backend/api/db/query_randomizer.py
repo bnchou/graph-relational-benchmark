@@ -13,8 +13,6 @@ def rand_entry(table, column):
 
     rand_row = table_entries[random.randint(0, len(table_entries))]
     rand_data_entry = rand_row[column]
-
-    print(rand_data_entry)
    
     return rand_data_entry
 
