@@ -70,17 +70,18 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+Install required dependencies for both python and node
 
 ```
 pip install -r requirements.txt
 npm install
 ```
 
-And repeat
+Add environment variables into a .env file
 
 ```
-until finished
+# .env
+SQL_SERVER=XXXXXX
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
