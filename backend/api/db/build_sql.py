@@ -1,5 +1,5 @@
 # MS SQL build script command
-# > py build_mssql.py [INPUT_FILE] [OUTPUT_FILE]
+# > py build_sql.py [INPUT_FILE] [OUTPUT_FILE]
 
 import json
 import sys
