@@ -21,13 +21,13 @@ To populate the graph database with fake data, run the following script while st
 > **! Important**: Remove (comment out) the config option: `dbms.directories.import=import` from Neo4j -> Database -> Settings
 
 ```
-> ./run_cypher.sh
+./run_cypher.sh
 ```
 
 To populate the relational database with fake data, run the following script while standing in the backend/db directory
 
 ```
-> ./run_sql.sh
+./run_sql.sh
 ```
 
 # frontend
@@ -73,7 +73,8 @@ A step by step series of examples that tell you how to get a development env run
 Say what the step will be
 
 ```
-Give the example
+pip install -r requirements.txt
+npm install
 ```
 
 And repeat
