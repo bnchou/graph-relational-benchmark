@@ -9,7 +9,7 @@ echo "Building csv files..."
 py build_csv.py "out/output.json" "out/temp"
 
 echo "Building sql output..."
-py build_mssql.py "out/output.json" "out/output.sql"
+py build_sql.py "out/output.json" "out/output.sql"
 
 echo "Running sql scripts..."
 START=$(date +%s%3N)

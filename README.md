@@ -27,7 +27,7 @@ To populate the graph database with fake data, run the following script while st
 To populate the relational database with fake data, run the following script while standing in the backend/db directory
 
 ```
-> ./run_mssql.sh
+> ./run_sql.sh
 ```
 
 # frontend

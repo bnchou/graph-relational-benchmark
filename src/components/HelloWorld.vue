@@ -52,13 +52,13 @@
           </el-table-column>
           <el-table-column label="MS SQL" width="140">
             <template slot-scope="scope">
-              <el-tag size="medium">{{ scope.row.mssql }} ms</el-tag>
+              <el-tag size="medium">{{ scope.row.sql }} ms</el-tag>
               <el-button
                 circle
                 type="text"
                 icon="el-icon-refresh"
-                @click="handle('mssql', scope.row.id, scope.row.stmt)"
-                :loading="mssql.loading[scope.row.id]"
+                @click="handle('sql', scope.row.id, scope.row.stmt)"
+                :loading="sql.loading[scope.row.id]"
                 :disabled="isDisabled"
               ></el-button>
             </template>
@@ -81,7 +81,7 @@ export default {
   data: function() {
     return {
       cypher: { loading: {} },
-      mssql: { loading: {} },
+      sql: { loading: {} },
       isDisabled: false,
       tableData: [
         {
@@ -89,21 +89,21 @@ export default {
           query: "Large insert statement",
           stmt: "insert",
           cypher: -1,
-          mssql: -1
+          sql: -1
         },
         {
           id: 1,
           query: "Flat select statement",
           stmt: "flat_select",
           cypher: -1,
-          mssql: -1
+          sql: -1
         },
         {
           id: 2,
           query: "Nested select statement",
           stmt: "nested_select",
           cypher: -1,
-          mssql: -1
+          sql: -1
         }
       ]
     };
