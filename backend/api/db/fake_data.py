@@ -143,11 +143,11 @@ if __name__ == "__main__":
     for i, lang in enumerate(['en_GB', 'dk_DK', 'fi_FI', 'sv_SE', 'no_NO']):
         fake = Faker(lang)
 
-        companies = 2000
+        companies = 20000
         persons = 5
-        offices = 2
+        offices = 20
         coworkers = 500
-        deals = 1000
+        deals = 10000
         documents = 2
 
         for j in range(companies):

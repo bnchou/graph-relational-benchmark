@@ -42,3 +42,18 @@ if __name__ == "__main__":
         LEFT JOIN deals ON p.id = deals.person_id
         LEFT JOIN companies ON p.company_id = companies.id
         WHERE deals.probability > {}''',  [random_entry(data, 'deals', 'probability')]))
+
+    get_stats(lambda: run_query(cursor.execute, ''' 
+        SELECT histories.id, histories.date, coworkers.id, coworkers.name, histories.type, persons.id, persons.name, documents.id, documents.description, histories.notes
+        FROM histories
+        LEFT JOIN deals ON histories.deal_id = deals.id 
+        LEFT JOIN coworkers ON histories.coworker_id = coworkers.id 
+        LEFT JOIN persons ON histories.person_id = persons.id 
+        LEFT JOIN documents ON histories.document_id = documents.id 
+        WHERE (histories.id IN (
+            SELECT histories.id AS id 
+            FROM histories 
+            LEFT JOIN deals ON histories.deal_id = deals.id 
+            WHERE  (deals.id = {})
+            )
+        );''', [random_entry(data, 'deals', 'id')]))
