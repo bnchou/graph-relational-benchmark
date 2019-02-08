@@ -10,9 +10,9 @@ def load_data(filepath="out/output.json"):
     return data
 
 
-def insert(adapter):
+def reset(adapter):
     filename = "backend/api/db/out/output.txt"
-    call('run_{}.sh'.format(adapter), cwd='backend/api/db', shell=True)
+    call('reset_{}.sh'.format(adapter), cwd='backend/api/db', shell=True)
 
     f = open(filename)
     data = json.loads(f.read())

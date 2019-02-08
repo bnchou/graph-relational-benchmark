@@ -11,11 +11,11 @@ def index(request):
     return HttpResponse("Welcome to API.")
 
 
-def cypher_insert(request):
-    res = database.insert('cypher')
+def cypher_reset(request):
+    res = database.reset('cypher')
     return JsonResponse(res)
 
 
-def sql_insert(request):
-    res = database.insert('sql')
+def sql_reset(request):
+    res = database.reset('sql')
     return JsonResponse(res)
