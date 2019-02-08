@@ -1,21 +1,7 @@
 from neo4j import GraphDatabase
 from statistics import median
-from random import randint
 import json
-
-
-def load_data(filepath="out/output.json"):
-    f = open(filepath, 'r')
-    data = json.loads(f.read())
-    f.close()
-    return data
-
-
-def random_entry(data, table_name, column):
-    table = data[table_name]
-    random_row = table[randint(0, len(table))]
-    return random_row[column]
-
+from database import random_entry, load_data
 
 def run_query(transaction, query, inputs=[]):
     def execute(tx):
@@ -25,7 +11,7 @@ def run_query(transaction, query, inputs=[]):
     return transaction(execute)
 
 
-def get_stats(exec, amount=100):
+def get_stats(exec, amount=10):
     print(median([exec() for i in range(amount)]))
 
 
