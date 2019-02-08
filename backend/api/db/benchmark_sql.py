@@ -1,6 +1,19 @@
 import pyodbc
+import os
 
-cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=BS28M32;DATABASE=LimeDB;')
+# Remove code under when file is used by django
+# ------------- BEGIN REMOVE -------------
+import dotenv
+dotenv.read_dotenv(os.path.join(
+    os.path.dirname(__file__), '..', '..', '..', '.env'))
+# ------------- END REMOVE ---------------
+
+
+# Specifying the ODBC driver, server name, database, etc. directly
+cnxn = pyodbc.connect(
+    'DRIVER={SQL Server};SERVER='+os.environ['SQL_SERVER']+';DATABASE=LimeDB;')
+
+# Create a cursor from the connection
 cursor = cnxn.cursor()
 
 cursor.execute("SELECT * FROM companies;")
