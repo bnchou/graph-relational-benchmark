@@ -15,6 +15,16 @@ label = {
     "histories": "History"
 }
 
+
+def get_row(attribute):
+    if attribute == "id" or attribute.endswith("_id") or attribute == "value":
+        return "toInteger(row.{})".format(str(attribute))
+    elif attribute == "probability":
+        return "toFloat(row.{})".format(str(attribute))
+    else:
+        return "row.{}".format(attribute)
+
+
 if __name__ == "__main__":
     f1 = "output.json"
     f2 = "output.cypher"
@@ -31,7 +41,8 @@ if __name__ == "__main__":
     lines.append('MATCH (n) DELETE n;')
 
     for key in data:
-        keys = ',\n'.join(map(lambda x: '{}: row.{}'.format(x, x), data[key][0].keys()))
+        keys = ',\n'.join(
+            map(lambda x: '{}: {}'.format(x, get_row(x)), data[key][0].keys()))
 
         lines.append('''
             USING PERIODIC COMMIT
