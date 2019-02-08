@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('cypher/insert', views.cypher_insert, name='cypher_insert'),
-    path('sql/insert', views.sql_insert, name='sql_insert'),
+    path('cypher/reset', views.cypher_reset, name='cypher_reset'),
+    path('sql/reset', views.sql_reset, name='sql_reset'),
 ]

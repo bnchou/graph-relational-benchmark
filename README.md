@@ -21,13 +21,13 @@ To populate the graph database with fake data, run the following script while st
 > **! Important**: Remove (comment out) the config option: `dbms.directories.import=import` from Neo4j -> Database -> Settings
 
 ```
-> ./run_cypher.sh
+./run_cypher.sh
 ```
 
 To populate the relational database with fake data, run the following script while standing in the backend/db directory
 
 ```
-> ./run_sql.sh
+./run_sql.sh
 ```
 
 # frontend
@@ -70,16 +70,18 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+Install required dependencies for both python and node
 
 ```
-Give the example
+pip install -r requirements.txt
+npm install
 ```
 
-And repeat
+Add environment variables into a .env file
 
 ```
-until finished
+# .env
+SQL_SERVER=XXXXXX (e.g. 8ZC5G31)
 ```
 
 End with an example of getting some data out of the system or using it for a little demo

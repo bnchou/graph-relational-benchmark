@@ -86,8 +86,8 @@ export default {
       tableData: [
         {
           id: 0,
-          query: "Large insert statement",
-          stmt: "insert",
+          query: "Reset Database",
+          stmt: "reset",
           cypher: -1,
           sql: -1
         },
