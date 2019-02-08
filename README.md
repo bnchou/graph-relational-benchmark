@@ -81,7 +81,7 @@ Add environment variables into a .env file
 
 ```
 # .env
-SQL_SERVER=XXXXXX
+SQL_SERVER=XXXXXX (e.g. 8ZC5G31)
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
