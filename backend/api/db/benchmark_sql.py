@@ -1,29 +1,16 @@
 from statistics import median
-from random import randint
 from time import time
 import pyodbc
 import dotenv
 import os
-import json
+
+from database import random_entry, load_data
 
 # Remove code under when file is used by django
 # ------------- BEGIN REMOVE -------------
 dotenv.read_dotenv(os.path.join(
     os.path.dirname(__file__), '..', '..', '..', '.env'))
 # ------------- END REMOVE ---------------
-
-
-def load_data(filepath="out/output.json"):
-    f = open(filepath, 'r')
-    data = json.loads(f.read())
-    f.close()
-    return data
-
-
-def random_entry(data, table_name, column):
-    table = data[table_name]
-    random_row = table[randint(0, len(table))]
-    return random_row[column]
 
 
 def run_query(execute, query, inputs=[]):

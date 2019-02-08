@@ -1,7 +1,8 @@
 from neo4j import GraphDatabase
 from statistics import median
-import json
+
 from database import random_entry, load_data
+
 
 def run_query(transaction, query, inputs=[]):
     def execute(tx):
