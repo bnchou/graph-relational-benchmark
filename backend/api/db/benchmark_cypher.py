@@ -47,3 +47,23 @@ if __name__ == "__main__":
             WHERE c.id = {}
             RETURN p.name, c.name;
         ''', [random_entry(data, 'companies', 'id')]))
+
+        get_stats(lambda: run_query(session.write_transaction, '''
+            MATCH (h: History)
+            WHERE h.id = {}
+            DETACH DELETE h;''', [random_entry(data, 'histories', 'id')]    
+        ))
+
+        get_stats(lambda: run_query(session.write_transaction, '''
+            MATCH (d: Deal)<-[:RESPONSIBLE_FOR]-(p:Person)
+            WHERE p.company_id = {}
+            SET d.probability = 0.99
+            RETURN d;''', [random_entry(data, 'persons', 'company_id')]
+        ))
+
+        get_stats(lambda: run_query(session.write_transaction, '''
+            MATCH (c: Company)
+            WHERE c.id = {}
+            SET c.name = 'Test'
+            RETURN c.name;''', [random_entry(data, 'companies', 'id')]
+        ))

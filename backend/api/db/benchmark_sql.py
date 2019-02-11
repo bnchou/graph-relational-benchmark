@@ -57,3 +57,24 @@ if __name__ == "__main__":
             WHERE  (deals.id = {})
             )
         );''', [random_entry(data, 'deals', 'id')]))
+
+    get_stats(lambda: run_query(cursor.execute, '''
+        DELETE FROM histories
+        WHERE histories.id = {}''', [random_entry(data, 'histories', 'id')]
+    ))
+
+    get_stats(lambda: run_query(cursor.execute, '''
+        UPDATE deals
+        SET deals.probability = 0.99
+        WHERE deals.person_id IN (
+            SELECT p.id 
+            FROM persons as p
+            WHERE p.company_id = {}
+        );''', [random_entry(data, 'persons', 'company_id')]
+    ))
+
+    get_stats(lambda: run_query(cursor.execute, '''
+        UPDATE companies
+        SET companies.name = 'Test'
+        WHERE companies.id = {}''', [random_entry(data, 'companies', 'id')]
+    ))
