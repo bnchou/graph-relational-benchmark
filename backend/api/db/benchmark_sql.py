@@ -1,4 +1,4 @@
-from statistics import median
+from statistics import median, mean
 from time import time
 import pyodbc
 import dotenv
@@ -21,7 +21,12 @@ def run_query(execute, query, inputs=[]):
 
 
 def get_stats(exec, amount=100):
-    print(median([exec() for i in range(amount)]))
+    res = [exec() for i in range(amount)]
+    res.remove(min(res))
+    res.remove(min(res))
+    res.remove(max(res))
+    res.remove(max(res))
+    print("median: {}, mean: {}".format(median(res), mean(res)))
 
 
 if __name__ == "__main__":
@@ -57,9 +62,16 @@ if __name__ == "__main__":
         );''', [random_entry(data, 'deals', 'id')]))
 
     get_stats(lambda: run_query(cursor.execute, '''
-        DELETE FROM histories
-        WHERE histories.id = {}''', [random_entry(data, 'histories', 'id')]
-    ))
+            SELECT persons.name, companies.name
+            FROM persons
+            LEFT JOIN companies ON persons.company_id = companies.id
+            WHERE companies.id = {};
+        ''', [random_entry(data, 'companies', 'id')]))
+
+    # get_stats(lambda: run_query(cursor.execute, '''
+    #     DELETE FROM histories
+    #     WHERE histories.id = {}''', [random_entry(data, 'histories', 'id')]
+    # ))
 
     get_stats(lambda: run_query(cursor.execute, '''
         UPDATE deals

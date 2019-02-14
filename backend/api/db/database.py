@@ -22,5 +22,5 @@ def reset(adapter):
 
 def random_entry(data, table_name, column):
     table = data[table_name]
-    random_row = table[randint(0, len(table))]
+    random_row = table[randint(0, len(table) - 1)]
     return random_row[column]

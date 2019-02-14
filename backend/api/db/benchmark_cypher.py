@@ -1,5 +1,5 @@
 from neo4j import GraphDatabase
-from statistics import median
+from statistics import median, mean
 
 from database import random_entry, load_data
 
@@ -12,8 +12,13 @@ def run_query(transaction, query, inputs=[]):
     return transaction(execute)
 
 
-def get_stats(exec, amount=10):
-    print(median([exec() for i in range(amount)]))
+def get_stats(exec, amount=500):
+    res = [exec() for i in range(amount)]
+    res.remove(min(res))
+    res.remove(min(res))
+    res.remove(max(res))
+    res.remove(max(res))
+    print("median: {}, mean: {}".format(median(res), mean(res)))
 
 
 if __name__ == "__main__":
@@ -43,11 +48,11 @@ if __name__ == "__main__":
             RETURN p.name, c.name;
         ''', [random_entry(data, 'companies', 'id')]))
 
-        get_stats(lambda: run_query(session.write_transaction, '''
-            MATCH (h: History)
-            WHERE h.id = {}
-            DETACH DELETE h;''', [random_entry(data, 'histories', 'id')]    
-        ))
+        # get_stats(lambda: run_query(session.write_transaction, '''
+        #     MATCH (h: History)
+        #     WHERE h.id = {}
+        #     DETACH DELETE h;''', [random_entry(data, 'histories', 'id')]    
+        # ))
 
         get_stats(lambda: run_query(session.write_transaction, '''
             MATCH (d: Deal)<-[:RESPONSIBLE_FOR]-(p:Person)
