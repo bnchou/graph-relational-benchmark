@@ -16,14 +16,16 @@ RETURN p.name, p.position, p.email, p.phone, d.name, c.name;
 
 // Fetch history on deal id: 1
 
-MATCH (deal:Deal {id: 1})-[:PART_OF]->(history:History)<-[:ATTACHED_TO]-(document:Document)
-MATCH (coworker:Coworker)-[:ATTENDED]->(history)<-[:ATTENDED]-(person:Person)
-RETURN history.id, history.type, history.date, coworker.name, person.name, document.description;
-// ORDER BY history.date DESC;
+MATCH (d:Deal)-[:PART_OF]->(h:History),
+    (h)<-[:ATTACHED_TO]-(doc:Document),
+    (c:Coworker)-[:ATTENDED]->(h)<-[:ATTENDED]-(p:Person)
+WHERE h.id = 1
+RETURN h.id, h.type, h.date, c.name, p.name, doc.description;
 
 // Fetch documents on person id: 1
 
-MATCH (person:Person {id: 1})-[:OWNS]->(document:Document)-[:ATTACHED_TO]->(deal:Deal)
+MATCH (person:Person {id: 1})-[:OWNS]->(document:Document),
+    (document)-[:ATTACHED_TO]->(deal:Deal)
 RETURN document.id, document.description, document.type, deal.name;
 
 // Fun

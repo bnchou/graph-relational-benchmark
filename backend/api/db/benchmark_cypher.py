@@ -24,11 +24,6 @@ if __name__ == "__main__":
 
     with driver.session() as session:
         get_stats(lambda: run_query(session.read_transaction, '''
-             MATCH (c: Company)
-             RETURN c.name, c.id;
-         '''))
-
-        get_stats(lambda: run_query(session.read_transaction, '''
             MATCH (p:Person)-[:RESPONSIBLE_FOR]->(d: Deal)
             MATCH (p)-[WORKS_AT]->(c: Company)
             WHERE d.probability > {}

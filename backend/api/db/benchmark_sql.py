@@ -34,8 +34,6 @@ if __name__ == "__main__":
 
     data = load_data()
 
-    get_stats(lambda: run_query(cursor.execute, "SELECT * FROM companies;"))
-
     get_stats(lambda: run_query(cursor.execute, '''
         SELECT p.name, p.position, p.email, p.phone, deals.name, companies.name
         FROM persons AS p
