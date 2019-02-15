@@ -51,7 +51,7 @@ if __name__ == "__main__":
         # get_stats(lambda: run_query(session.write_transaction, '''
         #     MATCH (h: History)
         #     WHERE h.id = {}
-        #     DETACH DELETE h;''', [random_entry(data, 'histories', 'id')]    
+        #     DETACH DELETE h;''', [random_entry(data, 'histories', 'id')]
         # ))
 
         get_stats(lambda: run_query(session.write_transaction, '''
