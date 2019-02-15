@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 from .db import database
 
 
@@ -19,3 +21,9 @@ def cypher_reset(request):
 def sql_reset(request):
     res = database.reset('sql')
     return JsonResponse(res)
+
+
+@csrf_exempt
+def command(request):
+    body = json.loads(request.body)
+    return JsonResponse({"method": request.method, "body": body})
