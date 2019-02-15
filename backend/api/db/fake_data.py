@@ -3,14 +3,6 @@ import random
 import json
 import sys
 
-country = {
-    "en_GB": "United Kingdom",
-    "dk_DK": "Denmark",
-    "fi_FI": "Finland",
-    "sv_SE": "Sweden",
-    "no_NO": "Norway"
-}
-
 
 def get_company(fake, index=None):
     fake.seed(index)
@@ -28,8 +20,7 @@ def get_company(fake, index=None):
         "website": '{}{}.{}'.format(name1, name2, fake.tld()).lower(),
         "address": ' '.join([address, postcode, city]),
         "postcode": postcode,
-        "city": city,
-        "country": country[fake._Generator__config["locale"]]
+        "city": city
     }
 
 
@@ -60,8 +51,7 @@ def get_office(fake, index=None):
         "id": index,
         "name": city,
         "phone": fake.phone_number(),
-        "address": ' '.join([address, postcode, city]),
-        "country": country[fake._Generator__config["locale"]]
+        "address": ' '.join([address, postcode, city])
     }
 
 
@@ -140,58 +130,48 @@ if __name__ == "__main__":
     if(len(sys.argv) > 1):
         filename = sys.argv[1]
 
-    for i, lang in enumerate(['en_GB', 'dk_DK', 'fi_FI', 'sv_SE', 'no_NO']):
-        fake = Faker(lang)
+    fake = Faker()
+    # random.seed(1234)
 
-        companies = 20000
-        persons = 5
-        offices = 20
-        coworkers = 500
-        deals = 10000
-        documents = 2
+    companies = 10
+    persons = 10
+    offices = 10
+    coworkers = 10
+    deals = 10
+    documents = 100000
+    histories = 100000
 
-        for j in range(companies):
-            co_idx = i * companies + j
-            output["companies"].append(get_company(fake, co_idx))
+    for i in range(companies):
+        output["companies"].append(get_company(fake, i))
 
-            for k in range(persons):
-                p_idx = co_idx * persons + k
-                output["persons"].append(get_person(fake, p_idx, co_idx))
+    for i in range(persons):
+        c_idx = random.randint(0, companies - 1)
+        output["persons"].append(get_person(fake, i, c_idx))
 
-        for j in range(offices):
-            off_idx = i * offices + j
-            output["offices"].append(get_office(fake, off_idx))
+    for i in range(offices):
+        output["offices"].append(get_office(fake, i))
 
-            for k in range(coworkers):
-                co_idx = off_idx * coworkers + k
-                output["coworkers"].append(get_coworker(fake, co_idx, off_idx))
+    for i in range(coworkers):
+        o_idx = random.randint(0, offices - 1)
+        output["coworkers"].append(get_coworker(fake, i, o_idx))
 
-        random.seed(i)
+    for i in range(deals):
+        p_idx = random.randint(0, persons - 1)
+        c_idx = random.randint(0, coworkers - 1)
+        output["deals"].append(get_deal(fake, i, p_idx, c_idx))
 
-        p_tot = companies * persons
-        p_start = i * p_tot
-        p_end = p_start + p_tot
-        p_list = list(range(p_start, p_end))
-        random.shuffle(p_list)
+    for i in range(documents):
+        p_idx = random.randint(0, persons - 1)
+        d_idx = random.randint(0, deals - 1)
+        output["documents"].append(
+            get_document(fake, i, p_idx, d_idx))
 
-        co_tot = offices * coworkers
-        co_start = i * co_tot
-        co_end = co_start + co_tot
-
-        for j in range(deals):
-            p_idx = p_list.pop()
-            co_idx = random.randint(co_start, co_end)
-            d_idx = i * deals + j
-            output["deals"].append(get_deal(fake, d_idx, p_idx, co_idx))
-
-            for k in range(documents):
-                doc_idx = d_idx * documents + k
-                output["documents"].append(
-                    get_document(fake, doc_idx, p_idx, d_idx))
-
-                h_idx = doc_idx
-                output["histories"].append(get_history(
-                    fake, h_idx, p_idx, co_idx, d_idx, doc_idx))
+    for i in range(histories):
+        p_idx = random.randint(0, persons - 1)
+        c_idx = random.randint(0, coworkers - 1)
+        d_idx = random.randint(0, deals - 1)
+        output["histories"].append(get_history(
+            fake, i, p_idx, c_idx, d_idx, d_idx))
 
     with open(filename, 'w') as f_out:
         json.dump(output, f_out)
