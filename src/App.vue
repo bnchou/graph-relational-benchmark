@@ -4,20 +4,18 @@
       <el-header class="header">
         <navbar></navbar>
       </el-header>
-      <docs></docs>
+      <router-view></router-view>
     </el-container>
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar";
-import Docs from "@/views/Docs";
 
 export default {
   name: "app",
   components: {
-    Navbar,
-    Docs
+    Navbar
   }
 };
 </script>

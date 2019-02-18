@@ -1,10 +1,12 @@
 <template>
   <div id="menu">
-    <el-menu mode="horizontal">
+    <el-menu :default-active="activeIndex" mode="horizontal" :router="true">
       <el-menu-item index="/">
         <logo></logo>
       </el-menu-item>
-      <el-menu-item class="item" index="/github">Github</el-menu-item>
+      <el-menu-item class="item" index="@github" :route="{}">
+        <a href="https://github.com/VictorWinberg/graph-relational-benchmark" target="_blank">Github</a>
+      </el-menu-item>
       <el-menu-item class="item" index="/docs">Docs</el-menu-item>
     </el-menu>
   </div>
@@ -16,6 +18,11 @@ import Logo from "./Logo";
 export default {
   components: {
     Logo
+  },
+  data() {
+    return {
+      activeIndex: this.$route.path
+    };
   }
 };
 </script>
@@ -23,5 +30,8 @@ export default {
 <style scoped>
 .item {
   float: right;
+}
+a {
+  text-decoration: none;
 }
 </style>

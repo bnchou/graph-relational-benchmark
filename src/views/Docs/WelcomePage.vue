@@ -78,7 +78,7 @@ export default {
   props: {
     title: String
   },
-  data: function() {
+  data() {
     return {
       cypher: { loading: {} },
       sql: { loading: {} },
