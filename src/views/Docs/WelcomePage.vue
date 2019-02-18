@@ -94,7 +94,7 @@ export default {
         {
           id: 1,
           query: "Flat select statement",
-          stmt: "flat_select",
+          stmt: "deal",
           cypher: -1,
           sql: -1
         },
@@ -120,7 +120,7 @@ export default {
 
       // const res = await fetch(`/api/${adapter}/${stmt}`);
 
-      const res = await fetch(`/api/command/${stmt}`);
+      const res = await fetch(`/api/command/${stmt}`) ;
       const json = await res.json();
       this.tableData[id][adapter] = json.data;
 

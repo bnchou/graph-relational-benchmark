@@ -4,7 +4,7 @@ import pyodbc
 import dotenv
 import os
 
-from database import random_entry, load_data
+from .database import random_entry, load_data, get_json, build_json
 
 # Remove code under when file is used by django
 # ------------- BEGIN REMOVE -------------
@@ -12,6 +12,14 @@ dotenv.read_dotenv(os.path.join(
     os.path.dirname(__file__), '..', '..', '..', '.env'))
 # ------------- END REMOVE ---------------
 
+output = {}
+
+cnxn = pyodbc.connect(
+    'DRIVER={SQL Server};SERVER='+os.environ['SQL_SERVER']+';DATABASE=LimeDB;')
+
+cursor = cnxn.cursor()
+
+data = load_data()
 
 def run_query(execute, query, inputs=[]):
     t1 = time()
@@ -28,17 +36,9 @@ def get_stats(exec, amount=500):
     res.remove(max(res))
     print("median: {}, mean: {}".format(median(res), mean(res)))
 
+    output['sql'] = res
 
-if __name__ == "__main__":
-    # Specifying the ODBC driver, server name, database, etc. directly
-    cnxn = pyodbc.connect(
-        'DRIVER={SQL Server};SERVER='+os.environ['SQL_SERVER']+';DATABASE=LimeDB;')
-
-    # Create a cursor from the connection
-    cursor = cnxn.cursor()
-
-    data = load_data()
-
+def get_deals():
     get_stats(lambda: run_query(cursor.execute, '''
         SELECT p.name, p.position, p.email, p.phone, deals.name, companies.name
         FROM persons AS p
@@ -46,6 +46,10 @@ if __name__ == "__main__":
         LEFT JOIN companies ON p.company_id = companies.id
         WHERE deals.probability > {}''',  [random_entry(data, 'deals', 'probability')]))
 
+    build_json(output)
+    return get_json()
+
+def get_history():
     get_stats(lambda: run_query(cursor.execute, ''' 
         SELECT histories.id, histories.date, coworkers.id, coworkers.name, histories.type, persons.id, persons.name, documents.id, documents.description, histories.notes
         FROM histories
@@ -61,18 +65,21 @@ if __name__ == "__main__":
             )
         );''', [random_entry(data, 'deals', 'id')]))
 
+    build_json(output)
+    return get_json()
+
+def get_persons():
     get_stats(lambda: run_query(cursor.execute, '''
             SELECT persons.name, companies.name
             FROM persons
             LEFT JOIN companies ON persons.company_id = companies.id
             WHERE companies.id = {};
         ''', [random_entry(data, 'companies', 'id')]))
+    
+    build_json(output)
+    return get_json()
 
-    # get_stats(lambda: run_query(cursor.execute, '''
-    #     DELETE FROM histories
-    #     WHERE histories.id = {}''', [random_entry(data, 'histories', 'id')]
-    # ))
-
+def update_deals():
     get_stats(lambda: run_query(cursor.execute, '''
         UPDATE deals
         SET deals.probability = 0.99
@@ -83,8 +90,19 @@ if __name__ == "__main__":
         );''', [random_entry(data, 'persons', 'company_id')]
     ))
 
+    build_json(output)
+    return get_json()
+
+def update_comp_names():
     get_stats(lambda: run_query(cursor.execute, '''
         UPDATE companies
         SET companies.name = 'Test'
         WHERE companies.id = {}''', [random_entry(data, 'companies', 'id')]
     ))
+
+    build_json(output)
+    return get_json()
+
+
+if __name__ == "__main__":
+   get_deals()
