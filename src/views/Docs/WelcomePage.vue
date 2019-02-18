@@ -22,16 +22,16 @@
     </ul>
     <el-row :gutter="20">
       <el-col :sm="8">
-        <h3>Graph example</h3>
-        <LineExample/>
+        <h3>Table example</h3>
+        <table-example/>
       </el-col>
       <el-col :sm="8">
-        <h3>Gauge example</h3>
-        <GaugeExample/>
+        <h3>Graph example</h3>
+        <line-example/>
       </el-col>
       <el-col :sm="8">
         <h3>Pie example</h3>
-        <PieExample/>
+        <pie-example/>
       </el-col>
       <el-col>
         <h3>Large data insert</h3>
@@ -70,9 +70,9 @@
 </template>
 
 <script>
-import LineExample from "@/components/Charts/LineExample.vue";
-import GaugeExample from "@/components/Charts/GaugeExample.vue";
-import PieExample from "@/components/Charts/PieExample.vue";
+import TableExample from "./Examples/TableExample.vue";
+import LineExample from "./Examples/LineExample.vue";
+import PieExample from "./Examples/PieExample.vue";
 
 export default {
   props: {
@@ -109,8 +109,8 @@ export default {
     };
   },
   components: {
+    TableExample,
     LineExample,
-    GaugeExample,
     PieExample
   },
   methods: {
