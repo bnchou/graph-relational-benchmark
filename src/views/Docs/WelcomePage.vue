@@ -101,7 +101,7 @@ export default {
         {
           id: 2,
           query: "Nested select statement",
-          stmt: "nested_select",
+          stmt: "history",
           cypher: -1,
           sql: -1
         }
