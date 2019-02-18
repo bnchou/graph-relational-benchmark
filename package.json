@@ -27,8 +27,10 @@
   "dependencies": {
     "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.5.2",
+    "lodash": "^4.17.11",
     "v-charts": "^1.19.0",
-    "vue": "^2.5.21"
+    "vue": "^2.5.21",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.3.0",
