@@ -2,8 +2,10 @@ import Vue from "vue";
 
 import _ from "lodash";
 import ElementUI from "element-ui";
+import Icon from "vue-awesome/components/Icon";
 import "element-ui/lib/theme-chalk/index.css";
 import "element-ui/lib/theme-chalk/display.css";
+import "vue-awesome/icons";
 
 import App from "./App";
 import Router from "./router";
@@ -13,6 +15,7 @@ Vue.config.productionTip = false;
 Object.defineProperty(Vue.prototype, "$_", { value: _ });
 
 Vue.use(ElementUI);
+Vue.component("v-icon", Icon);
 
 new Vue({
   render: h => h(App),

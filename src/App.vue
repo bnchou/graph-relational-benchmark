@@ -25,4 +25,11 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #2c3e50;
 }
+
+.fa-icon {
+  position: relative;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+}
 </style>
