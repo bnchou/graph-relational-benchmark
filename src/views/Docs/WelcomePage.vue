@@ -70,9 +70,9 @@
 </template>
 
 <script>
-import LineExample from "@/components/LineExample.vue";
-import GaugeExample from "@/components/GaugeExample.vue";
-import PieExample from "@/components/PieExample.vue";
+import LineExample from "@/components/Charts/LineExample.vue";
+import GaugeExample from "@/components/Charts/GaugeExample.vue";
+import PieExample from "@/components/Charts/PieExample.vue";
 
 export default {
   props: {

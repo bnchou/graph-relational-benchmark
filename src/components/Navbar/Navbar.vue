@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Logo from "@/components/Logo";
+import Logo from "./Logo";
 
 export default {
   components: {
