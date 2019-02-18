@@ -1,12 +1,22 @@
 <template>
-  <el-menu>
-    <el-menu-item index="1">
+  <el-menu :default-active="activeIndex" :router="true">
+    <el-menu-item index="/">
       <i class="el-icon-view"></i>
       <span>Analysis</span>
     </el-menu-item>
-    <el-menu-item index="2">
+    <el-menu-item index="/settings">
       <i class="el-icon-setting"></i>
       <span>Configuration</span>
     </el-menu-item>
   </el-menu>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      activeIndex: this.$route.path
+    };
+  }
+};
+</script>

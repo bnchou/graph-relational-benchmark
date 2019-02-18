@@ -4,19 +4,17 @@
       <sidebar></sidebar>
     </el-aside>
     <el-main class="main">
-      <benchmark-page/>
+      <router-view/>
     </el-main>
   </el-container>
 </template>
 
 <script>
-import BenchmarkPage from "./BenchmarkPage";
 import Sidebar from "./Sidebar";
 
 export default {
-  name: "app",
+  name: "benchmark",
   components: {
-    BenchmarkPage,
     Sidebar
   }
 };

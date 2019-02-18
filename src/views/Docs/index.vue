@@ -14,7 +14,7 @@ import WelcomePage from "./WelcomePage";
 import Sidebar from "./Sidebar";
 
 export default {
-  name: "app",
+  name: "docs",
   components: {
     WelcomePage,
     Sidebar
