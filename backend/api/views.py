@@ -13,17 +13,14 @@ def index(request):
     return HttpResponse("Welcome to API.")
 
 
-def cypher_reset(request):
-    res = database.reset('cypher')
-    return JsonResponse(res)
-
-
-def sql_reset(request):
-    res = database.reset('sql')
+def reset():
+    res = database.reset()
     return JsonResponse(res)
 
 
 @csrf_exempt
-def command(request):
-    body = json.loads(request.body)
-    return JsonResponse({"method": request.method, "body": body})
+def command(request, action):
+    if(action == 'reset'):
+        return reset()
+    print(action)
+    return JsonResponse({"method": request.method})

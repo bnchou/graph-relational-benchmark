@@ -10,9 +10,10 @@ def load_data(filepath="out/output.json"):
     return data
 
 
-def reset(adapter):
+def reset():
     filename = "backend/api/db/out/output.txt"
-    call('reset_{}.sh'.format(adapter), cwd='backend/api/db', shell=True)
+    call('reset_cypher.sh', cwd='backend/api/db', shell=True)
+    call('reset_sql.sh', cwd='backend/api/db', shell=True)
 
     f = open(filename)
     data = json.loads(f.read())

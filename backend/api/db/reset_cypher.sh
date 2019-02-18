@@ -19,4 +19,4 @@ cat "out/cypher/create_edges.cypher" | cypher-shell -u neo4j -p password --forma
 
 END=$(date +%s%3N)
 
-echo {\"data\": $(($END - $START))} > "out/output.txt"
+echo {\"cypher\": $(($END - $START)), > "out/output.txt"
