@@ -118,7 +118,9 @@ export default {
       this.$set(this[adapter].loading, id, true);
       this.isDisabled = true;
 
-      const res = await fetch(`/api/${adapter}/${stmt}`);
+      // const res = await fetch(`/api/${adapter}/${stmt}`);
+
+      const res = await fetch(`/api/command/${stmt}`);
       const json = await res.json();
       this.tableData[id][adapter] = json.data;
 

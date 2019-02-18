@@ -138,8 +138,8 @@ if __name__ == "__main__":
     offices = 10
     coworkers = 10
     deals = 10
-    documents = 100000
-    histories = 100000
+    documents = 10
+    histories = 10
 
     for i in range(companies):
         output["companies"].append(get_company(fake, i))
