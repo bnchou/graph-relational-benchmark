@@ -113,7 +113,7 @@ yarn-error.log*
 .DS_Store
 
 # Output
-output.*
+output*.*
 
 # Temporary folder
 temp

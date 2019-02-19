@@ -3,7 +3,7 @@ import json
 from random import randint
 
 
-def load_data(filepath="backend/api/db/out/output.json"):
+def load_data(filepath="backend/api/db/out/output-minimized.json"):
     f = open(filepath, 'r')
     data = json.loads(f.read())
     f.close()

@@ -71,7 +71,7 @@ def run_query(execute, query, inputs=[]):
     return round((t2 - t1) * 1000, 1)
 
 
-def get_stats(exec, amount=500):
+def get_stats(exec, amount=100):
     res = [exec() for i in range(amount)]
     res.remove(min(res))
     res.remove(min(res))

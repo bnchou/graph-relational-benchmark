@@ -52,7 +52,7 @@ def run_query(transaction, query, inputs=[]):
     return transaction(execute)
 
 
-def get_stats(exec, amount=500):
+def get_stats(exec, amount=100):
     res = [exec() for i in range(amount)]
     res.remove(min(res))
     res.remove(min(res))
