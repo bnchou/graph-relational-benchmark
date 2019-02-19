@@ -13,12 +13,32 @@ cursor = cnxn.cursor()
 data = load_data()
 
 queries = {
+    'companies': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        UPDATE companies
+        SET companies.name = 'Test'
+        WHERE companies.id = {}''', [random_entry(data, 'companies', 'id')])),
+    'persons': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        SELECT persons.name, companies.name
+        FROM persons
+        LEFT JOIN companies ON persons.company_id = companies.id
+        WHERE companies.id = {};
+    ''', [random_entry(data, 'companies', 'id')])),
     'deals': lambda: get_stats(lambda: run_query(cursor.execute, '''
         SELECT p.name, p.position, p.email, p.phone, deals.name, companies.name
         FROM persons AS p
         LEFT JOIN deals ON p.id = deals.person_id
         LEFT JOIN companies ON p.company_id = companies.id
         WHERE deals.probability > {}''',  [random_entry(data, 'deals', 'probability')])),
+    'documents': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        SELECT documents.id, persons.id, persons.name, documents.type, documents.description
+        FROM documents 
+        LEFT JOIN persons ON documents.person_id = persons.id 
+        WHERE documents.id IN (
+            SELECT documents.id AS id 
+            FROM documents 
+            LEFT JOIN persons ON documents.person_id = persons.id 
+            WHERE  persons.id = {}
+        );''', [random_entry(data, 'persons', 'id')])),
     'histories': lambda: get_stats(lambda: run_query(cursor.execute, '''
         SELECT histories.id, histories.date, coworkers.id, coworkers.name, histories.type, persons.id, persons.name, documents.id, documents.description, histories.notes
         FROM histories
@@ -33,12 +53,6 @@ queries = {
             WHERE  (deals.id = {})
             )
         );''', [random_entry(data, 'deals', 'id')])),
-    'persons': lambda: get_stats(lambda: run_query(cursor.execute, '''
-        SELECT persons.name, companies.name
-        FROM persons
-        LEFT JOIN companies ON persons.company_id = companies.id
-        WHERE companies.id = {};
-    ''', [random_entry(data, 'companies', 'id')])),
     'update_deals': lambda: get_stats(lambda: run_query(cursor.execute, '''
         UPDATE deals
         SET deals.probability = 0.99
@@ -46,21 +60,7 @@ queries = {
             SELECT p.id
             FROM persons as p
             WHERE p.company_id = {}
-        );''', [random_entry(data, 'persons', 'company_id')])),
-    'update_companies': lambda: get_stats(lambda: run_query(cursor.execute, '''
-        UPDATE companies
-        SET companies.name = 'Test'
-        WHERE companies.id = {}''', [random_entry(data, 'companies', 'id')])),
-    'documents': lambda: get_stats(lambda: run_query(cursor.execute, '''
-        SELECT documents.id, persons.id, persons.name, documents.type, documents.description
-        FROM documents 
-        LEFT JOIN persons ON documents.person_id = persons.id 
-        WHERE documents.id IN (
-            SELECT documents.id AS id 
-            FROM documents 
-            LEFT JOIN persons ON documents.person_id = persons.id 
-            WHERE  persons.id = {}
-        );''', [random_entry(data, 'persons', 'id')]))
+        );''', [random_entry(data, 'persons', 'company_id')]))
 }
 
 
@@ -71,7 +71,7 @@ def run_query(execute, query, inputs=[]):
     return round((t2 - t1) * 1000, 1)
 
 
-def get_stats(exec, amount=100):
+def get_stats(exec, amount=14):
     res = [exec() for i in range(amount)]
     res.remove(min(res))
     res.remove(min(res))
