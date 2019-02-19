@@ -24,8 +24,7 @@ CREATE TABLE companies (
     website VARCHAR(255),
     address VARCHAR(255),
     postcode VARCHAR(10),
-    city VARCHAR(50),
-    country VARCHAR(50)
+    city VARCHAR(50)
 );
 GO
 
@@ -43,8 +42,7 @@ CREATE TABLE offices (
     id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(25),
-    address VARCHAR(255),
-    country VARCHAR(50)
+    address VARCHAR(255)
 );
 GO
 

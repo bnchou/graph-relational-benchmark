@@ -17,10 +17,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      activeIndex: this.$route.path
-    };
+  computed: {
+    activeIndex() {
+      return this.$route.path;
+    }
   }
 };
 </script>
