@@ -115,7 +115,16 @@ def get_history(fake, index=None, p_idx=None, co_idx=None, d_idx=None, doc_idx=N
     }
 
 
-if __name__ == "__main__":
+def generate(filename="output.json",
+             companies=10000,
+             persons=100000,
+             offices=10,
+             coworkers=10,
+             deals=50000,
+             documents=300000,
+             histories=3000000):
+    # random.seed(1234)
+    fake = Faker()
     output = {
         "companies": [],
         "persons": [],
@@ -125,21 +134,6 @@ if __name__ == "__main__":
         "documents": [],
         "histories": []
     }
-
-    filename = "output.json"
-    if(len(sys.argv) > 1):
-        filename = sys.argv[1]
-
-    fake = Faker()
-    # random.seed(1234)
-
-    companies = 10
-    persons = 10
-    offices = 10
-    coworkers = 10
-    deals = 10
-    documents = 10
-    histories = 10
 
     for i in range(companies):
         output["companies"].append(get_company(fake, i))
@@ -175,3 +169,10 @@ if __name__ == "__main__":
 
     with open(filename, 'w') as f_out:
         json.dump(output, f_out)
+
+
+if __name__ == "__main__":
+    if(len(sys.argv) > 1):
+        generate(sys.argv[1])
+    else:
+        generate()
