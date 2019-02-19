@@ -1,7 +1,10 @@
 <template>
   <div>
-    <el-tabs type="border-card">
-      <el-tab-pane>
+    <el-tabs 
+      type="border-card"
+      @tab-click="handleClick"
+    >
+      <el-tab-pane name="update_companies">
         <span slot="label">
           <v-icon name="building"/>
           <!-- Companies -->
@@ -9,7 +12,7 @@
         </span>
         Fetching companies...
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="persons">
         <span slot="label">
           <v-icon name="users"/>
           <!-- Peoples -->
@@ -17,7 +20,7 @@
         </span>
         Fetching peoples...
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="deal">
         <span slot="label">
           <v-icon name="handshake"/>
           <!-- Deals -->
@@ -25,7 +28,7 @@
         </span>
         Fetching deals...
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="update_deals">
         <span slot="label">
           <v-icon name="file"/>
           <!-- Documents -->
@@ -33,7 +36,7 @@
         </span>
         Fetching documents...
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="history">
         <span slot="label">
           <v-icon name="history"/>
           <!-- Histories -->
@@ -48,7 +51,15 @@
 <script>
 export default {
   data() {
-    return {};
+    return {   
+    };
+  },
+methods: { 
+    handleClick: async (tab, event) => {
+      const res = await fetch(`/api/command/${tab.name}`);
+      const json = await res.json();
+      console.log(json)
+    }
   }
 };
 </script>
