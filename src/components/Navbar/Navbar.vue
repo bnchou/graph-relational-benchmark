@@ -1,7 +1,7 @@
 <template>
   <div id="menu">
     <el-menu :default-active="activeIndex" mode="horizontal" :router="true">
-      <el-menu-item index="/">
+      <el-menu-item index="/benchmark">
         <logo></logo>
       </el-menu-item>
       <el-menu-item class="item" index="@github" :route="{}">
@@ -19,10 +19,10 @@ export default {
   components: {
     Logo
   },
-  data() {
-    return {
-      activeIndex: this.$route.path
-    };
+  computed: {
+    activeIndex() {
+      return this.$route.path;
+    }
   }
 };
 </script>
