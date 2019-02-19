@@ -5,6 +5,9 @@ import Benchmark from "@/views/Benchmark";
 import BenchmarkPage from "@/views/Benchmark/BenchmarkPage";
 import ConfigurationPage from "@/views/Benchmark/ConfigurationPage";
 import Docs from "@/views/Docs";
+import IntroductionPage from "@/views/Docs/IntroductionPage";
+import QuickStartPage from "@/views/Docs/QuickStartPage";
+import ComponentsPage from "@/views/Docs/ComponentsPage";
 
 Vue.use(VueRouter);
 
@@ -13,6 +16,10 @@ export default new VueRouter({
   routes: [
     {
       path: "/",
+      redirect: "/benchmark"
+    },
+    {
+      path: "/benchmark",
       component: Benchmark,
       children: [
         {
@@ -27,7 +34,22 @@ export default new VueRouter({
     },
     {
       path: "/docs",
-      component: Docs
+      component: Docs,
+      redirect: "/docs/intro",
+      children: [
+        {
+          path: "intro",
+          component: IntroductionPage
+        },
+        {
+          path: "quick-start",
+          component: QuickStartPage
+        },
+        {
+          path: "components",
+          component: ComponentsPage
+        }
+      ]
     }
   ]
 });
