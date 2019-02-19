@@ -35,7 +35,12 @@ queries = {
         MATCH (c: Company)
         WHERE c.id = {}
         SET c.name = 'Test'
-        RETURN c.name;''', [random_entry(data, 'companies', 'id')]))
+        RETURN c.name;''', [random_entry(data, 'companies', 'id')])),
+    'documents': lambda session: get_stats(lambda: run_query(session.read_transaction, '''
+        MATCH (person:Person)-[:OWNS]->(document:Document),
+        (document)-[:ATTACHED_TO]->(deal:Deal)
+        WHERE person.id = {}
+        RETURN document.id, document.description, document.type, deal.name;''', [random_entry(data, 'persons', 'id')]))
 }
 
 

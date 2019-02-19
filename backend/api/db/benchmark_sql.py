@@ -50,7 +50,17 @@ queries = {
     'update_companies': lambda: get_stats(lambda: run_query(cursor.execute, '''
         UPDATE companies
         SET companies.name = 'Test'
-        WHERE companies.id = {}''', [random_entry(data, 'companies', 'id')]))
+        WHERE companies.id = {}''', [random_entry(data, 'companies', 'id')])),
+    'documents': lambda session: get_stats(lambda: run_query(cursor.execute, '''
+        SELECT documents.id, persons.id, persons.name, documents.type, documents.description
+        FROM documents 
+        LEFT JOIN persons ON documents.person_id = persons.id 
+        WHERE documents.id IN (
+            SELECT documents.id AS id 
+            FROM documents 
+            LEFT JOIN persons ON documents.person_id = persons.id 
+            WHERE  persons.id = {}
+        );''', [random_entry(data, 'persons', 'id')]))
 }
 
 
@@ -71,4 +81,4 @@ def get_stats(exec, amount=500):
 
 
 def run(stmt):
-    return queries[stmt]()
+    return queries[stmt](cursor)

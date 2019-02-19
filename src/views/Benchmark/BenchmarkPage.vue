@@ -28,7 +28,7 @@
         </span>
         Fetching deals...
       </el-tab-pane>
-      <el-tab-pane name="update_deals">
+      <el-tab-pane name="documents">
         <span slot="label">
           <v-icon name="file"/>
           <!-- Documents -->
