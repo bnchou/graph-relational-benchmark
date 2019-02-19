@@ -25,10 +25,3 @@ def random_entry(data, table_name, column):
     table = data[table_name]
     random_row = table[randint(0, len(table) - 1)]
     return random_row[column]
-
-def build_json(output):
-    with open('output.json', 'w') as f_out:
-            json.dump(output, f_out)
-
-def get_json():
-    return load_data('output.json')
