@@ -2,6 +2,7 @@ from statistics import median, mean
 from time import time
 import pyodbc
 import os
+import random
 
 from .database import random_entry, load_data
 
@@ -60,7 +61,32 @@ queries = {
             SELECT p.id
             FROM persons as p
             WHERE p.company_id = {}
-        );''', [random_entry(data, 'persons', 'company_id')]))
+        );''', [random_entry(data, 'persons', 'company_id')])),
+    'create_history': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        INSERT INTO histories
+        VALUES ({}, 'Call', '2018-03-15', 'Created', {}, {}, {}, {});''', 
+        [
+            random.randint(40000000, 90000000),
+            random_entry(data, 'persons', 'id'),
+            random_entry(data, 'coworkers', 'id'),
+            random_entry(data, 'deals', 'id'),
+            random_entry(data, 'documents', 'id')
+        ])),
+    'create_person': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        INSERT INTO persons
+        VALUES ({}, 'Inserted Name', '07012345678', 'CEO', 'insert@insert.com', {});''',
+        [
+            random.randint(40000000, 90000000),
+            random_entry(data, 'company', 'id')
+        ])),
+    'create_deals': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        INSERT INTO deals
+        VALUES ({}, 'Best Deal Ever', 10, 0.99999, {}, {});''',
+        [
+            random.randint(40000000, 90000000),
+            random_entry(data, 'persons', 'id'),
+            random_entry(data, 'coworkers', 'id')
+        ]))
 }
 
 

@@ -1,6 +1,6 @@
 from neo4j import GraphDatabase
 from statistics import median, mean
-
+import random
 from .database import random_entry, load_data
 
 uri = "bolt://localhost:7687"
@@ -40,13 +40,44 @@ queries = {
         MATCH (d: Deal)<-[:RESPONSIBLE_FOR]-(p:Person)
         WHERE p.company_id = {}
         SET d.probability = 0.99
-        RETURN d;''', [random_entry(data, 'persons', 'company_id')]))
+        RETURN d;''', [random_entry(data, 'persons', 'company_id')])),
+    'create_history': lambda session: get_stats(lambda: run_query(session.write_transaction, '''
+        MERGE (h: History {{id: {}, type: 'Call', notes: 'Created', date: '2018-03-15' }})
+        MERGE (doc: Document {{id: {} }})
+        MERGE (d: Deal {{id: {} }})
+        MERGE (p: Person {{id: {} }})
+        MERGE (c: Coworker {{id: {} }})
+        MERGE (h)<-[:ATTACHED_TO]-(doc)
+        MERGE (h)<-[:PART_OF]-(d)
+        MERGE (h)<-[:ATTENDED]-(p) 
+        MERGE (h)<-[:ATTENDED]-(c);''', [
+            random.randint(40000000, 90000000),
+            random_entry(data, 'documents', 'id'),
+            random_entry(data, 'deals', 'id'),
+            random_entry(data, 'persons', 'id'),
+            random_entry(data, 'coworkers', 'id')
+        ])),
+    'create_person': lambda session: get_stats(lambda: run_query(session.write_transaction, '''
+        MERGE (p: Person {id: {}, name: 'Inserted Name', phone: '07012345678', position: 'CEO', email: 'insert@insert.com'})
+        MERGE (c: Company {{id: {} }})
+        MERGE (p)-[:WORKS_AT]->(c);''', [random.randint(2000000, 3000000), random_entry(data, 'companies', 'id')])),
+    'create_deal': lambda session: get_stats(lambda: run_query(session.write_transaction, '''
+        MERGE (d: Deal {id: {}, name: 'Best Deal Ever', value: 10, probability: 0.99999})
+        MERGE (p: Person {{id: {} }})
+        MERGE (c: Coworker {{id: {} }})
+        MERGE (p)-[:RESPONSIBLE_FOR]->(d)<-[:SALESPERSON_FOR]-(c);''',
+        [
+            random.randint(9999999, 900000000),
+            random_entry(data, 'persons', 'id'),
+            random_entry(data, 'coworkers', 'id')
+        ]))
 }
 
 
 def run_query(transaction, query, inputs=[]):
     def execute(tx):
         result = tx.run(query.format(*inputs)).consume()
+        print(inputs)
         return result.t_first
 
     return transaction(execute)
