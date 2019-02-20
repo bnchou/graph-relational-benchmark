@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    executionData: {},
     data: {
       "line-example": {
         columns: ["date", "cost", "profit", "growthRate", "people"],
