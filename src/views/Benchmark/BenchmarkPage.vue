@@ -1,48 +1,56 @@
 <template>
-  <div>
-    <el-tabs type="border-card" @tab-click="handleClick" :stretch="true">
-      <el-tab-pane name="companies">
-        <span slot="label">
-          <v-icon name="building"/>
-          <!-- Companies -->
-          Companies
-        </span>
+  <el-tabs type="border-card" @tab-click="handleClick" :stretch="true">
+    <el-tab-pane name="companies" v-loading="isLoading">
+      <span slot="label">
+        <v-icon name="building"/>
+        <!-- Companies -->
+        Companies
+      </span>
+      <div v-if="!isLoading">
         <benchmark-pane title="Companies" data="companies"/>
-      </el-tab-pane>
-      <el-tab-pane name="persons">
-        <span slot="label">
-          <v-icon name="users"/>
-          <!-- Persons -->
-          Persons
-        </span>
+      </div>
+    </el-tab-pane>
+    <el-tab-pane name="persons" v-loading="isLoading">
+      <span slot="label">
+        <v-icon name="users"/>
+        <!-- Persons -->
+        Persons
+      </span>
+      <div v-if="!isLoading">
         <benchmark-pane title="Persons" data="persons"/>
-      </el-tab-pane>
-      <el-tab-pane name="deals">
-        <span slot="label">
-          <v-icon name="handshake"/>
-          <!-- Deals -->
-          Deals
-        </span>
+      </div>
+    </el-tab-pane>
+    <el-tab-pane name="deals" v-loading="isLoading">
+      <span slot="label">
+        <v-icon name="handshake"/>
+        <!-- Deals -->
+        Deals
+      </span>
+      <div v-if="!isLoading">
         <benchmark-pane title="Deals" data="deals"/>
-      </el-tab-pane>
-      <el-tab-pane name="documents">
-        <span slot="label">
-          <v-icon name="file"/>
-          <!-- Documents -->
-          Documents
-        </span>
+      </div>
+    </el-tab-pane>
+    <el-tab-pane name="documents" v-loading="isLoading">
+      <span slot="label">
+        <v-icon name="file"/>
+        <!-- Documents -->
+        Documents
+      </span>
+      <div v-if="!isLoading">
         <benchmark-pane title="Documents" data="documents"/>
-      </el-tab-pane>
-      <el-tab-pane name="histories">
-        <span slot="label">
-          <v-icon name="history"/>
-          <!-- Histories -->
-          Histories
-        </span>
+      </div>
+    </el-tab-pane>
+    <el-tab-pane name="histories" v-loading="isLoading">
+      <span slot="label">
+        <v-icon name="history"/>
+        <!-- Histories -->
+        Histories
+      </span>
+      <div v-if="!isLoading">
         <benchmark-pane title="Histories" data="histories"/>
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+      </div>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>
@@ -52,7 +60,8 @@ export default {
   components: { BenchmarkPane },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      selectedTab: "companies"
     };
   },
   methods: {
