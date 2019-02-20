@@ -77,7 +77,6 @@ queries = {
 def run_query(transaction, query, inputs=[]):
     def execute(tx):
         result = tx.run(query.format(*inputs)).consume()
-        print(inputs)
         return result.t_first
 
     return transaction(execute)
