@@ -7,7 +7,7 @@ import random
 from .database import random_entry, load_data
 
 cnxn = pyodbc.connect(
-    'DRIVER={SQL Server};SERVER='+os.environ['SQL_SERVER']+';DATABASE=LimeDB;')
+    'DRIVER={SQL Server};SERVER='+os.environ['SQL_SERVER']+';DATABASE=medium;')
 
 cursor = cnxn.cursor()
 
@@ -32,12 +32,12 @@ queries = {
         WHERE deals.probability > {}''',  [random_entry(data, 'deals', 'probability')])),
     'documents': lambda: get_stats(lambda: run_query(cursor.execute, '''
         SELECT documents.id, persons.id, persons.name, documents.type, documents.description
-        FROM documents 
-        LEFT JOIN persons ON documents.person_id = persons.id 
+        FROM documents
+        LEFT JOIN persons ON documents.person_id = persons.id
         WHERE documents.id IN (
-            SELECT documents.id AS id 
-            FROM documents 
-            LEFT JOIN persons ON documents.person_id = persons.id 
+            SELECT documents.id AS id
+            FROM documents
+            LEFT JOIN persons ON documents.person_id = persons.id
             WHERE  persons.id = {}
         );''', [random_entry(data, 'persons', 'id')])),
     'histories': lambda: get_stats(lambda: run_query(cursor.execute, '''
@@ -94,12 +94,11 @@ def run_query(execute, query, inputs=[]):
     return (t2 - t1) * 1000
 
 
-def get_stats(exec, amount=54):
+def get_stats(exec, amount=500):
     res = [exec() for i in range(amount)]
-    res.remove(min(res))
-    res.remove(min(res))
-    res.remove(max(res))
-    res.remove(max(res))
+    for _ in range(int(amount * 0.05)):
+        res.remove(min(res))
+        res.remove(max(res))
     return res
 
 

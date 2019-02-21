@@ -51,12 +51,12 @@ queries = {
         MERGE (h)<-[:PART_OF]-(d)
         MERGE (h)<-[:ATTENDED]-(p) 
         MERGE (h)<-[:ATTENDED]-(c);''', [
-            random.randint(40000000, 90000000),
-            random_entry(data, 'documents', 'id'),
-            random_entry(data, 'deals', 'id'),
-            random_entry(data, 'persons', 'id'),
-            random_entry(data, 'coworkers', 'id')
-        ])),
+        random.randint(40000000, 90000000),
+        random_entry(data, 'documents', 'id'),
+        random_entry(data, 'deals', 'id'),
+        random_entry(data, 'persons', 'id'),
+        random_entry(data, 'coworkers', 'id')
+    ])),
     'create_person': lambda session: get_stats(lambda: run_query(session.write_transaction, '''
         MERGE (p: Person {id: {}, name: 'Inserted Name', phone: '07012345678', position: 'CEO', email: 'insert@insert.com'})
         MERGE (c: Company {{id: {} }})
@@ -65,12 +65,12 @@ queries = {
         MERGE (d: Deal {id: {}, name: 'Best Deal Ever', value: 10, probability: 0.99999})
         MERGE (p: Person {{id: {} }})
         MERGE (c: Coworker {{id: {} }})
-        MERGE (p)-[:RESPONSIBLE_FOR]->(d)<-[:SALESPERSON_FOR]-(c);''',
-        [
-            random.randint(9999999, 900000000),
-            random_entry(data, 'persons', 'id'),
-            random_entry(data, 'coworkers', 'id')
-        ]))
+        MERGE (p)-[:RESPONSIBLE_FOR]->(d)<-[:SALESPERSON_FOR]-(c)
+        ;''', [
+        random.randint(9999999, 900000000),
+        random_entry(data, 'persons', 'id'),
+        random_entry(data, 'coworkers', 'id')
+    ]))
 }
 
 
@@ -82,12 +82,11 @@ def run_query(transaction, query, inputs=[]):
     return transaction(execute)
 
 
-def get_stats(exec, amount=54):
+def get_stats(exec, amount=500):
     res = [exec() for i in range(amount)]
-    res.remove(min(res))
-    res.remove(min(res))
-    res.remove(max(res))
-    res.remove(max(res))
+    for _ in range(int(amount * 0.05)):
+        res.remove(min(res))
+        res.remove(max(res))
     return res
 
 
