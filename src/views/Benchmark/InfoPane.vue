@@ -3,10 +3,15 @@
     <h4>Cypher</h4>
     <el-tag class="tag">Mean: {{chartData.cypher.mean}} ms</el-tag>
     <el-tag class="tag">Std: {{chartData.cypher.std}} ms</el-tag>
+    <el-tag class="tag">Worst: {{chartData.cypher.worst}} ms</el-tag>
 
     <h4>SQL</h4>
     <el-tag class="tag">Mean: {{chartData.sql.mean}} ms</el-tag>
     <el-tag class="tag">Std: {{chartData.sql.std}} ms</el-tag>
+    <el-tag class="tag">Worst: {{chartData.sql.worst}} ms</el-tag>
+
+    <h5>Note:</h5>
+    <p>Worst-case is with 99.7% confidence level.</p>
   </div>
 </template>
 
@@ -23,8 +28,10 @@ export default {
         const mean = _.mean(values);
         const pow2 = x => Math.pow(x - mean, 2);
         const std = Math.sqrt(_.sum(_.map(values, pow2)) / values.length);
+        const worst = mean + 3 * std;
 
-        return { mean: _.round(mean, 2), std: _.round(std, 2) };
+        const data = { mean, std, worst };
+        return _.mapValues(data, i => _.round(i, 2));
       };
 
       const chartData = this.$store.state.executionData[this.data];
