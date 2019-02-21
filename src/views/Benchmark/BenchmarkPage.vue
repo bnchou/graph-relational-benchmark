@@ -1,14 +1,12 @@
 <template>
-  <el-tabs type="border-card" @tab-click="handleClick" :stretch="true">
+  <el-tabs type="border-card" @tab-click="handleClick" :stretch="true" style="min-height: 80vh;">
     <el-tab-pane name="companies" v-loading="isLoading">
       <span slot="label">
         <v-icon name="building"/>
         <!-- Companies -->
         Companies
       </span>
-      <div v-if="!isLoading">
-        <benchmark-pane title="Companies" data="companies"/>
-      </div>
+      <benchmark-pane title="Companies" data="companies" :isLoading="isLoading"/>
     </el-tab-pane>
     <el-tab-pane name="persons" v-loading="isLoading">
       <span slot="label">
@@ -16,9 +14,7 @@
         <!-- Persons -->
         Persons
       </span>
-      <div v-if="!isLoading">
-        <benchmark-pane title="Persons" data="persons"/>
-      </div>
+      <benchmark-pane title="Persons" data="persons" :isLoading="isLoading"/>
     </el-tab-pane>
     <el-tab-pane name="deals" v-loading="isLoading">
       <span slot="label">
@@ -26,9 +22,7 @@
         <!-- Deals -->
         Deals
       </span>
-      <div v-if="!isLoading">
-        <benchmark-pane title="Deals" data="deals"/>
-      </div>
+      <benchmark-pane title="Deals" data="deals" :isLoading="isLoading"/>
     </el-tab-pane>
     <el-tab-pane name="documents" v-loading="isLoading">
       <span slot="label">
@@ -36,9 +30,7 @@
         <!-- Documents -->
         Documents
       </span>
-      <div v-if="!isLoading">
-        <benchmark-pane title="Documents" data="documents"/>
-      </div>
+      <benchmark-pane title="Documents" data="documents" :isLoading="isLoading"/>
     </el-tab-pane>
     <el-tab-pane name="histories" v-loading="isLoading">
       <span slot="label">
@@ -46,9 +38,7 @@
         <!-- Histories -->
         Histories
       </span>
-      <div v-if="!isLoading">
-        <benchmark-pane title="Histories" data="histories"/>
-      </div>
+      <benchmark-pane title="Histories" data="histories" :isLoading="isLoading"/>
     </el-tab-pane>
   </el-tabs>
 </template>

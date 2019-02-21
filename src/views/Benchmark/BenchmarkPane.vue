@@ -8,11 +8,11 @@
       </el-col>
       <el-col :sm="8">
         <h2>Graph</h2>
-        <line-chart :data="data"/>
+        <line-chart v-if="!isLoading" :data="data"/>
       </el-col>
       <el-col :sm="8">
         <h2>Pie</h2>
-        <pie-chart :data="data"/>
+        <pie-chart v-if="!isLoading" :data="data"/>
       </el-col>
     </el-row>
   </div>
@@ -26,7 +26,8 @@ import PieChart from "./PieChart";
 export default {
   props: {
     title: String,
-    data: String
+    data: String,
+    isLoading: Boolean
   },
   components: { InfoPane, LineChart, PieChart }
 };
