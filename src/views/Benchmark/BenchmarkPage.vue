@@ -60,8 +60,7 @@ export default {
   components: { BenchmarkPane },
   data() {
     return {
-      isLoading: false,
-      selectedTab: "companies"
+      isLoading: false
     };
   },
   methods: {

@@ -1,5 +1,5 @@
 <template>
-  <ve-line :data="chartData"></ve-line>
+  <ve-line :data="chartData" :settings="chartSettings"></ve-line>
 </template>
 
 <script>
@@ -11,6 +11,13 @@ export default {
     data: { type: String, required: true }
   },
   components: { VeLine },
+  data() {
+    return {
+      chartSettings: {
+        yAxisName: ["time [ms]"]
+      }
+    };
+  },
   computed: {
     chartData() {
       const ungrouped = json => {
