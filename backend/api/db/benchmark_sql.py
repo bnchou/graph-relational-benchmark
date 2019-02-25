@@ -7,7 +7,7 @@ import random
 from .database import random_entry, load_data
 
 cnxn = pyodbc.connect(
-    'DRIVER={SQL Server};SERVER='+os.environ['SQL_SERVER']+';DATABASE=medium;')
+    'DRIVER={SQL Server};SERVER='+os.environ['SQL_SERVER']+';DATABASE=LimeDB;')
 
 cursor = cnxn.cursor()
 
@@ -95,6 +95,10 @@ def run_query(execute, query, inputs=[]):
 
 
 def get_stats(exec, amount=500):
+    if(os.path.isfile('amount.txt')):
+        for line in open('amount.txt', 'r'):
+            if(line.strip()):
+                 amount = int(line)
     res = [exec() for i in range(amount)]
     for _ in range(int(amount * 0.05)):
         res.remove(min(res))

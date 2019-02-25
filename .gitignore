@@ -114,6 +114,7 @@ yarn-error.log*
 
 # Output
 output*.*
+amount.txt
 
 # Temporary folder
 temp

@@ -32,11 +32,12 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     var assertInteger = (rule, value, callback) => {
       const num = parseInt(value)
-      console.log(num)
       if (!Number.isInteger(num)) {
             callback(new Error('Please input digits'));
       }
@@ -58,7 +59,10 @@ export default {
     onSubmit(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // Send value to backend
+          axios.post('/api/command/amount', this.form.amount).then(response => {console.log(response.config.data)})
+          .catch(e => {
+            console.log(e)
+          })
         } else {
           console.log('Invalid input');
           return false;

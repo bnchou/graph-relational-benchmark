@@ -1,6 +1,7 @@
 from neo4j import GraphDatabase
 from statistics import median, mean
 import random
+import os
 from .database import random_entry, load_data
 
 uri = "bolt://localhost:7687"
@@ -83,6 +84,11 @@ def run_query(transaction, query, inputs=[]):
 
 
 def get_stats(exec, amount=500):
+    if(os.path.isfile('amount.txt')):
+        for line in open('amount.txt', 'r'):
+            if(line.strip()):
+                 amount = int(line)
+                 print(line)
     res = [exec() for i in range(amount)]
     for _ in range(int(amount * 0.05)):
         res.remove(min(res))
