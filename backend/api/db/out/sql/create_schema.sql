@@ -85,4 +85,22 @@ CREATE TABLE histories (
     document_id INT REFERENCES Documents (id)
 );
 
+CREATE INDEX idx_comp_id
+ON companies (id);
+
+CREATE INDEX idx_person_id
+ON persons (id);
+
+CREATE INDEX idx_coworker_id
+ON coworkers (id);
+
+CREATE INDEX idx_deal_id
+ON deals (id);
+
+CREATE INDEX idx_document_id
+ON documents (id);
+
+CREATE INDEX idx_history_id
+ON histories (id);
+
 
