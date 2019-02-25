@@ -59,7 +59,7 @@ export default {
     onSubmit(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          axios.post('/api/command/amount', this.form.amount).then(response => {console.log(response.config.data)})
+          axios.post('/api/command/amount', this.form.amount).then(response => {})
           .catch(e => {
             console.log(e)
           })
