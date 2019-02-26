@@ -75,8 +75,8 @@ queries = {
     'create_person': lambda: get_stats(lambda: run_query(cursor.execute, '''
         INSERT INTO persons
         VALUES ({}, 'Inserted Name', '07012345678', 'CEO', 'insert@insert.com', {}
-        );''', [random.randint(40000000, 90000000), random_entry(data, 'company', 'id')])),
-    'create_deals': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        );''', [random.randint(40000000, 90000000), random_entry(data, 'companies', 'id')])),
+    'create_deal': lambda: get_stats(lambda: run_query(cursor.execute, '''
         INSERT INTO deals
         VALUES ({}, 'Best Deal Ever', 10, 0.99999, {}, {}
         );''', [
@@ -88,7 +88,7 @@ queries = {
 
 
 def run_query(execute, query, inputs=[]):
-    print('|', end='')
+    print('|', end='', flush=True)
 
     t1 = time()
     execute(query.format(*inputs))

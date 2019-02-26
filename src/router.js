@@ -2,12 +2,15 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Benchmark from "@/views/Benchmark";
-import BenchmarkPage from "@/views/Benchmark/BenchmarkPage";
 import ConfigurationPage from "@/views/Benchmark/ConfigurationPage";
 import Docs from "@/views/Docs";
 import IntroductionPage from "@/views/Docs/IntroductionPage";
 import QuickStartPage from "@/views/Docs/QuickStartPage";
 import ComponentsPage from "@/views/Docs/ComponentsPage";
+import InsertionPage from "@/views/Benchmark/InsertionPage";
+import UpdatePage from "@/views/Benchmark/UpdatePage";
+import RetrievalPage from "@/views/Benchmark/RetrievalPage";
+import ComplexityPage from "@/views/Benchmark/ComplexityPage";
 
 Vue.use(VueRouter);
 
@@ -24,7 +27,23 @@ export default new VueRouter({
       children: [
         {
           path: "",
-          component: BenchmarkPage
+          component: RetrievalPage
+        },
+        {
+          path: "retrieval",
+          component: RetrievalPage
+        },
+        {
+          path: "complexity",
+          component: ComplexityPage
+        },
+        {
+          path: "update",
+          component: UpdatePage
+        },
+        {
+          path: "insertion",
+          component: InsertionPage
         },
         {
           path: "settings",
