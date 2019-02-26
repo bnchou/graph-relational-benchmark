@@ -38,8 +38,8 @@ queries = {
         RETURN history.id, history.type, history.date, coworker.name, person.name, document.description;
     ''', [random_entry(data, 'histories', 'id')])),
     'update_deals': lambda session: get_stats(lambda: run_query(session.write_transaction, '''
-        MATCH (d: Deal)<-[:RESPONSIBLE_FOR]-(p:Person)
-        WHERE p.company_id = {}
+        MATCH (d: Deal)<-[:RESPONSIBLE_FOR]-(p:Person)-[:WORKS_AT]->(c:Company)
+        WHERE c.id = {}
         SET d.probability = 0.99
         RETURN d;''', [random_entry(data, 'persons', 'company_id')])),
     'create_history': lambda session: get_stats(lambda: run_query(session.write_transaction, '''
