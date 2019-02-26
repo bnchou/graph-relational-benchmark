@@ -76,6 +76,8 @@ queries = {
 
 
 def run_query(transaction, query, inputs=[]):
+    print('|', end='')
+
     def execute(tx):
         result = tx.run(query.format(*inputs)).consume()
         return result.t_first
@@ -87,7 +89,7 @@ def get_stats(exec, amount=500):
     if(os.path.isfile('amount.txt')):
         for line in open('amount.txt', 'r'):
             if(line.strip()):
-                 amount = int(line)
+                amount = int(line)
     res = [exec() for i in range(amount)]
     for _ in range(int(amount * 0.05)):
         res.remove(min(res))
