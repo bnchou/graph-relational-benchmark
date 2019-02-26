@@ -85,22 +85,43 @@ CREATE TABLE histories (
     document_id INT REFERENCES Documents (id)
 );
 
-CREATE INDEX idx_comp_id
+CREATE INDEX idx_company_id
 ON companies (id);
+CREATE INDEX idx_person_company_id
+ON persons (company_id);
 
 CREATE INDEX idx_person_id
 ON persons (id);
+CREATE INDEX idx_deal_person_id
+ON deals (person_id);
+CREATE INDEX idx_document_person_id
+ON documents (person_id);
+CREATE INDEX idx_history_person_id
+ON histories (person_id);
+
+CREATE INDEX idx_office_id
+ON offices (id);
+CREATE INDEX idx_person_office_id
+ON coworkers (office_id);
 
 CREATE INDEX idx_coworker_id
 ON coworkers (id);
+CREATE INDEX idx_deal_coworker_id
+ON deals (coworker_id);
+CREATE INDEX idx_history_coworker_id
+ON histories (coworker_id);
 
 CREATE INDEX idx_deal_id
 ON deals (id);
+CREATE INDEX idx_document_deal_id
+ON documents (deal_id);
+CREATE INDEX idx_history_deal_id
+ON histories (deal_id);
 
 CREATE INDEX idx_document_id
 ON documents (id);
+CREATE INDEX idx_history_document_id
+ON histories (document_id);
 
 CREATE INDEX idx_history_id
 ON histories (id);
-
-
