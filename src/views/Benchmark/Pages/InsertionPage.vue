@@ -1,14 +1,6 @@
 <template>
   <el-tabs type="border-card" @tab-click="handleClick" :stretch="true" style="min-height: 80vh;">
-    <el-tab-pane name="companies" v-loading="isLoading">
-      <span slot="label">
-        <v-icon name="building"/>
-        <!-- Companies -->
-        Companies
-      </span>
-      <benchmark-pane title="Companies" data="companies" :isLoading="isLoading"/>
-    </el-tab-pane>
-    <el-tab-pane name="persons" v-loading="isLoading">
+    <el-tab-pane name="create_person" v-loading="isLoading">
       <span slot="label">
         <v-icon name="users"/>
         <!-- Persons -->
@@ -16,7 +8,7 @@
       </span>
       <benchmark-pane title="Persons" data="persons" :isLoading="isLoading"/>
     </el-tab-pane>
-    <el-tab-pane name="deals" v-loading="isLoading">
+    <el-tab-pane name="create_deal" v-loading="isLoading">
       <span slot="label">
         <v-icon name="handshake"/>
         <!-- Deals -->
@@ -24,15 +16,7 @@
       </span>
       <benchmark-pane title="Deals" data="deals" :isLoading="isLoading"/>
     </el-tab-pane>
-    <el-tab-pane name="documents" v-loading="isLoading">
-      <span slot="label">
-        <v-icon name="file"/>
-        <!-- Documents -->
-        Documents
-      </span>
-      <benchmark-pane title="Documents" data="documents" :isLoading="isLoading"/>
-    </el-tab-pane>
-    <el-tab-pane name="histories" v-loading="isLoading">
+    <el-tab-pane name="create_history" v-loading="isLoading">
       <span slot="label">
         <v-icon name="history"/>
         <!-- Histories -->
@@ -44,7 +28,7 @@
 </template>
 
 <script>
-import BenchmarkPane from "./BenchmarkPane";
+import BenchmarkPane from "@/components/Panes/BenchmarkPane";
 
 export default {
   components: { BenchmarkPane },

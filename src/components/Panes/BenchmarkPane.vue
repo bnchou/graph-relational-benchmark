@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import InfoPane from "./InfoPane";
-import LineChart from "./LineChart";
-import PieChart from "./PieChart";
+import InfoPane from "@/components/Panes/InfoPane";
+import LineChart from "@/components/Charts/LineChart";
+import PieChart from "@/components/Charts/PieChart";
 
 export default {
   props: {

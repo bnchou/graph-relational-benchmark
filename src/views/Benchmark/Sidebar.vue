@@ -1,23 +1,25 @@
 <template>
   <el-menu :default-active="activeIndex" :router="true">
     <el-menu-item index="/benchmark/retrieval">
-      <i class="el-icon-view"></i>
-      <span>Data retrieval</span>
+      <el-tag class="tag">GET</el-tag>
+      <span>Retrieval</span>
     </el-menu-item>
     <el-menu-item index="/benchmark/insertion">
-      <i class="el-icon-view"></i>
-      <span>Data insertion</span>
+      <el-tag class="tag" type="success">POST</el-tag>
+      <span>Insertion</span>
     </el-menu-item>
-    <el-menu-item index="/benchmark/update">
-      <i class="el-icon-view"></i>
-      <span>Data update</span>
+    <el-menu-item index="/benchmark/updating">
+      <el-tag class="tag" type="warning">PUT</el-tag>
+      <span>Updating</span>
     </el-menu-item>
     <el-menu-item index="/benchmark/complexity">
-      <i class="el-icon-view"></i>
-      <span>Query complexity</span>
+      <el-tag class="tag" type="info">E=mc²</el-tag>
+      <span>Complexity</span>
     </el-menu-item>
     <el-menu-item index="/benchmark/settings">
-      <i class="el-icon-setting"></i>
+      <el-tag class="tag" color="white">
+        <i class="el-icon-setting"></i>
+      </el-tag>
       <span>Configuration</span>
     </el-menu-item>
   </el-menu>
@@ -32,3 +34,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.tag {
+  width: 60px;
+  text-align: center;
+  margin-right: 10px;
+}
+</style>

@@ -2,15 +2,16 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Benchmark from "@/views/Benchmark";
-import ConfigurationPage from "@/views/Benchmark/ConfigurationPage";
+import InsertionPage from "@/views/Benchmark/Pages/InsertionPage";
+import UpdatingPage from "@/views/Benchmark/Pages/UpdatingPage";
+import RetrievalPage from "@/views/Benchmark/Pages/RetrievalPage";
+import ComplexityPage from "@/views/Benchmark/Pages/ComplexityPage";
+import ConfigurationPage from "@/views/Benchmark/Pages/ConfigurationPage";
+
 import Docs from "@/views/Docs";
-import IntroductionPage from "@/views/Docs/IntroductionPage";
-import QuickStartPage from "@/views/Docs/QuickStartPage";
-import ComponentsPage from "@/views/Docs/ComponentsPage";
-import InsertionPage from "@/views/Benchmark/InsertionPage";
-import UpdatePage from "@/views/Benchmark/UpdatePage";
-import RetrievalPage from "@/views/Benchmark/RetrievalPage";
-import ComplexityPage from "@/views/Benchmark/ComplexityPage";
+import IntroductionPage from "@/views/Docs/Pages/IntroductionPage";
+import QuickStartPage from "@/views/Docs/Pages/QuickStartPage";
+import ComponentsPage from "@/views/Docs/Pages/ComponentsPage";
 
 Vue.use(VueRouter);
 
@@ -23,12 +24,9 @@ export default new VueRouter({
     },
     {
       path: "/benchmark",
+      redirect: "/benchmark/retrieval",
       component: Benchmark,
       children: [
-        {
-          path: "",
-          component: RetrievalPage
-        },
         {
           path: "retrieval",
           component: RetrievalPage
@@ -38,8 +36,8 @@ export default new VueRouter({
           component: ComplexityPage
         },
         {
-          path: "update",
-          component: UpdatePage
+          path: "updating",
+          component: UpdatingPage
         },
         {
           path: "insertion",
