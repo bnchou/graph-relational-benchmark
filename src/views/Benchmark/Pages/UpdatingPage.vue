@@ -1,6 +1,6 @@
 <template>
   <el-tabs type="border-card" @tab-click="handleClick" :stretch="true" style="min-height: 80vh;">
-    <el-tab-pane name="deals" v-loading="isLoading">
+    <el-tab-pane name="update_deals" v-loading="isLoading">
       <span slot="label">
         <v-icon name="handshake"/>
         <!-- Deals -->

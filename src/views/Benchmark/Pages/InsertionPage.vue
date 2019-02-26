@@ -6,7 +6,7 @@
         <!-- Persons -->
         Persons
       </span>
-      <benchmark-pane title="Persons" data="persons" :isLoading="isLoading"/>
+      <benchmark-pane title="Persons" data="create_person" :isLoading="isLoading"/>
     </el-tab-pane>
     <el-tab-pane name="create_deal" v-loading="isLoading">
       <span slot="label">
@@ -14,7 +14,7 @@
         <!-- Deals -->
         Deals
       </span>
-      <benchmark-pane title="Deals" data="deals" :isLoading="isLoading"/>
+      <benchmark-pane title="Deals" data="create_deal" :isLoading="isLoading"/>
     </el-tab-pane>
     <el-tab-pane name="create_history" v-loading="isLoading">
       <span slot="label">
@@ -22,7 +22,7 @@
         <!-- Histories -->
         Histories
       </span>
-      <benchmark-pane title="Histories" data="histories" :isLoading="isLoading"/>
+      <benchmark-pane title="Histories" data="create_history" :isLoading="isLoading"/>
     </el-tab-pane>
   </el-tabs>
 </template>
