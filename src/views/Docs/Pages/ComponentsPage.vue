@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import TableExample from "./Examples/TableExample.vue";
-import LineExample from "./Examples/LineExample.vue";
-import PieExample from "./Examples/PieExample.vue";
+import TableExample from "@/components/Charts/TableExample.vue";
+import LineExample from "@/components/Charts/LineExample.vue";
+import PieExample from "@/components/Charts/PieExample.vue";
 
 export default {
   components: {

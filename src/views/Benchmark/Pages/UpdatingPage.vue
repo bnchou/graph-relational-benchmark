@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import BenchmarkPane from "./BenchmarkPane";
+import BenchmarkPane from "@/components/Panes/BenchmarkPane";
 
 export default {
   components: { BenchmarkPane },
