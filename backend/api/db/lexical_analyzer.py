@@ -4,7 +4,7 @@ import sys
 
 if __name__ == "__main__":
     query = "SELECT * FROM customers;"
-    f2 = "output.json"
+    f2 = "output-complexity.json"
     if(len(sys.argv) > 2):
         f1 = sys.argv[1]
         f2 = sys.argv[2]
@@ -12,8 +12,6 @@ if __name__ == "__main__":
         f = open(f1, 'r')
         query = f.read()
         f.close()
-    elif(len(sys.argv) > 1):
-        f2 = sys.argv[1]
 
     parser = re.compile(r"""
         ([0-9]+\.?[0-9]*|'.*')                  # 1. literals

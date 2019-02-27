@@ -21,20 +21,15 @@
             "OR": 2,
             "ASC": 2,
             "DESC": 2
-        },
-        "whitespace": 0
+        }
     },
     "cypher": {
         "literals": 1,
         "seperators": {
-            ":": 4,
             "-": 3,
             "->": 3,
             "<-": 3,
-            "{": 1,
-            "}": 1,
-            "(": 1,
-            ")": 1
+            ":": 2
         },
         "identifiers": 1,
         "operators": 2,
@@ -50,7 +45,6 @@
             "OR": 2,
             "ASC": 2,
             "DESC": 2
-        },
-        "whitespace": 0
+        }
     }
 }
