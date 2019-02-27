@@ -16,13 +16,13 @@ queries = {
         SET c.name = 'Test'
         RETURN c.name;''', [random_entry(data, 'companies', 'id')])),
     'persons': lambda session: get_stats(lambda: run_query(session.read_transaction, '''
-        MATCH (p: Person)-[:WORKS_AT]->(c:Company)
-        WHERE c.id = {}
-        RETURN p.name, c.name;
+        MATCH (p: Person)-[:OWNS]->(d: Document)
+        WHERE p.id = {}
+        RETURN d.id, p.id, p.name, d.type, d.description;
     ''', [random_entry(data, 'companies', 'id')])),
     'deals': lambda session: get_stats(lambda: run_query(session.read_transaction, '''
-        MATCH (p:Person)-[:RESPONSIBLE_FOR]->(d: Deal)
-        MATCH (p)-[WORKS_AT]->(c: Company)
+         MATCH (p: Person)-[:RESPONSIBLE_FOR]->(d: Deal),
+        (p)-[:WORKS_AT]->(c: Company)
         WHERE d.probability > {}
         RETURN p.name, p.position, p.email, p.phone, d.name, c.name;
     ''', [random_entry(data, 'deals', 'probability')])),
@@ -32,11 +32,12 @@ queries = {
         WHERE person.id = {}
         RETURN document.id, document.description, document.type, deal.name;''', [random_entry(data, 'persons', 'id')])),
     'histories': lambda session: get_stats(lambda: run_query(session.read_transaction, '''
-        MATCH (deal:Deal)-[:PART_OF]->(history:History)<-[:ATTACHED_TO]-(document:Document)
-        MATCH (coworker:Coworker)-[:ATTENDED]->(history)<-[:ATTENDED]-(person:Person)
-        WHERE history.id = {}
-        RETURN history.id, history.type, history.date, coworker.name, person.name, document.description;
-    ''', [random_entry(data, 'histories', 'id')])),
+        MATCH (deal: Deal)-[:PART_OF]->(h: History),
+        (h)<-[:ATTACHED_TO]-(d:Document),
+        (c: Coworker)-[:ATTENDED]->(h)<-[:ATTENDED]-(p: Person)
+        WHERE deal.id = {}
+        RETURN h.id, h.type, h.date, c.name, p.name, d.description;
+    ''', [random_entry(data, 'deals', 'id')])),
     'update_deals': lambda session: get_stats(lambda: run_query(session.write_transaction, '''
         MATCH (d: Deal)<-[:RESPONSIBLE_FOR]-(p:Person)-[:WORKS_AT]->(c:Company)
         WHERE c.id = {}

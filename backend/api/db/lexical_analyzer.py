@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     parser = re.compile(r"""
         ([0-9]+\.?[0-9]*|'.*')                  # 1. literals
-        |([{}()[\],:;-]|<-|->)                  # 2. seperators
+        |(<-|->|[{}()[\],:;-])                  # 2. seperators
         |([A-Z]?[a-z]+\.?[a-z_]*|(?<=:)[A-Z_]+) # 3. identifiers
         |(=|>=|>|<=|<|!=|\*)                    # 4. operators
         |([A-Z]+)                               # 5. keywords
