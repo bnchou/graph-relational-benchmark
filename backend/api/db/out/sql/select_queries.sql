@@ -3,7 +3,7 @@ SELECT c.id FROM companies AS c;
 SELECT p.name, c.name
 FROM persons AS p
 LEFT JOIN companies AS c
-ON p.company_id = c.id;
+ON p.company_id = c.id
 WHERE c.id = 1;
 
 SELECT p.name, p.position, p.email, p.phone, d.name, c.name

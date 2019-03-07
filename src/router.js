@@ -7,6 +7,7 @@ import UpdatingPage from "@/views/Benchmark/Pages/UpdatingPage";
 import RetrievalPage from "@/views/Benchmark/Pages/RetrievalPage";
 import ComplexityPage from "@/views/Benchmark/Pages/ComplexityPage";
 import ConfigurationPage from "@/views/Benchmark/Pages/ConfigurationPage";
+import AdvancedRetrievalPage from "@/views/Benchmark/Pages/AdvancedRetrievalPage";
 
 import Docs from "@/views/Docs";
 import IntroductionPage from "@/views/Docs/Pages/IntroductionPage";
@@ -46,6 +47,10 @@ export default new VueRouter({
         {
           path: "settings",
           component: ConfigurationPage
+        },
+        {
+          path: "advanced_retrieval",
+          component: AdvancedRetrievalPage
         }
       ]
     },

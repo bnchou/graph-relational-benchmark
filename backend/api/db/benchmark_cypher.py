@@ -72,6 +72,15 @@ queries = {
         random.randint(9999999, 900000000),
         random_entry(data, 'persons', 'id'),
         random_entry(data, 'coworkers', 'id')
+    ])),
+    'advanced_coworkers': lambda session: get_stats(lambda: run_query(session.read_transaction, '''
+        MATCH (c: Company)<-[:WORKS_AT]-(p: Person),
+        (p)-[:RESPONSIBLE_FOR]->(d: Deal),
+        (d)<-[:SALESPERSON_FOR]-(co: Coworker)
+        WHERE co.name =~ '{}.*' AND c.city =~ '{}.*'
+        RETURN co.name, c.city;''', [
+            random_entry(data, 'coworkers', 'name').split()[0],
+            random_entry(data, 'companies', 'city')[:4]
     ]))
 }
 

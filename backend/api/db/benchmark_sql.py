@@ -74,6 +74,19 @@ queries = {
         random.randint(40000000, 90000000),
         random_entry(data, 'persons', 'id'),
         random_entry(data, 'coworkers', 'id')
+    ])),
+    'advanced_coworkers': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        SELECT c.name, p.name
+        FROM companies as c
+        LEFT JOIN persons as p
+        ON p.company_id = c.id
+        LEFT JOIN deals as d
+        ON deals.person_id = p.id
+        LEFT JOIN coworkers as co
+        ON co.id = d.coworker_id
+        WHERE co.name LIKE '{}*' AND c.city LIKE '{}*';''', [
+            random_entry(data, 'coworkers', 'name').split()[0],
+            random_entry(data, 'companies', 'city')[:4]
     ]))
 }
 
