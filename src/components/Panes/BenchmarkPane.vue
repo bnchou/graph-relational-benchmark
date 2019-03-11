@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>{{title}}</h1>
     <el-row :gutter="20">
       <el-col :sm="8">
         <h2>Information</h2>
@@ -15,6 +14,7 @@
         <pie-chart v-if="!isLoading" :data="data"/>
       </el-col>
     </el-row>
+    {{query}}
   </div>
 </template>
 
@@ -25,8 +25,8 @@ import PieChart from "@/components/Charts/PieChart";
 
 export default {
   props: {
-    title: String,
     data: String,
+    query: Object,
     isLoading: Boolean
   },
   components: { InfoPane, LineChart, PieChart }
