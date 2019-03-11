@@ -37,11 +37,3 @@ CREATE (history)<-[:ATTACHED_TO]-(document);
 MATCH (history:History), (deal:Deal)
 WHERE history.deal_id = deal.id
 CREATE (history)<-[:PART_OF]-(deal);
-
-CREATE INDEX ON :Company(id);
-CREATE INDEX ON :Person(id);
-CREATE INDEX ON :Office(id);
-CREATE INDEX ON :Coworker(id);
-CREATE INDEX ON :Deal(id);
-CREATE INDEX ON :Document(id);
-CREATE INDEX ON :History(id)

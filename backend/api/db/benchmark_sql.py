@@ -17,12 +17,12 @@ queries = {
     'companies': lambda: get_stats(lambda: run_query(cursor.execute, '''
         UPDATE companies
         SET companies.name = 'Test'
-        WHERE companies.id = {}''', [random_entry(data, 'companies', 'id')])),
+        WHERE companies.id = {};''', [random_entry(data, 'companies', 'id')])),
     'persons': lambda: get_stats(lambda: run_query(cursor.execute, '''
         SELECT p.name, c.name
         FROM persons AS p
         LEFT JOIN companies AS c
-        ON p.company_id = c.id;
+        ON p.company_id = c.id
         WHERE c.id = {};
     ''', [random_entry(data, 'companies', 'id')])),
     'deals': lambda: get_stats(lambda: run_query(cursor.execute, '''
@@ -30,13 +30,13 @@ queries = {
         FROM persons AS p
         LEFT JOIN deals AS d ON p.id = d.person_id
         LEFT JOIN companies AS c ON p.company_id = c.id
-        WHERE d.probability > {}''',  [random_entry(data, 'deals', 'probability')])),
+        WHERE d.probability > {};''',  [random_entry(data, 'deals', 'probability')])),
     'documents': lambda: get_stats(lambda: run_query(cursor.execute, '''
         SELECT d.id, p.id, p.name, d.type, d.description
         FROM documents AS d
         LEFT JOIN persons AS p 
         ON d.person_id = p.id
-        WHERE persons.id = {};''', [random_entry(data, 'persons', 'id')])),
+        WHERE p.id = {};''', [random_entry(data, 'persons', 'id')])),
     'histories': lambda: get_stats(lambda: run_query(cursor.execute, '''
         SELECT h.id, h.type, h.date, c.name, p.name, d.description
         FROM histories AS h

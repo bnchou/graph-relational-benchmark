@@ -85,7 +85,8 @@ queries = {
     'advanced_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, '''
         MATCH (d: Deal)<-[:PART_OF]-(h:History)
         WHERE d.value > 100000 AND h.type = 'Call'
-        AND h.date = {}''', [data, 'histories', 'date'] 
+        AND h.date = {}
+        RETURN d.name;''', [data, 'histories', 'date'] 
     ))
 }
 

@@ -24,4 +24,4 @@ SELECT d.id, p.id, p.name, d.type, d.description
 FROM documents AS d
 LEFT JOIN persons AS p 
 ON d.person_id = p.id
-WHERE persons.id = 1;
+WHERE p.id = 1;
