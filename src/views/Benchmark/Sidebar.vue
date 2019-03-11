@@ -4,10 +4,6 @@
       <el-tag class="tag">GET</el-tag>
       <span>Retrieval</span>
     </el-menu-item>
-    <el-menu-item index="/benchmark/advanced_retrieval">
-      <el-tag class="tag">GET</el-tag>
-      <span>Adv. Retrieval</span>
-    </el-menu-item>
     <el-menu-item index="/benchmark/insertion">
       <el-tag class="tag" type="success">POST</el-tag>
       <span>Insertion</span>
