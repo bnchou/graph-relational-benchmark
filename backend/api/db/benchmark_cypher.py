@@ -66,10 +66,10 @@ raw_queries = {
         WHERE co.name =~ '{}.*' AND c.city =~ '{}.*'
         RETURN co.name, c.city;''',
     'advanced_histories': '''
-        MATCH (d: Deal)<-[:PART_OF]-(h:History)
-        WHERE d.value > 100000 AND h.type = 'Call'
-        AND h.date = {}
-        RETURN d.name;'''
+        MATCH (d: Deal)-[:PART_OF]->(h:History)
+        WHERE d.value > {} AND h.type = {}
+        AND h.date >= apoc.date.format(apoc.date.add(apoc.date.currentTimestamp(), 'ms', -183, 'd'), 'ms', 'yyyy-MM-dd')
+        RETURN count(*);'''
 }
 
 queries = {
@@ -97,7 +97,8 @@ queries = {
         random_entry(data, 'companies', 'city')[:4]
     ])),
     'advanced_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['advanced_histories'], [
-        random_entry(data, 'histories', 'date')
+        random_entry(data, 'deals', 'value'),
+        random_entry(data, 'histories', 'type')
     ]))
 }
 
