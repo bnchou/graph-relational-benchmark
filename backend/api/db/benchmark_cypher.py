@@ -81,7 +81,12 @@ queries = {
         RETURN co.name, c.city;''', [
             random_entry(data, 'coworkers', 'name').split()[0],
             random_entry(data, 'companies', 'city')[:4]
-    ]))
+    ])),
+    'advanced_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, '''
+        MATCH (d: Deal)<-[:PART_OF]-(h:History)
+        WHERE d.value > 100000 AND h.type = 'Call'
+        AND h.date = {}''', [data, 'histories', 'date'] 
+    ))
 }
 
 

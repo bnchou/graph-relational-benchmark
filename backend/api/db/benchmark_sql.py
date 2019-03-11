@@ -81,12 +81,21 @@ queries = {
         LEFT JOIN persons as p
         ON p.company_id = c.id
         LEFT JOIN deals as d
-        ON deals.person_id = p.id
+        ON d.person_id = p.id
         LEFT JOIN coworkers as co
         ON co.id = d.coworker_id
         WHERE co.name LIKE '{}*' AND c.city LIKE '{}*';''', [
             random_entry(data, 'coworkers', 'name').split()[0],
             random_entry(data, 'companies', 'city')[:4]
+    ])),
+    'advanced_histories': lambda: get_stats(lambda: run_query(cursor.execute, '''
+        SELECT COUNT(*) AS NumCallsHalfYear
+        FROM deals AS d
+        LEFT JOIN histories AS h
+        ON h.deal_id = d.id
+        WHERE d.value > {} AND h.type = 'Call'
+        AND h.date BETWEEN GETDATE() AND DATEADD(mm, -6, GETDATE())''', [
+            random_entry(data, 'deals', 'value')
     ]))
 }
 
