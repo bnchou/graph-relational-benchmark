@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('commands', views.commands, name='commands'),
     path('command/<str:action>', views.command, name='command')
 ]
