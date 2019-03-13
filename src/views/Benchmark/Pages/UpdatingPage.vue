@@ -1,12 +1,20 @@
 <template>
   <el-tabs type="border-card" @tab-click="handleClick" :stretch="true" style="min-height: 80vh;">
-    <el-tab-pane name="update_deals" v-loading="isLoading">
+    <el-tab-pane name="put_companies" v-loading="isLoading">
+      <span slot="label">
+        <v-icon name="handshake"/>
+        <!-- Companies -->
+        Companies
+      </span>
+      <benchmark-pane title="Companies" data="put_companies" :isLoading="isLoading"/>
+    </el-tab-pane>
+    <el-tab-pane name="put_deals" v-loading="isLoading">
       <span slot="label">
         <v-icon name="handshake"/>
         <!-- Deals -->
         Deals
       </span>
-      <benchmark-pane title="Deals" data="update_deals" :isLoading="isLoading"/>
+      <benchmark-pane title="Deals" data="put_deals" :isLoading="isLoading"/>
     </el-tab-pane>
   </el-tabs>
 </template>

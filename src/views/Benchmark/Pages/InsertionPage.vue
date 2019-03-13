@@ -1,28 +1,28 @@
 <template>
   <el-tabs type="border-card" @tab-click="handleClick" :stretch="true" style="min-height: 80vh;">
-    <el-tab-pane name="create_person" v-loading="isLoading">
+    <el-tab-pane name="post_person" v-loading="isLoading">
       <span slot="label">
         <v-icon name="users"/>
         <!-- Persons -->
         Persons
       </span>
-      <benchmark-pane title="Persons" data="create_person" :isLoading="isLoading"/>
+      <benchmark-pane title="Persons" data="post_person" :isLoading="isLoading"/>
     </el-tab-pane>
-    <el-tab-pane name="create_deal" v-loading="isLoading">
+    <el-tab-pane name="post_deal" v-loading="isLoading">
       <span slot="label">
         <v-icon name="handshake"/>
         <!-- Deals -->
         Deals
       </span>
-      <benchmark-pane title="Deals" data="create_deal" :isLoading="isLoading"/>
+      <benchmark-pane title="Deals" data="post_deal" :isLoading="isLoading"/>
     </el-tab-pane>
-    <el-tab-pane name="create_history" v-loading="isLoading">
+    <el-tab-pane name="post_history" v-loading="isLoading">
       <span slot="label">
         <v-icon name="history"/>
         <!-- Histories -->
         Histories
       </span>
-      <benchmark-pane title="Histories" data="create_history" :isLoading="isLoading"/>
+      <benchmark-pane title="Histories" data="post_history" :isLoading="isLoading"/>
     </el-tab-pane>
   </el-tabs>
 </template>
