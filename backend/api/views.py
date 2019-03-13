@@ -20,9 +20,14 @@ def command(request, action):
     elif(action == 'amount'):
         database.save_amount_to_file(request.body.decode('utf-8'))
         return JsonResponse({})
+
+    print('\nBenchmarking Cypher...')
+    cypher = benchmark_cypher.run(action)
+    print('\nBenchmarking SQL...')
+    sql = benchmark_sql.run(action)
     return JsonResponse({
-        'cypher': benchmark_cypher.run(action),
-        'sql': benchmark_sql.run(action)
+        'cypher': cypher,
+        'sql': sql
     })
 
 
