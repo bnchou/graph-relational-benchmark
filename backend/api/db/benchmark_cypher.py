@@ -28,7 +28,8 @@ raw_queries = {
         'histories': '''
             MATCH (d: Deal)<-[:PART_OF]-(h: History),
             (h)<-[:ATTACHED_TO]-(doc: Document),
-            (c: Coworker)-[:ATTENDED]->(h)<-[:ATTENDED]-(p: Person)
+            (h)<-[:ATTENDED]-(c: Coworker),
+            (h)<-[:ATTENDED]-(p: Person)
             WHERE d.id = {}
             RETURN h.type, h.date, c.name, p.name, doc.description;''',
         'filter_coworkers': '''
