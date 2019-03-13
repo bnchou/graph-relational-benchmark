@@ -114,15 +114,24 @@ def get_history(fake, index=None, p_idx=None, co_idx=None, d_idx=None, doc_idx=N
         "document_id": doc_idx
     }
 
+# - Large size DB -
+# companies=10000,
+# persons=100000,
+# offices=10,
+# coworkers=500,
+# deals=50000,
+# documents=300000,
+# histories=3000000
+
 
 def generate(filename="output.json",
              companies=10000,
              persons=100000,
              offices=10,
              coworkers=500,
-             deals=50000,
-             documents=300000,
-             histories=3000000):
+             deals=1000,
+             documents=30000,
+             histories=300000):
     # random.seed(1234)
     fake = Faker()
     output = {
