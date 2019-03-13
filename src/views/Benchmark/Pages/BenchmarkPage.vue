@@ -1,5 +1,5 @@
 <template>
-  <el-tabs type="border-card" :stretch="true" style="min-height: 80vh;">
+  <el-tabs type="border-card" @tab-click="handleTabClick" :stretch="true" style="min-height: 80vh;">
     <el-tab-pane
       :key="key"
       :name="`${method}_${key}`"
@@ -55,6 +55,12 @@ export default {
       this.$set(this.$store.state.executionData, action, json);
 
       this.isLoading = false;
+    },
+    handleTabClick: function() {
+      this.isLoading = true;
+      this.$nextTick(function() {
+        this.isLoading = false;
+      });
     },
     getIcon: function(key) {
       return this.$store.state.icons[key];
