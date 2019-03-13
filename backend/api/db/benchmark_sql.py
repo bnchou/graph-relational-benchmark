@@ -42,7 +42,7 @@ raw_queries = {
             LEFT JOIN documents AS d ON h.document_id = d.id 
             WHERE deals.id = {};''',
         'advanced_coworkers': '''
-            SELECT c.name, p.name
+            SELECT co.name, c.name, c.city
             FROM companies as c
             LEFT JOIN persons as p
             ON p.company_id = c.id
@@ -52,12 +52,12 @@ raw_queries = {
             ON co.id = d.coworker_id
             WHERE co.name LIKE '{}*' AND c.city LIKE '{}*';''',
         'advanced_histories': '''
-            SELECT COUNT(*) AS NumCallsHalfYear
+            SELECT d.name, h.date
             FROM deals AS d
             LEFT JOIN histories AS h
             ON h.deal_id = d.id
             WHERE d.value > {} AND h.type = 'Call'
-            AND h.date BETWEEN GETDATE() AND DATEADD(mm, -6, GETDATE());'''
+            AND h.date < '{}';'''
     },
     'post': {
         'history': '''
@@ -96,10 +96,11 @@ queries = {
     'get_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['histories'], [random_entry(data, 'deals', 'id')])),
     'get_advanced_coworkers': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['advanced_coworkers'], [
         random_entry(data, 'coworkers', 'name').split()[0],
-        random_entry(data, 'companies', 'city')[:4]
+        random_entry(data, 'companies', 'city')
     ])),
     'get_advanced_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['advanced_histories'], [
-        random_entry(data, 'deals', 'value')
+        random_entry(data, 'deals', 'value'),
+        random_entry(data, 'histories', 'date')
     ])),
     'post_history': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['post']['history'], [
         random.randint(40000000, 90000000),

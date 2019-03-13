@@ -36,11 +36,12 @@ raw_queries = {
             (p)-[:RESPONSIBLE_FOR]->(d: Deal),
             (d)<-[:SALESPERSON_FOR]-(co: Coworker)
             WHERE co.name =~ '{}.*' AND c.city =~ '{}.*'
-            RETURN co.name, c.city;''',
+            RETURN co.name, c.name, c.city;''',
         'advanced_histories': '''
             MATCH (d: Deal)<-[:PART_OF]-(h:History)
-            WHERE d.value > 100000 AND h.type = 'Call'
-            AND h.date = {};''',
+            WHERE d.value > {} AND h.type = 'Call'
+            AND h.date < '{}'
+            RETURN d.name, h.date;''',
     },
     'post': {
         'history': '''
@@ -84,9 +85,10 @@ queries = {
     'get_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories'], [random_entry(data, 'deals', 'id')])),
     'get_advanced_coworkers': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['advanced_coworkers'], [
         random_entry(data, 'coworkers', 'name').split()[0],
-        random_entry(data, 'companies', 'city')[:4]
+        random_entry(data, 'companies', 'city')
     ])),
     'get_advanced_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['advanced_histories'], [
+        random_entry(data, 'deals', 'value'),
         random_entry(data, 'histories', 'date')
     ])),
     'put_companies': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['companies'], [random_entry(data, 'companies', 'id')])),
