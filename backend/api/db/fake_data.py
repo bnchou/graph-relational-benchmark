@@ -88,7 +88,7 @@ def get_document(fake, index=None, p_idx=None, d_idx=None):
     fake.seed(index)
     date = fake.date(pattern="%y%m%d")
     domain = fake.domain_word()
-    ext = fake.file_extension(category="text")
+    ext = fake.file_extension()
 
     return {
         "id": index,
@@ -155,17 +155,21 @@ def generate(filename="output.json",
         output["deals"].append(get_deal(fake, i, p_idx, c_idx))
 
     for i in range(documents):
-        p_idx = random.randint(0, persons - 1)
         d_idx = random.randint(0, deals - 1)
+        deal = output["deals"][d_idx]
+        p_idx = deal["person_id"]
         output["documents"].append(
             get_document(fake, i, p_idx, d_idx))
 
     for i in range(histories):
-        p_idx = random.randint(0, persons - 1)
-        c_idx = random.randint(0, coworkers - 1)
-        d_idx = random.randint(0, deals - 1)
+        doc_idx = random.randint(0, documents - 1)
+        document = output["documents"][doc_idx]
+        d_idx = document["deal_id"]
+        deal = output["deals"][d_idx]
+        p_idx = deal["person_id"]
+        c_idx = deal["coworker_id"]
         output["histories"].append(get_history(
-            fake, i, p_idx, c_idx, d_idx, d_idx))
+            fake, i, p_idx, c_idx, d_idx, doc_idx))
 
     with open(filename, 'w') as f_out:
         json.dump(output, f_out)
