@@ -9,7 +9,7 @@ MATCH (p: Person)-[:RESPONSIBLE_FOR]->(d: Deal),
 WHERE d.probability > 0.9
 RETURN p.name, p.position, p.email, p.phone, d.name, c.name;
 
-MATCH (deal: Deal)-[:PART_OF]->(h: History),
+MATCH (deal: Deal)<-[:PART_OF]-(h: History),
     (h)<-[:ATTACHED_TO]-(d:Document),
     (c: Coworker)-[:ATTENDED]->(h)<-[:ATTENDED]-(p: Person)
 WHERE deal.id = 1
