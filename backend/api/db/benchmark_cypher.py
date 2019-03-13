@@ -31,13 +31,13 @@ raw_queries = {
             (c: Coworker)-[:ATTENDED]->(h)<-[:ATTENDED]-(p: Person)
             WHERE deal.id = {}
             RETURN h.id, h.type, h.date, c.name, p.name, d.description;''',
-        'advanced_coworkers': '''
+        'filter_coworkers': '''
             MATCH (c: Company)<-[:WORKS_AT]-(p: Person),
             (p)-[:RESPONSIBLE_FOR]->(d: Deal),
             (d)<-[:SALESPERSON_FOR]-(co: Coworker)
             WHERE co.name =~ '{}.*' AND c.city =~ '{}.*'
             RETURN co.name, c.name, c.city;''',
-        'advanced_histories': '''
+        'filter_histories': '''
             MATCH (d: Deal)<-[:PART_OF]-(h:History)
             WHERE d.value > {} AND h.type = 'Call'
             AND h.date < '{}'
@@ -83,11 +83,11 @@ queries = {
     'get_deals': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['deals'], [random_entry(data, 'deals', 'probability')])),
     'get_documents': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['documents'], [random_entry(data, 'persons', 'id')])),
     'get_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories'], [random_entry(data, 'deals', 'id')])),
-    'get_advanced_coworkers': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['advanced_coworkers'], [
+    'get_filter_coworkers': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['filter_coworkers'], [
         random_entry(data, 'coworkers', 'name').split()[0],
         random_entry(data, 'companies', 'city')
     ])),
-    'get_advanced_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['advanced_histories'], [
+    'get_filter_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['filter_histories'], [
         random_entry(data, 'deals', 'value'),
         random_entry(data, 'histories', 'date')
     ])),
