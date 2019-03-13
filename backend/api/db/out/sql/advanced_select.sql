@@ -1,5 +1,3 @@
-SET STATISTICS TIME ON;
-
 SELECT c.name, co.name
 FROM companies AS c
 LEFT JOIN persons AS p
@@ -16,6 +14,4 @@ LEFT JOIN histories AS h
 ON h.deal_id = d.id
 WHERE d.value > 100000 AND h.type = 'Call'
 AND h.date BETWEEN GETDATE() AND DATEADD(mm, -6, GETDATE())
-
-SET STATISTICS TIME OFF;
 
