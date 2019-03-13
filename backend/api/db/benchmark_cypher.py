@@ -12,25 +12,25 @@ data = load_data()
 raw_queries = {
     'get': {
         'persons': '''
-            MATCH (p: Person)-[:OWNS]->(d: Document)
-            WHERE p.id = {}
-            RETURN d.id, p.id, p.name, d.type, d.description;''',
+            MATCH (p: Person)-[:WORKS_AT]->(c: Company)
+            WHERE c.id = {}
+            RETURN p.name, c.name;''',
         'deals': '''
             MATCH (p: Person)-[:RESPONSIBLE_FOR]->(d: Deal),
             (p)-[:WORKS_AT]->(c: Company)
             WHERE d.probability > {}
-            RETURN p.name, p.position, p.email, p.phone, d.name, c.name;''',
+            RETURN p.name, p.email, p.phone, d.name, c.name;''',
         'documents': '''
-            MATCH (person:Person)-[:OWNS]->(document:Document),
-            (document)-[:ATTACHED_TO]->(deal:Deal)
-            WHERE person.id = {}
-            RETURN document.id, document.description, document.type, deal.name;''',
+            MATCH (p: Person)-[:OWNS]->(doc: Document),
+            (doc)-[:ATTACHED_TO]->(d: Deal)
+            WHERE p.id = {}
+            RETURN doc.id, doc.description, doc.type, d.name;''',
         'histories': '''
-            MATCH (deal: Deal)<-[:PART_OF]-(h: History),
-            (h)<-[:ATTACHED_TO]-(d:Document),
+            MATCH (d: Deal)<-[:PART_OF]-(h: History),
+            (h)<-[:ATTACHED_TO]-(doc: Document),
             (c: Coworker)-[:ATTENDED]->(h)<-[:ATTENDED]-(p: Person)
-            WHERE deal.id = {}
-            RETURN h.id, h.type, h.date, c.name, p.name, d.description;''',
+            WHERE d.id = {}
+            RETURN h.type, h.date, c.name, p.name, doc.description;''',
         'filter_coworkers': '''
             MATCH (c: Company)<-[:WORKS_AT]-(p: Person),
             (p)-[:RESPONSIBLE_FOR]->(d: Deal),
@@ -38,7 +38,7 @@ raw_queries = {
             WHERE co.name =~ '{}.*' AND c.city =~ '{}.*'
             RETURN co.name, c.name, c.city;''',
         'filter_histories': '''
-            MATCH (d: Deal)<-[:PART_OF]-(h:History)
+            MATCH (d: Deal)<-[:PART_OF]-(h: History)
             WHERE d.value > {} AND h.type = 'Call'
             AND h.date < '{}'
             RETURN d.name, h.date;''',
@@ -71,7 +71,8 @@ raw_queries = {
             SET c.name = 'Test'
             RETURN c.name;''',
         'deals': '''
-            MATCH (d: Deal)<-[:RESPONSIBLE_FOR]-(p:Person)-[:WORKS_AT]->(c:Company)
+            MATCH (d: Deal)<-[:RESPONSIBLE_FOR]-(p: Person),
+            (p)-[:WORKS_AT]->(c: Company)
             WHERE c.id = {}
             SET d.probability = 0.99
             RETURN d;''',

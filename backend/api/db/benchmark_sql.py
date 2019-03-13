@@ -22,40 +22,36 @@ raw_queries = {
             ON p.company_id = c.id
             WHERE c.id = {};''',
         'deals': '''
-            SELECT p.name, p.position, p.email, p.phone, d.name, c.name
+            SELECT p.name, p.email, p.phone, d.name, c.name
             FROM persons AS p
             LEFT JOIN deals AS d ON p.id = d.person_id
             LEFT JOIN companies AS c ON p.company_id = c.id
             WHERE d.probability > {};''',
         'documents': '''
-            SELECT d.id, p.id, p.name, d.type, d.description
-            FROM documents AS d
-            LEFT JOIN persons AS p 
-            ON d.person_id = p.id
+            SELECT doc.id, doc.description, doc.type, d.name
+            FROM documents AS doc
+            LEFT JOIN persons AS p ON doc.person_id = p.id
+            LEFT JOIN deals AS d ON doc.deal_id = d.id
             WHERE p.id = {};''',
         'histories': '''
-            SELECT h.id, h.type, h.date, c.name, p.name, d.description
+            SELECT h.type, h.date, c.name, p.name, doc.description
             FROM histories AS h
-            LEFT JOIN deals ON h.deal_id = deals.id 
+            LEFT JOIN deals AS d ON h.deal_id = d.id 
             LEFT JOIN coworkers AS c ON h.coworker_id = c.id 
             LEFT JOIN persons AS p ON h.person_id = p.id 
-            LEFT JOIN documents AS d ON h.document_id = d.id 
-            WHERE deals.id = {};''',
+            LEFT JOIN documents AS doc ON h.document_id = doc.id 
+            WHERE d.id = {};''',
         'filter_coworkers': '''
             SELECT co.name, c.name, c.city
             FROM companies as c
-            LEFT JOIN persons as p
-            ON p.company_id = c.id
-            LEFT JOIN deals as d
-            ON d.person_id = p.id
-            LEFT JOIN coworkers as co
-            ON co.id = d.coworker_id
+            LEFT JOIN persons as p ON p.company_id = c.id
+            LEFT JOIN deals as d ON d.person_id = p.id
+            LEFT JOIN coworkers as co ON d.coworker_id = co.id
             WHERE co.name LIKE '{}*' AND c.city LIKE '{}*';''',
         'filter_histories': '''
             SELECT d.name, h.date
             FROM deals AS d
-            LEFT JOIN histories AS h
-            ON h.deal_id = d.id
+            LEFT JOIN histories AS h ON h.deal_id = d.id
             WHERE d.value > {} AND h.type = 'Call'
             AND h.date < '{}';'''
     },
@@ -83,7 +79,7 @@ raw_queries = {
             SET deals.probability = 0.99
             WHERE deals.person_id IN (
                 SELECT p.id
-                FROM persons as p
+                FROM persons AS p
                 WHERE p.company_id = {}
             );''',
     }
