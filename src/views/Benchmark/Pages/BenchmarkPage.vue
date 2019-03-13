@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <el-tabs type="border-card" :stretch="true" style="min-height: 80vh;">
-      <el-tab-pane
-        :key="key"
-        :name="`${method}_${key}`"
-        v-loading="isLoading"
-        v-for="(query, key) in commands[method]"
-      >
-        <span slot="label">
-          <v-icon :name="getIcon(key)"/>
-          <!-- Newline -->
-          {{$_.startCase(key)}}
-        </span>
-        <h1>
-          {{$_.startCase(key)}}
-          <el-button @click="() => handleClick(`${method}_${key}`)" icon="el-icon-refresh" circle></el-button>
-        </h1>
-        <benchmark-pane :data="`${method}_${key}`" :query="query" :isLoading="isLoading"/>
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+  <el-tabs type="border-card" :stretch="true" style="min-height: 80vh;">
+    <el-tab-pane
+      :key="key"
+      :name="`${method}_${key}`"
+      v-loading="isLoading"
+      v-for="(query, key) in commands[method]"
+    >
+      <span slot="label">
+        <v-icon :name="getIcon(key)"/>
+        <!-- Newline -->
+        {{$_.startCase(key)}}
+      </span>
+      <h1>
+        {{$_.startCase(key)}}
+        <el-button @click="() => handleClick(`${method}_${key}`)" icon="el-icon-refresh" circle></el-button>
+      </h1>
+      <benchmark-pane :data="`${method}_${key}`" :query="query" :isLoading="isLoading"/>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>

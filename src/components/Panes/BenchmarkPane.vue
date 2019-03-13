@@ -14,7 +14,16 @@
         <pie-chart v-if="!isLoading" :data="data"/>
       </el-col>
     </el-row>
-    {{query}}
+    <el-row :gutter="20">
+      <el-col :sm="12">
+        <h3>Cypher Query</h3>
+        <pre v-highlightjs="$_.trim(query.cypher).replace(/  /g, '')"><code class="prolog"></code></pre>
+      </el-col>
+      <el-col :sm="12">
+        <h3>SQL Query</h3>
+        <pre v-highlightjs="$_.trim(query.sql).replace(/  /g, '')"><code class="prolog"></code></pre>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
