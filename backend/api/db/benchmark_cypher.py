@@ -34,7 +34,7 @@ raw_queries = {
             RETURN h.type, h.date, c.name, p.name, doc.description;''',
         'filter_coworkers': '''
             MATCH (c: Company)<-[:WORKS_AT]-(p: Person),
-            (p)-[:RESPONSIBLE_FOR]->(d: Deal),
+            (d: Deal)<-[:RESPONSIBLE_FOR]-(p),
             (d)<-[:SALESPERSON_FOR]-(co: Coworker)
             WHERE co.name =~ '{}.*' AND c.city =~ '{}.*'
             RETURN co.name, c.name, c.city;''',
@@ -63,7 +63,8 @@ raw_queries = {
             MERGE (d: Deal {{id: {}, name: 'Best Deal Ever', value: 10, probability: 0.99999}})
             MERGE (p: Person {{id: {} }})
             MERGE (c: Coworker {{id: {} }})
-            MERGE (p)-[:RESPONSIBLE_FOR]->(d)<-[:SALESPERSON_FOR]-(c);''',
+            MERGE (d)<-[:RESPONSIBLE_FOR]-(p)
+            MERGE (d)<-[:SALESPERSON_FOR]-(c);''',
     },
     'put': {
         'companies': '''
