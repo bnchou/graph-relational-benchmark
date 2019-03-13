@@ -119,11 +119,11 @@ queries = {
 
 
 def run_query(execute, query, inputs=[]):
-    print('|', end='', flush=True)
-
     t1 = time()
-    execute(query.format(*inputs))
+    res = execute(query.format(*inputs)).fetchall()
     t2 = time()
+
+    print('|{}'.format(len(res)), end='', flush=True)
     return (t2 - t1) * 1000
 
 

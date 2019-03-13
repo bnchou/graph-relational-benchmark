@@ -113,11 +113,11 @@ queries = {
 
 
 def run_query(transaction, query, inputs=[]):
-    print('|', end='', flush=True)
 
     def execute(tx):
-        result = tx.run(query.format(*inputs)).consume()
-        return result.t_first
+        result = tx.run(query.format(*inputs))
+        print('|{}'.format(len(result.values())), end='', flush=True)
+        return result.consume().t_first
 
     return transaction(execute)
 
