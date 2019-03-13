@@ -26,7 +26,7 @@ raw_queries = {
             WHERE p.id = {}
             RETURN doc.id, doc.description, doc.type, d.name;''',
         'histories': '''
-            MATCH (d: Deal)-[:PART_OF]->(h: History),
+            MATCH (d: Deal)<-[:PART_OF]-(h: History),
             (h)<-[:ATTACHED_TO]-(doc: Document),
             (c: Coworker)-[:ATTENDED]->(h)<-[:ATTENDED]-(p: Person)
             WHERE d.id = {}

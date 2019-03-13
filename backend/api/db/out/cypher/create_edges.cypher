@@ -36,4 +36,4 @@ CREATE (history)<-[:ATTACHED_TO]-(document);
 
 MATCH (history:History), (deal:Deal)
 WHERE history.deal_id = deal.id
-CREATE (history)<-[:PART_OF]-(deal);
+CREATE (history)-[:PART_OF]->(deal);
