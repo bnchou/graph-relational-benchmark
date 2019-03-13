@@ -6,6 +6,18 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     executionData: {},
+    icons: {
+      companies: "building",
+      person: "users",
+      persons: "users",
+      filter_coworkers: "users",
+      deal: "handshake",
+      deals: "handshake",
+      documents: "file",
+      history: "history",
+      histories: "history",
+      filter_histories: "history"
+    },
     data: {
       "line-example": {
         columns: ["date", "cost", "profit", "growthRate", "people"],

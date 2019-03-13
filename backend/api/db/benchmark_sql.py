@@ -41,7 +41,7 @@ raw_queries = {
             LEFT JOIN persons AS p ON h.person_id = p.id 
             LEFT JOIN documents AS d ON h.document_id = d.id 
             WHERE deals.id = {};''',
-        'advanced_coworkers': '''
+        'filter_coworkers': '''
             SELECT co.name, c.name, c.city
             FROM companies as c
             LEFT JOIN persons as p
@@ -51,7 +51,7 @@ raw_queries = {
             LEFT JOIN coworkers as co
             ON co.id = d.coworker_id
             WHERE co.name LIKE '{}*' AND c.city LIKE '{}*';''',
-        'advanced_histories': '''
+        'filter_histories': '''
             SELECT d.name, h.date
             FROM deals AS d
             LEFT JOIN histories AS h
@@ -94,11 +94,11 @@ queries = {
     'get_deals': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['deals'],  [random_entry(data, 'deals', 'probability')])),
     'get_documents': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['documents'], [random_entry(data, 'persons', 'id')])),
     'get_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['histories'], [random_entry(data, 'deals', 'id')])),
-    'get_advanced_coworkers': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['advanced_coworkers'], [
+    'get_filter_coworkers': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['filter_coworkers'], [
         random_entry(data, 'coworkers', 'name').split()[0],
         random_entry(data, 'companies', 'city')
     ])),
-    'get_advanced_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['advanced_histories'], [
+    'get_filter_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['filter_histories'], [
         random_entry(data, 'deals', 'value'),
         random_entry(data, 'histories', 'date')
     ])),

@@ -3,20 +3,20 @@
     <el-tabs type="border-card" :stretch="true" style="min-height: 80vh;">
       <el-tab-pane
         :key="key"
-        :name="`get_${key}`"
+        :name="`${method}_${key}`"
         v-loading="isLoading"
-        v-for="(query, key) in commands.get"
+        v-for="(query, key) in commands[method]"
       >
         <span slot="label">
-          <v-icon name="building"/>
+          <v-icon :name="getIcon(key)"/>
           <!-- Newline -->
-          {{key}}
+          {{$_.startCase(key)}}
         </span>
         <h1>
-          {{key}}
-          <el-button @click="() => handleClick(`get_${key}`)" icon="el-icon-refresh" circle></el-button>
+          {{$_.startCase(key)}}
+          <el-button @click="() => handleClick(`${method}_${key}`)" icon="el-icon-refresh" circle></el-button>
         </h1>
-        <benchmark-pane :data="`get_${key}`" :query="query" :isLoading="isLoading"/>
+        <benchmark-pane :data="`${method}_${key}`" :query="query" :isLoading="isLoading"/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -27,6 +27,9 @@ import _ from "lodash";
 import BenchmarkPane from "@/components/Panes/BenchmarkPane";
 
 export default {
+  props: {
+    method: String
+  },
   components: { BenchmarkPane },
   data() {
     return {
@@ -54,6 +57,9 @@ export default {
       this.$set(this.$store.state.executionData, action, json);
 
       this.isLoading = false;
+    },
+    getIcon: function(key) {
+      return this.$store.state.icons[key];
     }
   }
 };
