@@ -117,7 +117,8 @@ def run_query(transaction, query, inputs=[]):
     def execute(tx):
         result = tx.run(query.format(*inputs))
         print('|{}'.format(len(result.values())), end='', flush=True)
-        return result.consume().t_first
+        consumed = result.consume()
+        return consumed.t_first + consumed.t_last
 
     return transaction(execute)
 
