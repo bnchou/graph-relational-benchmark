@@ -29,10 +29,10 @@ raw_queries = {
             LEFT JOIN companies AS c ON p.company_id = c.id
             WHERE c.id = {};''',
         'filter_histories': '''
-            SELECT TOP 10000 h.date, c.name, h.type, p.name, doc.name
+            SELECT TOP 10000 h.date, c.name, h.type, p.name, doc.description
             FROM deals AS d
             LEFT JOIN histories AS h ON h.deal_id = d.id
-            LEFT JOIN documents AS doc on history.document_id = doc.id
+            LEFT JOIN documents AS doc on h.document_id = doc.id
             LEFT JOIN persons AS p ON h.person_id = p.id
             LEFT JOIN coworkers AS c ON h.coworker_id = c.id
             WHERE d.id = {} AND h.type = 'Call'
@@ -44,7 +44,7 @@ raw_queries = {
             LEFT JOIN coworkers AS c ON h.coworker_id = c.id 
             LEFT JOIN persons AS p ON h.person_id = p.id 
             LEFT JOIN documents AS doc ON h.document_id = doc.id 
-            WHERE d.id = {};''',
+            WHERE d.id = {} AND doc.description LIKE '{}%';''',
         'filter_coworkers': '''
             SELECT TOP 10000 co.name, c.name, c.city
             FROM companies as c
@@ -96,7 +96,10 @@ queries = {
         random_entry(data, 'deals', 'id'),
         random_entry(data, 'histories', 'date')
     ])),
-    'get_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['histories'], [random_entry(data, 'deals', 'id')])),
+    'get_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['histories'], [
+        random_entry(data, 'deals', 'id'),
+        random_entry(data, 'documents', 'description')[:2],
+    ])),
     'get_filter_coworkers': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['filter_coworkers'], [
         random_entry(data, 'coworkers', 'name').split()[0],
         random_entry(data, 'companies', 'city')[:2]

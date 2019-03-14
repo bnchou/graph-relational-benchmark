@@ -31,14 +31,14 @@ raw_queries = {
             (h)<-[:ATTENDED]-(p: Person)
             WHERE d.id = {} AND h.type = 'Call'
             AND h.date < '{}'
-            RETURN h.date, c.name, h.type, p.name, doc.name
+            RETURN h.date, c.name, h.type, p.name, doc.description
             LIMIT 10000;''',
         'histories': '''
             MATCH (d: Deal)<-[:PART_OF]-(h: History),
             (h)<-[:ATTACHED_TO]-(doc: Document),
             (h)<-[:ATTENDED]-(c: Coworker),
             (h)<-[:ATTENDED]-(p: Person)
-            WHERE d.id = {}
+            WHERE d.id = {} AND doc.description =~ '{}.*'
             RETURN h.type, h.date, c.name, p.name, doc.description
             LIMIT 10000;''',
         'filter_coworkers': '''
@@ -95,7 +95,10 @@ raw_queries = {
 queries = {
     'get_documents': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['documents'], [random_entry(data, 'histories', 'type')])),
     'get_persons': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['persons'], [random_entry(data, 'companies', 'id')])),
-    'get_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories'], [random_entry(data, 'deals', 'id')])),
+    'get_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories'], [
+        random_entry(data, 'deals', 'id'),
+        random_entry(data, 'documents', 'description')[:2],
+    ])),
     'get_filter_coworkers': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['filter_coworkers'], [
         random_entry(data, 'coworkers', 'name').split()[0],
         random_entry(data, 'companies', 'city')[:2]
