@@ -51,8 +51,8 @@ raw_queries = {
         'deals': '''
             MATCH (p: Person)-[:RESPONSIBLE_FOR]->(d: Deal),
             (p)-[:WORKS_AT]->(c: Company)
-            WHERE d.probability > {}
-            RETURN p.name
+            WHERE d.probability > {} AND c.name =~ '{}.*'
+            RETURN p.name, p.email, p.phone, d.name, c.name
             LIMIT 10000;'''
     },
     'post': {
@@ -107,7 +107,10 @@ queries = {
         random_entry(data, 'deals', 'id'),
         random_entry(data, 'histories', 'date')
     ])),
-    'get_deals': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['deals'], [random_entry(data, 'deals', 'probability')])),
+    'get_deals': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['deals'], [
+        random_entry(data, 'deals', 'probability'),
+        random_entry(data, 'companies', 'name')[:2],
+    ])),
     'put_companies': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['companies'], [random_entry(data, 'companies', 'id')])),
     'put_deals': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['deals'], [random_entry(data, 'persons', 'company_id')])),
     'post_history': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['post']['history'], [

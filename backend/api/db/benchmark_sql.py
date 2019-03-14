@@ -57,7 +57,7 @@ raw_queries = {
             FROM persons AS p
             LEFT JOIN deals AS d ON p.id = d.person_id
             LEFT JOIN companies AS c ON p.company_id = c.id
-            WHERE d.probability > {};'''
+            WHERE d.probability > {} AND c.name LIKE '{}%';'''
     },
     'post': {
         'history': '''
@@ -104,7 +104,10 @@ queries = {
         random_entry(data, 'coworkers', 'name').split()[0],
         random_entry(data, 'companies', 'city')[:2]
     ])),
-    'get_deals': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['deals'],  [random_entry(data, 'deals', 'probability')])),
+    'get_deals': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['deals'],  [
+        random_entry(data, 'deals', 'probability'),
+        random_entry(data, 'companies', 'name')[:2],
+    ])),
     'post_history': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['post']['history'], [
         random.randint(40000000, 90000000),
         random_entry(data, 'persons', 'id'),
