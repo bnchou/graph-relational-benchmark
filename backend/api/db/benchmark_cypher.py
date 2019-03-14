@@ -11,38 +11,49 @@ data = load_data()
 
 raw_queries = {
     'get': {
+        'documents': '''
+            MATCH (d: Deal)<-[:PART_OF]-(h: History),
+            (h)<-[:ATTENDED]-(co: Coworker),
+            (h)<-[:ATTENDED]-(p: Person),
+            (p)-[:WORKS_AT]->(c: Company)
+            WHERE h.type = '{}'
+            RETURN h.date, co.name, h.type, p.name, c.name, d.name
+            LIMIT 10000;''',
         'persons': '''
             MATCH (p: Person)-[:WORKS_AT]->(c: Company)
             WHERE c.id = {}
-            RETURN p.name, c.name;''',
-        'deals': '''
-            MATCH (p: Person)-[:RESPONSIBLE_FOR]->(d: Deal),
-            (p)-[:WORKS_AT]->(c: Company)
-            WHERE d.probability > {}
-            RETURN p.name, p.email, p.phone, d.name, c.name;''',
-        'documents': '''
-            MATCH (p: Person)-[:OWNS]->(doc: Document),
-            (doc)-[:ATTACHED_TO]->(d: Deal)
-            WHERE p.id = {}
-            RETURN doc.id, doc.description, doc.type, d.name;''',
+            RETURN p.name, p.email, c.name
+            LIMIT 10000;''',
+        'filter_histories': '''
+            MATCH (d: Deal)<-[:PART_OF]-(h: History),
+            (h)<-[:ATTACHED_TO]-(doc: Document),
+            (h)<-[:ATTENDED]-(c: Coworker),
+            (h)<-[:ATTENDED]-(p: Person)
+            WHERE d.id = {} AND h.type = 'Call'
+            AND h.date < '{}'
+            RETURN h.date, c.name, h.type, p.name, doc.name
+            LIMIT 10000;''',
         'histories': '''
             MATCH (d: Deal)<-[:PART_OF]-(h: History),
             (h)<-[:ATTACHED_TO]-(doc: Document),
             (h)<-[:ATTENDED]-(c: Coworker),
             (h)<-[:ATTENDED]-(p: Person)
             WHERE d.id = {}
-            RETURN h.type, h.date, c.name, p.name, doc.description;''',
+            RETURN h.type, h.date, c.name, p.name, doc.description
+            LIMIT 10000;''',
         'filter_coworkers': '''
             MATCH (c: Company)<-[:WORKS_AT]-(p: Person),
             (d: Deal)<-[:RESPONSIBLE_FOR]-(p),
             (d)<-[:SALESPERSON_FOR]-(co: Coworker)
             WHERE co.name =~ '{}.*' AND c.city =~ '{}.*'
-            RETURN co.name, c.name, c.city;''',
-        'filter_histories': '''
-            MATCH (d: Deal)<-[:PART_OF]-(h: History)
-            WHERE d.value > {} AND h.type = 'Call'
-            AND h.date < '{}'
-            RETURN d.name, h.date;''',
+            RETURN co.name, c.name, c.city
+            LIMIT 10000;''',
+        'deals': '''
+            MATCH (p: Person)-[:RESPONSIBLE_FOR]->(d: Deal),
+            (p)-[:WORKS_AT]->(c: Company)
+            WHERE d.probability > {}
+            RETURN p.name
+            LIMIT 10000;'''
     },
     'post': {
         'history': '''
@@ -82,18 +93,18 @@ raw_queries = {
 }
 
 queries = {
+    'get_documents': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['documents'], [random_entry(data, 'histories', 'type')])),
     'get_persons': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['persons'], [random_entry(data, 'companies', 'id')])),
-    'get_deals': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['deals'], [random_entry(data, 'deals', 'probability')])),
-    'get_documents': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['documents'], [random_entry(data, 'persons', 'id')])),
     'get_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories'], [random_entry(data, 'deals', 'id')])),
     'get_filter_coworkers': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['filter_coworkers'], [
         random_entry(data, 'coworkers', 'name').split()[0],
-        random_entry(data, 'companies', 'city')
+        random_entry(data, 'companies', 'city')[:2]
     ])),
     'get_filter_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['filter_histories'], [
-        random_entry(data, 'deals', 'value'),
+        random_entry(data, 'deals', 'id'),
         random_entry(data, 'histories', 'date')
     ])),
+    'get_deals': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['deals'], [random_entry(data, 'deals', 'probability')])),
     'put_companies': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['companies'], [random_entry(data, 'companies', 'id')])),
     'put_deals': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['deals'], [random_entry(data, 'persons', 'company_id')])),
     'post_history': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['post']['history'], [
@@ -117,7 +128,8 @@ def run_query(transaction, query, inputs=[]):
     def execute(tx):
         result = tx.run(query.format(*inputs))
         print('|{}'.format(len(result.values())), end='', flush=True)
-        return result.consume().t_first
+        r = result.consume()
+        return r.t_last + r.t_first
 
     return transaction(execute)
 
