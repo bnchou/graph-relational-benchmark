@@ -22,3 +22,14 @@ FROM documents AS doc
 LEFT JOIN persons AS p ON doc.person_id = p.id
 LEFT JOIN deals AS d ON doc.deal_id = d.id
 WHERE p.id = 1;
+
+SELECT d.name, d.value, d.probability, co.name
+FROM deals AS d
+LEFT JOIN coworkers AS co ON d.coworker_id = co.id
+WHERE co.id IN (
+    SELECT TOP 1 co2.id
+    FROM deals as d2
+    LEFT JOIN coworkers AS co2 ON d2.coworker_id = co2.id
+    ORDER BY d2.probability DESC
+) AND d.probability > 0.8
+ORDER BY d.probability DESC;
