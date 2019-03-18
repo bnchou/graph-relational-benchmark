@@ -17,3 +17,9 @@ RETURN h.id, h.type, h.date, c.name, p.name, doc.description;
     (doc)-[:ATTACHED_TO]->(d: Deal)
 WHERE p.id = 100
 RETURN doc.id, doc.description, doc.type, d.name;
+
+MATCH (d: Deal)<-[:SALESPERSON_FOR]-(co: Coworker)
+WITH co.id as id, d.probability as prob
+ORDER BY d.probability DESC LIMIT 1
+MATCH (c: Coworker {id: id})-[:SALESPERSON_FOR]->(deal: Deal)
+RETURN deal.name, deal.value, deal.probability;
