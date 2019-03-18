@@ -44,7 +44,9 @@ raw_queries = {
             LEFT JOIN coworkers AS c ON h.coworker_id = c.id 
             LEFT JOIN persons AS p ON h.person_id = p.id 
             LEFT JOIN documents AS doc ON h.document_id = doc.id 
-            WHERE d.id = {} AND (h.type LIKE '{}%' OR c.name LIKE '{}%' OR p.name LIKE '{}%' OR doc.description LIKE '{}%');''',
+            WHERE (h.type LIKE '{}%' OR c.name LIKE '{}%' OR p.name LIKE '{}%' OR doc.description LIKE '{}%')
+            AND (h.type LIKE '{}%' OR c.name LIKE '{}%' OR p.name LIKE '{}%' OR doc.description LIKE '{}%')
+            AND (h.type LIKE '{}%' OR c.name LIKE '{}%' OR p.name LIKE '{}%' OR doc.description LIKE '{}%');''',
         'filter_coworkers': '''
             SELECT TOP 10000 co.name, c.name, c.city
             FROM companies as c
@@ -97,11 +99,18 @@ queries = {
         random_entry(data, 'histories', 'date')
     ])),
     'get_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['histories'], [
-        random_entry(data, 'deals', 'id'),
-        random_entry(data, 'histories', 'type'),
-        random_entry(data, 'companies', 'name')[:4],
-        random_entry(data, 'persons', 'name')[:4],
-        random_entry(data, 'documents', 'description')[:2],
+        random_entry(data, 'histories', 'type')[:1],
+        random_entry(data, 'histories', 'type')[:1],
+        random_entry(data, 'histories', 'type')[:1],
+        random_entry(data, 'histories', 'type')[:1],
+        random_entry(data, 'persons', 'name')[:1],
+        random_entry(data, 'persons', 'name')[:1],
+        random_entry(data, 'persons', 'name')[:1],
+        random_entry(data, 'persons', 'name')[:1],
+        random_entry(data, 'documents', 'description')[:1],
+        random_entry(data, 'documents', 'description')[:1],
+        random_entry(data, 'documents', 'description')[:1],
+        random_entry(data, 'documents', 'description')[:1],
     ])),
     'get_filter_coworkers': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['filter_coworkers'], [
         random_entry(data, 'coworkers', 'name').split()[0],
