@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 
 import Benchmark from "@/views/Benchmark";
 import BenchmarkPage from "@/views/Benchmark/Pages/BenchmarkPage";
-import ComplexityPage from "@/views/Benchmark/Pages/ComplexityPage";
 import ConfigurationPage from "@/views/Benchmark/Pages/ConfigurationPage";
 
 import Docs from "@/views/Docs";
@@ -39,10 +38,6 @@ export default new VueRouter({
           path: "updating",
           component: BenchmarkPage,
           props: { method: "put" }
-        },
-        {
-          path: "complexity",
-          component: ComplexityPage
         },
         {
           path: "settings",
