@@ -11,24 +11,22 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Give examples
+To be able to connect to the Microsoft SQL database that will be created using the creation scripts below, there is a need to set up a Microsoft SQL Server on your local computer.
+
+Neo4j Desktop Client also needs to be installed to be able to query the created Neo4j database.
 ```
 
 # Running scripts manually
+> **! Important**: Remove (comment out) the config option: `dbms.directories.import=import` from Neo4j -> Database -> Settings before population the graph database with fake data.
 
-To populate the graph database with fake data, run the following script while standing in the backend/db directory
-
-> **! Important**: Remove (comment out) the config option: `dbms.directories.import=import` from Neo4j -> Database -> Settings
-
-```
-./run_cypher.sh
-```
-
-To populate the relational database with fake data, run the following script while standing in the backend/db directory
+To populate the databases with fake data, run the following scripts while standing in the backend/api/db directory
 
 ```
-./run_sql.sh
+./reset_cypher.sh -u
+./reset_sql.sh
 ```
+
+> **Note**: Only the first data population command needs the argument -u, as it creates the data which will be used to populate both databases. Nothing bad will happen if -u is provided to both scripts, it will just take a very long time.
 
 # frontend
 
@@ -42,24 +40,6 @@ npm install
 
 ```
 npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Run your tests
-
-```
-npm run test
-```
-
-### Lints and fixes files
-
-```
-npm run lint
 ```
 
 ### Customize configuration
@@ -84,31 +64,17 @@ Add environment variables into a .env file
 SQL_SERVER=XXXXXX (e.g. 8ZC5G31)
 ```
 
+## Starting the web app and the django server
+
+To start the development server, run 
+
+```
+npm start
+```
+
+which will start the web app at http://localhost:8080 as well as starting the backend server.
+
 End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
