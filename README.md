@@ -84,7 +84,13 @@ To analyse the complexity of the queries that are used for the benchmark, run th
 ./complexity_analyzer.sh cypher_argument sql_argument
 ```
 
-Where cypher_argument and sql_argument are the queries that are to be compared, e.g. cypher_argument = 'match' and sql_argument = 'select' will compare the complexity of the cypher match queries that correspond to the select queries in SQL.
+Where cypher_argument and sql_argument are the queries that are to be compared, e.g. 
+
+```
+./complexity_analyzer.sh match select
+```
+
+will compare the complexity of the cypher match queries that correspond to the select queries in SQL.
 
 ## Built With
 
