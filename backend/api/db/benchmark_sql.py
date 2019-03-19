@@ -93,7 +93,18 @@ raw_queries = {
                     WHERE d3.name LIKE '{}%' OR p2.name LIKE '{}%' OR co.name LIKE '{}%'
                 )
             )
-            GROUP BY p1.name, p1.email'''
+            GROUP BY p1.name, p1.email''',
+        'top_deal' : '''
+            SELECT d.name, d.value, d.probability, co.name
+            FROM deals AS d
+            LEFT JOIN coworkers AS co ON d.coworker_id = co.id
+            WHERE co.id IN (
+                SELECT TOP 1 co2.id
+                FROM deals as d2
+                LEFT JOIN coworkers AS co2 ON d2.coworker_id = co2.id
+                ORDER BY d2.probability DESC
+            ) AND d.probability > {}
+            ORDER BY d.probability DESC;'''
     },
     'post': {
         'history': '''
@@ -126,6 +137,7 @@ raw_queries = {
 }
 
 queries = {
+    'get_top_deal': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['top_deal'], [random_entry(data, 'deals', 'probability')])),
     'get_documents': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['documents'], [random_entry(data, 'histories', 'type')])),
     'get_persons': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['persons'], [random_entry(data, 'companies', 'id')])),
     'get_filter_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['filter_histories'], [
