@@ -33,3 +33,19 @@ WHERE co.id IN (
     ORDER BY d2.probability DESC
 ) AND d.probability > 0.8
 ORDER BY d.probability DESC;
+
+SELECT p1.name, p1.email
+FROM persons AS p1
+LEFT JOIN histories AS h1 ON h1.person_id = p1.id
+WHERE h1.id IN (
+    SELECT h2.id
+    FROM histories AS h2
+    WHERE h2.deal_id IN (
+        SELECT d3.id
+        FROM deals AS d3
+        LEFT JOIN persons AS p2 ON d3.person_id = p2.id
+        LEFT JOIN coworkers AS co ON d3.coworker_id = co.id
+        WHERE d3.name LIKE 'Ro%' OR p2.name LIKE 'Ro%' OR co.name LIKE 'Ro%'
+    )
+)
+GROUP BY p1.name, p1.email

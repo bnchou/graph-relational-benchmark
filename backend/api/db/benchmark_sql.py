@@ -59,7 +59,23 @@ raw_queries = {
             FROM persons AS p
             LEFT JOIN deals AS d ON p.id = d.person_id
             LEFT JOIN companies AS c ON p.company_id = c.id
-            WHERE d.probability > {} AND c.name LIKE '{}%';'''
+            WHERE d.probability > {} AND c.name LIKE '{}%';''',
+        'transfer_deals': '''
+            SELECT p1.name, p1.email
+            FROM persons AS p1
+            LEFT JOIN histories AS h1 ON h1.person_id = p1.id
+            WHERE h1.id IN (
+                SELECT h2.id
+                FROM histories AS h2
+                WHERE h2.deal_id IN (
+                    SELECT d3.id
+                    FROM deals AS d3
+                    LEFT JOIN persons AS p2 ON d3.person_id = p2.id
+                    LEFT JOIN coworkers AS co ON d3.coworker_id = co.id
+                    WHERE d3.name LIKE '{}%' OR p2.name LIKE '{}%' OR co.name LIKE '{}%'
+                )
+            )
+            GROUP BY p1.name, p1.email'''
     },
     'post': {
         'history': '''
@@ -119,6 +135,11 @@ queries = {
     'get_deals': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['deals'],  [
         random_entry(data, 'deals', 'probability'),
         random_entry(data, 'companies', 'name')[:2],
+    ])),
+    'get_transfer_deals': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['transfer_deals'],  [
+        random_entry(data, 'persons', 'name')[:5],
+        random_entry(data, 'persons', 'name')[:5],
+        random_entry(data, 'persons', 'name')[:5]
     ])),
     'post_history': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['post']['history'], [
         random.randint(40000000, 90000000),
