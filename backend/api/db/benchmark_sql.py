@@ -59,7 +59,25 @@ raw_queries = {
             FROM persons AS p
             LEFT JOIN deals AS d ON p.id = d.person_id
             LEFT JOIN companies AS c ON p.company_id = c.id
-            WHERE d.probability > {} AND c.name LIKE '{}%';'''
+            WHERE d.probability > {} AND c.name LIKE '{}%';''',
+        'relationships': '''
+            SELECT r.from_person_id, r.to_person_id
+            FROM relationships AS r
+            WHERE r.type = '{}';''',
+        'related': '''
+            SELECT DISTINCT depth4.to_person_id
+            FROM relationships AS depth4
+            WHERE depth4.from_person_id IN (
+                SELECT DISTINCT depth3.to_person_id
+                FROM relationships AS depth3
+                WHERE depth3.from_person_id IN (
+                    SELECT DISTINCT depth2.to_person_id
+                    FROM relationships AS depth2
+                    WHERE depth2.from_person_id IN (
+                        SELECT depth1.to_person_id
+                        FROM relationships AS depth1
+                        WHERE depth1.type = '{}' 
+                        AND depth1.from_person_id = {})));'''
     },
     'post': {
         'history': '''
@@ -119,6 +137,13 @@ queries = {
     'get_deals': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['deals'],  [
         random_entry(data, 'deals', 'probability'),
         random_entry(data, 'companies', 'name')[:2],
+    ])),
+    'get_relationships': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['relationships'],  [
+        random_entry(data, 'relationships', 'type'),
+    ])),
+    'get_related': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['related'],  [
+        random_entry(data, 'relationships', 'type'),
+        random_entry(data, 'persons', 'id'),
     ])),
     'post_history': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['post']['history'], [
         random.randint(40000000, 90000000),

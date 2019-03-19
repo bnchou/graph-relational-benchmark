@@ -16,7 +16,9 @@ export default new Vuex.Store({
       documents: "file",
       history: "history",
       histories: "history",
-      filter_histories: "history"
+      filter_histories: "history",
+      relationships: "users",
+      related: "users"
     },
     data: {
       "line-example": {

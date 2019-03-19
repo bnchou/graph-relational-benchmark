@@ -55,7 +55,18 @@ raw_queries = {
             (p)-[:WORKS_AT]->(c: Company)
             WHERE d.probability > {} AND c.name =~ '{}.*'
             RETURN p.name, p.email, p.phone, d.name, c.name
-            LIMIT 10000;'''
+            LIMIT 10000;''',
+        'relationships': '''
+            MATCH (p1: Person)-[r:RELATED_TO]->(p2: Person)
+            WHERE r.type = '{}'
+            RETURN p1.id,p2.id;''',
+        'related': '''
+            MATCH (p: Person {{ id: {} }}),
+                  (p)-[:RELATED_TO {{ type: '{}' }}]->(depth1),
+                  (depth1)-[:RELATED_TO]->(depth2),
+                  (depth2)-[:RELATED_TO]->(depth3),
+                  (depth3)-[:RELATED_TO]->(depth4)
+            RETURN DISTINCT depth4.id;'''
     },
     'post': {
         'history': '''
@@ -122,6 +133,13 @@ queries = {
     'get_deals': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['deals'], [
         random_entry(data, 'deals', 'probability'),
         random_entry(data, 'companies', 'name')[:2],
+    ])),
+    'get_relationships': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['relationships'], [
+        random_entry(data, 'relationships', 'type'),
+    ])),
+    'get_related': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['related'], [
+        random_entry(data, 'persons', 'id'),
+        random_entry(data, 'relationships', 'type'),
     ])),
     'put_companies': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['companies'], [random_entry(data, 'companies', 'id')])),
     'put_deals': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['deals'], [random_entry(data, 'persons', 'company_id')])),

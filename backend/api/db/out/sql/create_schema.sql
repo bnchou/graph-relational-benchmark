@@ -84,6 +84,14 @@ CREATE TABLE histories (
     deal_id INT REFERENCES Deals (id),
     document_id INT REFERENCES Documents (id)
 );
+GO
+
+CREATE TABLE relationships (
+    id INT NOT NULL PRIMARY KEY,
+    type VARCHAR(25),
+    from_person_id INT REFERENCES Persons (id),
+    to_person_id INT REFERENCES Persons (id),
+);
 
 CREATE INDEX idx_company_id
 ON companies (id);
@@ -125,3 +133,10 @@ ON histories (document_id);
 
 CREATE INDEX idx_history_id
 ON histories (id);
+
+CREATE INDEX idx_relationship_id
+ON relationships (id);
+CREATE INDEX idx_relationship_from_person_id
+ON relationships (from_person_id);
+CREATE INDEX idx_relationship_to_person_id
+ON relationships (to_person_id);

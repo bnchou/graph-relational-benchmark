@@ -12,7 +12,8 @@ label = {
     "coworkers": "Coworker",
     "deals": "Deal",
     "documents": "Document",
-    "histories": "History"
+    "histories": "History",
+    "relationships": "Relationship"
 }
 
 
