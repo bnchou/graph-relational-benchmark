@@ -66,7 +66,14 @@ raw_queries = {
                   (depth1)-[:RELATED_TO]->(depth2),
                   (depth2)-[:RELATED_TO]->(depth3),
                   (depth3)-[:RELATED_TO]->(depth4)
-            RETURN DISTINCT depth4.id;'''
+            RETURN DISTINCT depth4.id;''',
+        'transfer_deals': '''
+            MATCH (co: Coworker)-[:SALESPERSON_FOR]->(d: Deal)<-[:RESPONSIBLE_FOR]-(p1: Person)
+            WITH d.id as d_id
+            WHERE d.name =~ '{}.*' OR p1.name =~ '{}.*' OR co.name =~ '{}.*'
+            MATCH (h: History)-[:PART_OF]->(deal: Deal {{id: d_id}}),
+            (h)<-[:ATTENDED]-(p2: Person)
+            RETURN COLLECT(DISTINCT p2.name), p2.email;'''
     },
     'post': {
         'history': '''
@@ -77,7 +84,7 @@ raw_queries = {
             MERGE (c: Coworker {{id: {} }})
             MERGE (h)<-[:ATTACHED_TO]-(doc)
             MERGE (h)<-[:PART_OF]-(d)
-            MERGE (h)<-[:ATTENDED]-(p) 
+            MERGE (h)<-[:ATTENDED]-(p)
             MERGE (h)<-[:ATTENDED]-(c);''',
         'person': '''
             MERGE (p: Person {{id: {}, name: 'Inserted Name', phone: '07012345678', position: 'CEO', email: 'insert@insert.com'}})
@@ -140,6 +147,11 @@ queries = {
     'get_related': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['related'], [
         random_entry(data, 'persons', 'id'),
         random_entry(data, 'relationships', 'type'),
+    ])),
+    'get_transfer_deals': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['transfer_deals'], [
+        random_entry(data, 'persons', 'name')[:5],
+        random_entry(data, 'persons', 'name')[:5],
+        random_entry(data, 'persons', 'name')[:5]
     ])),
     'put_companies': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['companies'], [random_entry(data, 'companies', 'id')])),
     'put_deals': lambda session: get_stats(lambda: run_query(session.write_transaction, raw_queries['put']['deals'], [random_entry(data, 'persons', 'company_id')])),
