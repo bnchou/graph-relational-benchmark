@@ -3,18 +3,13 @@
     <div id="logo">
       <logo></logo>
     </div>
-    <div id="tabs">
-      <el-menu :default-active="activeIndex" mode="horizontal" :router="true">
-        <el-menu-item index="/benchmark">Benchmark</el-menu-item>
-        <el-menu-item class="item" index="@github" :route="{}">
-          <a
-            href="https://github.com/VictorWinberg/graph-relational-benchmark"
-            target="_blank"
-          >Github</a>
-        </el-menu-item>
-        <el-menu-item class="item" index="/docs">Docs</el-menu-item>
-      </el-menu>
-    </div>
+    <el-menu id="tabs" :default-active="activeIndex" mode="horizontal" :router="true">
+      <el-menu-item index="/benchmark">Benchmark</el-menu-item>
+      <el-menu-item class="item" index="@github" :route="{}">
+        <a href="https://github.com/VictorWinberg/graph-relational-benchmark" target="_blank">Github</a>
+      </el-menu-item>
+      <el-menu-item class="item" index="/docs">Docs</el-menu-item>
+    </el-menu>
   </div>
 </template>
 
@@ -39,12 +34,12 @@ export default {
   align-items: flex-end;
 }
 #logo {
-  margin: 0 7px;
+  margin: 0 3px;
 }
 #tabs {
   flex: 1;
 }
-.item {
+#tabs .item {
   float: right;
 }
 a {

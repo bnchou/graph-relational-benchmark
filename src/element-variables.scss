@@ -1,0 +1,37 @@
+/* theme color */
+$--color-primary: #85c436;
+// $--color-primary: #409EFF !default;
+$--color-success: #67c23a !default;
+$--color-warning: #e6a23c !default;
+$--color-danger: #f56c6c !default;
+$--color-info: #909399 !default;
+
+$--color-text-primary: #303133 !default;
+$--color-text-regular: #606266 !default;
+$--color-text-secondary: #909399 !default;
+
+/* icon font path, required */
+$--font-path: "~element-ui/lib/theme-chalk/fonts";
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+@font-face {
+  font-family: "GalanoGrotesque";
+  src: url("assets/fonts/GalanoGrotesque-Thin.woff") format("woff");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "GalanoGrotesque";
+  src: url("assets/fonts/GalanoGrotesque-Light.woff") format("woff");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "GalanoGrotesque";
+  src: url("assets/fonts/GalanoGrotesque-Regular.woff") format("woff");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "GalanoGrotesque";
+  src: url("assets/fonts/GalanoGrotesque-Bold.woff") format("woff");
+  font-weight: 600;
+}
