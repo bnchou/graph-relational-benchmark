@@ -12,10 +12,6 @@
       <el-tag class="tag" type="warning">PUT</el-tag>
       <span>Updating</span>
     </el-menu-item>
-    <el-menu-item index="/benchmark/complexity">
-      <el-tag class="tag" type="info">E=mc²</el-tag>
-      <span>Complexity</span>
-    </el-menu-item>
     <el-menu-item index="/benchmark/settings">
       <el-tag class="tag" color="white">
         <i class="el-icon-setting"></i>

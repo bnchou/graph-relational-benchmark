@@ -73,7 +73,15 @@ raw_queries = {
             WHERE d.name =~ '{}.*' OR p1.name =~ '{}.*' OR co.name =~ '{}.*'
             MATCH (h: History)-[:PART_OF]->(deal: Deal {{id: d_id}}),
             (h)<-[:ATTENDED]-(p2: Person)
-            RETURN COLLECT(DISTINCT p2.name), p2.email;'''
+            RETURN COLLECT(DISTINCT p2.name), p2.email;''',
+        'top_deal': '''
+            MATCH (d: Deal)<-[:SALESPERSON_FOR]-(co: Coworker)
+            WITH co.id as id, d.probability as prob
+            ORDER BY d.probability DESC LIMIT 1
+            MATCH (c: Coworker {{id: id}})-[:SALESPERSON_FOR]->(deal: Deal)
+            WHERE deal.probability > {}
+            RETURN deal.name, deal.value, deal.probability, c.name;'''
+
     },
     'post': {
         'history': '''
@@ -113,6 +121,7 @@ raw_queries = {
 }
 
 queries = {
+    'get_top_deal': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['top_deal'], [random_entry(data, 'deals', 'probability')])),
     'get_documents': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['documents'], [random_entry(data, 'histories', 'type')])),
     'get_persons': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['persons'], [random_entry(data, 'companies', 'id')])),
     'get_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories'], [
