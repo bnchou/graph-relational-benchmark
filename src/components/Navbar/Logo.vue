@@ -1,18 +1,11 @@
 <template>
-  <div id="logo">
-    <img src="@/assets/logo.png" alt="Logo">
-    <span>Benchmarking</span>
-  </div>
+  <img src="@/assets/logo.png" alt="Logo">
 </template>
 
 <style scoped>
-span {
-  color: #303133;
-}
-
-#logo img {
+img {
   margin-right: 5px;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 }
 </style>
