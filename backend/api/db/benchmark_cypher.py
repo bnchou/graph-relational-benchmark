@@ -40,7 +40,6 @@ raw_queries = {
             (h)<-[:ATTENDED]-(p: Person)
             WHERE (h.type =~ '{}.*' OR c.name =~ '{}.*' OR p.name =~ '{}.*' OR doc.description =~ '{}.*')
             AND (h.type =~ '{}.*' OR c.name =~ '{}.*' OR p.name =~ '{}.*' OR doc.description =~ '{}.*')
-            AND (h.type =~ '{}.*' OR c.name =~ '{}.*' OR p.name =~ '{}.*' OR doc.description =~ '{}.*')
             RETURN h.type, h.date, c.name, p.name, doc.description
             LIMIT 10000;''',
         'filter_coworkers': '''
@@ -68,19 +67,22 @@ raw_queries = {
                   (depth3)-[:RELATED_TO]->(depth4)
             RETURN DISTINCT depth4.id;''',
         'transfer_deals': '''
-            MATCH (co: Coworker)-[:SALESPERSON_FOR]->(d: Deal)<-[:RESPONSIBLE_FOR]-(p1: Person)
+            MATCH (co: Coworker)-[:SALESPERSON_FOR]->(d: Deal),
+            (d)<-[:RESPONSIBLE_FOR]-(p1: Person)
             WITH d.id as d_id
             WHERE d.name =~ '{}.*' OR p1.name =~ '{}.*' OR co.name =~ '{}.*'
             MATCH (h: History)-[:PART_OF]->(deal: Deal {{id: d_id}}),
             (h)<-[:ATTENDED]-(p2: Person)
-            RETURN COLLECT(DISTINCT p2.name), p2.email;''',
+            RETURN COLLECT(DISTINCT p2.name), p2.email
+            LIMIT 10000;''',
         'top_deal': '''
             MATCH (d: Deal)<-[:SALESPERSON_FOR]-(co: Coworker)
             WITH co.id as id, d.probability as prob
             ORDER BY d.probability DESC LIMIT 1
             MATCH (c: Coworker {{id: id}})-[:SALESPERSON_FOR]->(deal: Deal)
             WHERE deal.probability > {}
-            RETURN deal.name, deal.value, deal.probability, c.name;'''
+            RETURN deal.name, deal.value, deal.probability, c.name
+            LIMIT 10000;'''
 
     },
     'post': {
@@ -125,10 +127,6 @@ queries = {
     'get_documents': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['documents'], [random_entry(data, 'histories', 'type')])),
     'get_persons': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['persons'], [random_entry(data, 'companies', 'id')])),
     'get_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories'], [
-        random_entry(data, 'histories', 'type')[:1],
-        random_entry(data, 'histories', 'type')[:1],
-        random_entry(data, 'histories', 'type')[:1],
-        random_entry(data, 'histories', 'type')[:1],
         random_entry(data, 'persons', 'name')[:1],
         random_entry(data, 'persons', 'name')[:1],
         random_entry(data, 'persons', 'name')[:1],
