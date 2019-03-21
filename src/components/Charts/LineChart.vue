@@ -33,7 +33,7 @@ export default {
       const chartData = this.$store.state.executionData[this.data];
 
       if (chartData) return ungrouped(chartData);
-      return null;
+      return { columns: ["x", "no data"], rows: [{ x: 0, "no data": 0 }] };
     }
   }
 };

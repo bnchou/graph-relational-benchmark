@@ -18,7 +18,10 @@ export default {
       const rows = _.map(result, (mean, key) => ({ name: key, mean }));
 
       if (chartData) return { columns: ["name", "mean"], rows };
-      return null;
+      return {
+        columns: ["name", "x"],
+        rows: [{ name: "no data", x: 0 }]
+      };
     }
   }
 };

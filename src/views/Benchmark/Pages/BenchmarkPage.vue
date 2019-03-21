@@ -1,21 +1,22 @@
 <template>
   <el-tabs type="border-card" @tab-click="handleTabClick" :stretch="true" style="min-height: 80vh;">
-    <el-tab-pane
-      :key="key"
-      :name="`${method}_${key}`"
-      v-loading="isLoading"
-      v-for="(query, key) in commands[method]"
-    >
+    <el-tab-pane :key="key" :name="`${method}_${key}`" v-for="(query, key) in commands[method]">
       <span slot="label">
-        <v-icon :name="getIcon(key)"/>
+        <v-icon :name="$store.getters.getIcon(key)"/>
         <!-- Newline -->
         {{$_.startCase(key)}}
       </span>
       <h1>
         {{$_.startCase(key)}}
-        <el-button @click="() => handleClick(`${method}_${key}`)" icon="el-icon-refresh" circle></el-button>
+        <el-button
+          circle
+          icon="el-icon-refresh"
+          @click="() => handleClick(`${method}_${key}`)"
+          :loading="isLoading"
+        ></el-button>
       </h1>
-      <benchmark-pane :data="`${method}_${key}`" :query="query" :isLoading="isLoading"/>
+      <span>This pane shows a benchmark comparison for the {{$_.lowerCase(key)}} query between Neo4j and MS SQL.</span>
+      <benchmark-pane :data="`${method}_${key}`" :query="query" :reset="reset"/>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -31,6 +32,7 @@ export default {
   components: { BenchmarkPane },
   data() {
     return {
+      reset: false,
       isLoading: false,
       commands: {}
     };
@@ -57,13 +59,10 @@ export default {
       this.isLoading = false;
     },
     handleTabClick: function() {
-      this.isLoading = true;
+      this.reset = true;
       this.$nextTick(function() {
-        this.isLoading = false;
+        this.reset = false;
       });
-    },
-    getIcon: function(key) {
-      return this.$store.state.icons[key];
     }
   }
 };

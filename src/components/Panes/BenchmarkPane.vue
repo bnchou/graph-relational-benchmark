@@ -7,11 +7,11 @@
       </el-col>
       <el-col :sm="8">
         <h2>Graph</h2>
-        <line-chart v-if="!isLoading" :data="data"/>
+        <line-chart v-if="!reset" :data="data"/>
       </el-col>
       <el-col :sm="8">
         <h2>Pie</h2>
-        <pie-chart v-if="!isLoading" :data="data"/>
+        <pie-chart v-if="!reset" :data="data"/>
       </el-col>
     </el-row>
     <el-row :gutter="20">
@@ -36,7 +36,7 @@ export default {
   props: {
     data: String,
     query: Object,
-    isLoading: Boolean
+    reset: Boolean
   },
   components: { InfoPane, LineChart, PieChart }
 };

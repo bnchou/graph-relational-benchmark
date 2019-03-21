@@ -1,14 +1,14 @@
 <template>
   <div>
     <h4>Cypher</h4>
-    <el-tag type="info" class="tag">Mean: {{chartData.cypher.mean}} ms</el-tag>
-    <el-tag type="info" class="tag">Std: {{chartData.cypher.std}} ms</el-tag>
-    <el-tag type="info" class="tag">Worst: {{chartData.cypher.worst}} ms</el-tag>
+    <el-tag type="info" class="tag">Mean: {{chartData.cypher.mean || 0}} ms</el-tag>
+    <el-tag type="info" class="tag">Std: {{chartData.cypher.std || 0}} ms</el-tag>
+    <el-tag type="info" class="tag">Worst: {{chartData.cypher.worst || 0}} ms</el-tag>
 
     <h4>SQL</h4>
-    <el-tag type="info" class="tag">Mean: {{chartData.sql.mean}} ms</el-tag>
-    <el-tag type="info" class="tag">Std: {{chartData.sql.std}} ms</el-tag>
-    <el-tag type="info" class="tag">Worst: {{chartData.sql.worst}} ms</el-tag>
+    <el-tag type="info" class="tag">Mean: {{chartData.sql.mean || 0}} ms</el-tag>
+    <el-tag type="info" class="tag">Std: {{chartData.sql.std || 0}} ms</el-tag>
+    <el-tag type="info" class="tag">Worst: {{chartData.sql.worst || 0}} ms</el-tag>
 
     <h5>Note:</h5>
     <p>Worst-case is with 99.7% confidence level.</p>
