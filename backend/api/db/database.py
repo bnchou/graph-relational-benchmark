@@ -26,6 +26,12 @@ def random_entry(data, table_name, column):
     random_row = table[randint(0, len(table) - 1)]
     return random_row[column]
 
+
 def save_amount_to_file(amount):
     f = open('amount.txt', 'w')
     f.write(amount)
+
+
+def get_amount_from_file():
+    f = open('amount.txt', 'r')
+    return f.read()

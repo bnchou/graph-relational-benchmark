@@ -18,8 +18,9 @@ def command(request, action):
     if(action == 'reset'):
         return JsonResponse(database.reset())
     elif(action == 'amount'):
-        database.save_amount_to_file(request.body.decode('utf-8'))
-        return JsonResponse({})
+        if(request.body):
+            database.save_amount_to_file(request.body.decode('utf-8'))
+        return JsonResponse({"amount": database.get_amount_from_file()})
 
     print('\nBenchmarking Cypher...')
     cypher = benchmark_cypher.run(action)
