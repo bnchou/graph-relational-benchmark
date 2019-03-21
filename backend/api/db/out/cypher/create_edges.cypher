@@ -38,6 +38,6 @@ MATCH (history:History), (deal:Deal)
 WHERE history.deal_id = deal.id
 CREATE (history)-[:PART_OF]->(deal);
 
-MATCH (r:Relationship), (p1:Person), (p2:Person)
-WHERE r.from_person_id = p1.id AND r.to_person_id = p2.id
-CREATE (p1)-[:RELATED_TO {type: r.type}]->(p2);
+// MATCH (r:Relationship), (p1:Person), (p2:Person)
+// WHERE r.from_person_id = p1.id AND r.to_person_id = p2.id
+// CREATE (p1)-[:RELATED_TO {type: r.type}]->(p2);

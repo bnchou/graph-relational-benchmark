@@ -134,16 +134,34 @@ def get_relationship(fake, index=None, p1_idx=None, p2_idx=None):
 # documents=300000,
 # histories=3000000
 
+# - Medium size DB -
+# companies=10000,
+# persons=100000,
+# offices=10,
+# coworkers=500,
+# deals=1000,
+# documents=30000,
+# histories=300000
+
+#  - Small size DB -
+# companies=1000,
+# persons=1000,
+# offices=10,
+# coworkers=50,
+# deals=100,
+# documents=3000,
+# histories=30000
+
 
 def generate(filename="output.json",
-             companies=10000,
-             persons=100000,
-             offices=10,
-             coworkers=500,
-             deals=1000,
-             documents=30000,
-             histories=300000,
-             relationships=300000):
+companies=10000,
+persons=100000,
+offices=10,
+coworkers=500,
+deals=50000,
+documents=300000,
+histories=3000000
+             ):
     # random.seed(1234)
     fake = Faker()
     output = {
@@ -153,8 +171,7 @@ def generate(filename="output.json",
         "coworkers": [],
         "deals": [],
         "documents": [],
-        "histories": [],
-        "relationships": []
+        "histories": []
     }
 
     for i in range(companies):
@@ -193,10 +210,10 @@ def generate(filename="output.json",
         output["histories"].append(get_history(
             fake, i, p_idx, c_idx, d_idx, doc_idx))
 
-    for i in range(relationships):
-        [p1_idx, p2_idx] = random.sample(range(0, persons), 2)
-        output["relationships"].append(
-            get_relationship(fake, i, p1_idx, p2_idx))
+    # for i in range(relationships):
+    #     [p1_idx, p2_idx] = random.sample(range(0, persons), 2)
+    #     output["relationships"].append(
+    #         get_relationship(fake, i, p1_idx, p2_idx))
 
     with open(filename, 'w') as f_out:
         json.dump(output, f_out)

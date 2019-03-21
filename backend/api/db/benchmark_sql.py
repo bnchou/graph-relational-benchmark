@@ -45,7 +45,6 @@ raw_queries = {
             LEFT JOIN persons AS p ON h.person_id = p.id 
             LEFT JOIN documents AS doc ON h.document_id = doc.id 
             WHERE (h.type LIKE '{}%' OR c.name LIKE '{}%' OR p.name LIKE '{}%' OR doc.description LIKE '{}%')
-            AND (h.type LIKE '{}%' OR c.name LIKE '{}%' OR p.name LIKE '{}%' OR doc.description LIKE '{}%')
             AND (h.type LIKE '{}%' OR c.name LIKE '{}%' OR p.name LIKE '{}%' OR doc.description LIKE '{}%');''',
         'filter_coworkers': '''
             SELECT TOP 10000 co.name, c.name, c.city
@@ -79,7 +78,7 @@ raw_queries = {
                         WHERE depth1.type = '{}' 
                         AND depth1.from_person_id = {})));''',
         'transfer_deals': '''
-            SELECT p1.name, p1.email
+            SELECT TOP 10000 p1.name, p1.email
             FROM persons AS p1
             LEFT JOIN histories AS h1 ON h1.person_id = p1.id
             WHERE h1.id IN (
@@ -95,7 +94,7 @@ raw_queries = {
             )
             GROUP BY p1.name, p1.email''',
         'top_deal' : '''
-            SELECT d.name, d.value, d.probability, co.name
+            SELECT TOP 10000 d.name, d.value, d.probability, co.name
             FROM deals AS d
             LEFT JOIN coworkers AS co ON d.coworker_id = co.id
             WHERE co.id IN (
@@ -145,10 +144,6 @@ queries = {
         random_entry(data, 'histories', 'date')
     ])),
     'get_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['histories'], [
-        random_entry(data, 'histories', 'type')[:1],
-        random_entry(data, 'histories', 'type')[:1],
-        random_entry(data, 'histories', 'type')[:1],
-        random_entry(data, 'histories', 'type')[:1],
         random_entry(data, 'persons', 'name')[:1],
         random_entry(data, 'persons', 'name')[:1],
         random_entry(data, 'persons', 'name')[:1],
@@ -200,7 +195,6 @@ queries = {
 
 def run_query(execute, query, inputs=[]):
     t1 = time()
-    print(query)
     #res = execute(query.format(*inputs)).fetchall()
     execute(query.format(*inputs))
     t2 = time()
