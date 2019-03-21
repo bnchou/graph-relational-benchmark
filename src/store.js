@@ -6,20 +6,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     executionData: {},
-    icons: {
-      companies: "building",
-      person: "users",
-      persons: "users",
-      filter_coworkers: "users",
-      deal: "handshake",
-      deals: "handshake",
-      documents: "file",
-      history: "history",
-      histories: "history",
-      filter_histories: "history",
-      relationships: "users",
-      related: "users"
-    },
     data: {
       "line-example": {
         columns: ["date", "cost", "profit", "growthRate", "people"],
@@ -103,6 +89,31 @@ export default new Vuex.Store({
             city: "Hallland"
           }
         ]
+      }
+    }
+  },
+  getters: {
+    getIcon: () => icon => {
+      switch (icon) {
+        case "companies":
+          return "building";
+        case "person":
+        case "persons":
+        case "filter_coworkers":
+        case "relationships":
+        case "related":
+          return "users";
+        case "deal":
+        case "deals":
+          return "handshake";
+        case "documents":
+          return "file";
+        case "history":
+        case "histories":
+        case "filter_histories":
+          return "history";
+        default:
+          return "question";
       }
     }
   }

@@ -22,7 +22,7 @@ export default {
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "GalanoGrotesque", "Avenir", Helvetica, Arial, sans-serif;
   color: #2c3e50;
 }
 
