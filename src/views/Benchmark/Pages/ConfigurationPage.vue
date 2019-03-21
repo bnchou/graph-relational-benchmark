@@ -6,7 +6,7 @@
         <el-input v-model="form.amount"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('form')">Save</el-button>
+        <el-button type="primary" native-type="submit" @click="onSubmit">Save</el-button>
       </el-form-item>
     </el-form>
 
@@ -55,15 +55,26 @@ export default {
       }
     };
   },
+  async created() {
+    const res = await fetch("/api/command/amount");
+    const { amount } = await res.json();
+    this.form.amount = amount;
+  },
   methods: {
-    onSubmit(formName) {
-      this.$refs[formName].validate(valid => {
+    onSubmit(event) {
+      event.preventDefault();
+
+      this.$refs.form.validate(async valid => {
         if (valid) {
-          fetch("/api/command/amount", {
+          const res = await fetch("/api/command/amount", {
             method: "POST",
             body: this.form.amount
           });
-          return true;
+          if (res.ok) {
+            this.$message.success("Success, the amount has been changed.");
+          } else {
+            this.$message.error("Oops, something went wrong.");
+          }
         }
         // Invalid input
         return false;
