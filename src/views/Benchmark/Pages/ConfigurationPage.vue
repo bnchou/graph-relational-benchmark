@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Configuration</h2>
-    <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="130px">
       <el-form-item label="Query Amount" prop="amount">
         <el-input v-model="form.amount"></el-input>
       </el-form-item>
@@ -29,13 +29,13 @@
 <script>
 export default {
   data() {
-    var assertInteger = (rule, value, callback) => {
-      const num = parseInt(value);
-      if (!Number.isInteger(num)) {
-        callback(new Error("Please input digits"));
+    const checkInteger = (rule, value, callback) => {
+      if (isNaN(value)) {
+        return callback(new Error("Please input digits"));
       }
-      callback();
+      return callback();
     };
+
     return {
       form: {
         amount: ""
@@ -44,13 +44,12 @@ export default {
         amount: [
           {
             required: true,
-            message: "Please enter an amount before saving",
+            message: "Please enter an amount",
             trigger: "blur"
           },
           {
-            validator: assertInteger,
-            message: "Please enter an integer",
-            trigger: "blur"
+            validator: checkInteger,
+            trigger: "change"
           }
         ]
       }
