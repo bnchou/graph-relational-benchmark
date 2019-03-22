@@ -135,8 +135,8 @@ def get_relationship(fake, index=None, p1_idx=None, p2_idx=None):
 # histories=3000000
 
 # - Medium size DB -
-# companies=10000,
-# persons=100000,
+# companies=1000,
+# persons=10000,
 # offices=10,
 # coworkers=500,
 # deals=1000,
