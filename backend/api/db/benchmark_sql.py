@@ -1,4 +1,4 @@
-from statistics import median, mean
+from statistics import mean, stdev
 from time import time
 import pyodbc
 import os
@@ -93,7 +93,7 @@ raw_queries = {
                 )
             )
             GROUP BY p1.name, p1.email''',
-        'top_deal' : '''
+        'top_deal': '''
             SELECT TOP 10000 d.name, d.value, d.probability, co.name
             FROM deals AS d
             LEFT JOIN coworkers AS co ON d.coworker_id = co.id
@@ -196,10 +196,10 @@ queries = {
 def run_query(execute, query, inputs=[]):
     t1 = time()
     #res = execute(query.format(*inputs)).fetchall()
-    execute(query.format(*inputs))
+    res = list(execute(query.format(*inputs)))
     t2 = time()
 
-    #print('|{}'.format(len(res)), end='', flush=True)
+    print('|{}'.format(len(res)), end='', flush=True)
     return (t2 - t1) * 1000
 
 
@@ -212,6 +212,7 @@ def get_stats(exec, amount=500):
     for _ in range(int(amount * 0.05)):
         res.remove(min(res))
         res.remove(max(res))
+    print("\nMean: {}, Std: {}".format(mean(res), stdev(res)))
     return res
 
 

@@ -1,5 +1,5 @@
 from neo4j import GraphDatabase
-from statistics import median, mean
+from statistics import mean, stdev
 import random
 import os
 from .database import random_entry, load_data
@@ -198,6 +198,7 @@ def get_stats(exec, amount=500):
     for _ in range(int(amount * 0.05)):
         res.remove(min(res))
         res.remove(max(res))
+    print("\nMean: {}, Std: {}".format(mean(res), stdev(res)))
     return res
 
 
