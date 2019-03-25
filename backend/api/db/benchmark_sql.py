@@ -59,24 +59,6 @@ raw_queries = {
             LEFT JOIN deals AS d ON p.id = d.person_id
             LEFT JOIN companies AS c ON p.company_id = c.id
             WHERE d.probability > {} AND c.name LIKE '{}%';''',
-        'relationships': '''
-            SELECT r.from_person_id, r.to_person_id
-            FROM relationships AS r
-            WHERE r.type = '{}';''',
-        'related': '''
-            SELECT DISTINCT depth4.to_person_id
-            FROM relationships AS depth4
-            WHERE depth4.from_person_id IN (
-                SELECT DISTINCT depth3.to_person_id
-                FROM relationships AS depth3
-                WHERE depth3.from_person_id IN (
-                    SELECT DISTINCT depth2.to_person_id
-                    FROM relationships AS depth2
-                    WHERE depth2.from_person_id IN (
-                        SELECT depth1.to_person_id
-                        FROM relationships AS depth1
-                        WHERE depth1.type = '{}' 
-                        AND depth1.from_person_id = {})));''',
         'transfer_deals': '''
             SELECT TOP 10000 p1.name, p1.email
             FROM persons AS p1
@@ -161,13 +143,6 @@ queries = {
         random_entry(data, 'deals', 'probability'),
         random_entry(data, 'companies', 'name')[:2],
     ])),
-    'get_relationships': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['relationships'],  [
-        random_entry(data, 'relationships', 'type'),
-    ])),
-    'get_related': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['related'],  [
-        random_entry(data, 'relationships', 'type'),
-        random_entry(data, 'persons', 'id'),
-    ])),
     'get_transfer_deals': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['transfer_deals'],  [
         random_entry(data, 'persons', 'name')[:5],
         random_entry(data, 'persons', 'name')[:5],
@@ -196,10 +171,10 @@ queries = {
 def run_query(execute, query, inputs=[]):
     t1 = time()
     #res = execute(query.format(*inputs)).fetchall()
-    res = list(execute(query.format(*inputs)))
+    res = execute(query.format(*inputs))
     t2 = time()
 
-    print('|{}'.format(len(res)), end='', flush=True)
+    print('|{}'.format(res.rowcount), end='', flush=True)
     return (t2 - t1) * 1000
 
 

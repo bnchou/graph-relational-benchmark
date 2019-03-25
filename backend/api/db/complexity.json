@@ -9,18 +9,26 @@
             "SELECT": 4,
             "FROM": 4,
             "ON": 4,
-            "INSERT INTO": 3,
+            "UPDATE" : 4,
+            "INSERT": 3,
             "VALUES": 3,
             "SET": 3,
             "WHERE": 3,
-            "ORDER BY": 3,
+            "ORDER": 3,
             "BETWEEN": 3,
+            "GROUP": 3,
+            "LIKE": 3,
             "AS": 1,
+            "COUNT": 2,
             "NOT": 2,
             "AND": 2,
             "OR": 2,
             "ASC": 2,
-            "DESC": 2
+            "DESC": 2,
+            "IN": 2,
+            "TOP": 2,
+            "BY": 1,
+            "LEFT": 1
         }
     },
     "cypher": {
@@ -37,14 +45,17 @@
             "MERGE": 5,
             "MATCH": 5,
             "RETURN": 4,
+            "WITH": 4,
             "SET": 3,
             "WHERE": 3,
-            "ORDER BY": 3,
+            "ORDER": 3,
             "NOT": 2,
             "AND": 2,
             "OR": 2,
             "ASC": 2,
-            "DESC": 2
+            "DESC": 2,
+            "LIMIT": 2,
+            "BY": 1
         }
     }
 }
