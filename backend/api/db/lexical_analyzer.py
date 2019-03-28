@@ -14,13 +14,13 @@ if __name__ == "__main__":
         f.close()
 
     parser = re.compile(r"""
-        (\/\/.*|--.*)                           # 0. comments
-        |([0-9]+\.?[0-9]*|'.*')                 # 1. literals
-        |(<-|->|[{}()[\],:;-])                  # 2. seperators
-        |([A-Z]?[a-z]+\.?[a-z_]*|(?<=:)[A-Z_]+) # 3. identifiers
-        |(=|>=|>|<=|<|!=|\*)                    # 4. operators
-        |([A-Z]+)                               # 5. keywords
-        |(\s+)                                  # 6. whitespace
+        (\/\/.*|--.*)                                   # 0. comments
+        |([0-9]+\.?[0-9]*|'[^']*')                      # 1. literals
+        |(<-|->|[{}()[\],:;-])                          # 2. seperators
+        |([A-Z]?[a-z][a-z0-9]*\.?[a-z_]*|(?<=:)[A-Z_]+) # 3. identifiers
+        |(=~|=|>=|>|<=|<|!=|\*)                         # 4. operators
+        |([A-Z]+)                                       # 5. keywords
+        |(\s+)                                          # 6. whitespace
         """, re.VERBOSE)
 
     groups = [
