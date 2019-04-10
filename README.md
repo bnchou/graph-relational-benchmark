@@ -11,7 +11,8 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-To be able to connect to the Microsoft SQL database that will be created using the creation scripts below, there is a need to set up a Microsoft SQL Server on your local computer.
+To be able to connect to the Microsoft SQL database that will be created using the creation scripts below,
+there is a need to set up a Microsoft SQL Server on your local computer.
 
 Neo4j Desktop Client also needs to be installed to be able to query the created Neo4j database.
 ```
