@@ -46,7 +46,7 @@ MATCH (co: Coworker)-[:SALESPERSON_FOR]->(d: Deal),
 (d)<-[:RESPONSIBLE_FOR]-(p1: Person)
 WITH d.id as d_id
 WHERE d.name =~ 'Rob.*' OR p1.name =~ 'Rob.*' OR co.name =~ 'Rob.*'
-MATCH (h: History)-[:PART_OF]->(deal: Deal {{id: d_id}}),
+MATCH (h: History)-[:PART_OF]->(deal: Deal {id: d_id}),
 (h)<-[:ATTENDED]-(p2: Person)
 RETURN COLLECT(DISTINCT p2.name), p2.email
 LIMIT 10000;
@@ -54,7 +54,7 @@ LIMIT 10000;
 MATCH (d: Deal)<-[:SALESPERSON_FOR]-(co: Coworker)
 WITH co.id as id, d.probability as prob
 ORDER BY d.probability DESC LIMIT 1
-MATCH (c: Coworker {{id: id}})-[:SALESPERSON_FOR]->(deal: Deal)
+MATCH (c: Coworker {id: id})-[:SALESPERSON_FOR]->(deal: Deal)
 WHERE deal.probability > 0.5
 RETURN deal.name, deal.value, deal.probability, c.name
 LIMIT 10000;
