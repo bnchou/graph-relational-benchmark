@@ -14,15 +14,17 @@ if __name__ == "__main__":
         f.close()
 
     parser = re.compile(r"""
-        ([0-9]+\.?[0-9]*|'.*')                  # 1. literals
-        |(<-|->|[{}()[\],:;-])                  # 2. seperators
-        |([A-Z]?[a-z]+\.?[a-z_]*|(?<=:)[A-Z_]+) # 3. identifiers
-        |(=|>=|>|<=|<|!=|\*)                    # 4. operators
-        |([A-Z]+)                               # 5. keywords
-        |(\s+)                                  # 6. whitespace
+        (\/\/.*|--.*)                                   # 0. comments
+        |([0-9]+\.?[0-9]*|'[^']*')                      # 1. literals
+        |(<-|->|[{}()[\],:;-])                          # 2. seperators
+        |([A-Z]?[a-z][a-z0-9]*\.?[a-z_]*|(?<=:)[A-Z_]+) # 3. identifiers
+        |(=~|=|>=|>|<=|<|!=|\*)                         # 4. operators
+        |([A-Z]+)                                       # 5. keywords
+        |(\s+)                                          # 6. whitespace
         """, re.VERBOSE)
 
     groups = [
+        "comments",
         "literals",
         "seperators",
         "identifiers",
@@ -45,7 +47,8 @@ if __name__ == "__main__":
         token = m.group(m.lastindex)
         group[token] = group.get(token, 0) + 1
 
-    # remove whitespace group from result dict
+    # remove comments and whitespace group from result dict
+    del result["comments"]
     del result["whitespace"]
 
     with open(f2, 'w') as f_out:
