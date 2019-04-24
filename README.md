@@ -8,14 +8,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+What things you need to install the software and how to install them:
 
-```
 To be able to connect to the Microsoft SQL database that will be created using the creation scripts below,
 there is a need to set up a Microsoft SQL Server on your local computer.
 
 Neo4j Desktop Client also needs to be installed to be able to query the created Neo4j database, it can be downloaded [here](https://neo4j.com/download/ "Download Neo4j").
-```
 
 ## Project setup
 
@@ -48,7 +46,9 @@ To create the Microsoft SQL Server database, run the following
 sqlcmd -i "backend/api/db/out/sql/create_db.sql"
 ```
 
-Neo4j databases are easiest created in the Neo4j desktop client by clicking 'Projects' -> 'New' -> 'Add Graph' -> 'Start'. The benchmark page will automatically connect to the Neo4j database that is currently running.
+Neo4j databases are easiest created in the Neo4j desktop client by clicking 'Projects' -> 'New' -> 'Add Graph' -> 'Start'.
+
+The benchmark page will automatically connect to the Neo4j database that is currently running.
 
 > **! Important**: Remove (comment out) the config option: `dbms.directories.import=import` from Neo4j -> Database -> Settings before population the graph database with fake data.
 
@@ -71,7 +71,9 @@ npm start
 
 which will start the web app at http://localhost:8080 as well as starting the backend server.
 
-In the web app, pressing a tab and the 'refresh'-button will run the query shown at the bottom of the page a given amount of times. The amount of query runs can be specified through the tab 'Configuration' -> Specify Query Amount -> 'Save'.
+In the web app, pressing a tab and the 'refresh'-button will run the query shown at the bottom of the page a given amount of times.
+
+The amount of query runs can be specified through the tab 'Configuration' -> Specify Query Amount -> 'Save'.
 
 > **Note**: Some queries, e.g. the queries in the 'documents' and 'histories' tab take a very long time and can therefore only be run a few times without the request timing out.
 
