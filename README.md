@@ -55,8 +55,8 @@ The benchmark page will automatically connect to the Neo4j database that is curr
 To populate the databases with fake data, run the following scripts while standing in the backend/api/db directory
 
 ```
-./reset_cypher.sh -u
-./reset_sql.sh
+./reset_sql.sh -u
+./reset_cypher.sh
 ```
 
 > **Note**: Only the first data population command needs the argument -u, as it creates the data which will be used to populate both databases. Nothing bad will happen if -u is provided to both scripts, the process will just take twice as long.
