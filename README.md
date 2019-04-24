@@ -48,7 +48,7 @@ sqlcmd -i "backend/api/db/out/sql/create_db.sql"
 
 Neo4j databases are easiest created in the Neo4j desktop client by clicking 'Projects' -> 'New' -> 'Add Graph' -> 'Start'.
 
-The benchmark page will automatically connect to the Neo4j database that is currently running.
+The web app will automatically connect to the Neo4j database that is currently running.
 
 > **! Important**: Remove (comment out) the config option: `dbms.directories.import=import` from Neo4j -> Database -> Settings before population the graph database with fake data.
 
