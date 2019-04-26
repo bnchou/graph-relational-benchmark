@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h4>Cypher</h4>
+    <h4>Neo4j</h4>
     <el-tag type="info" class="tag">Mean: {{chartData.cypher.mean || 0}} ms</el-tag>
     <el-tag type="info" class="tag">Std: {{chartData.cypher.std || 0}} ms</el-tag>
     <el-tag type="info" class="tag">Worst: {{chartData.cypher.worst || 0}} ms</el-tag>
 
-    <h4>SQL</h4>
+    <h4>MS SQL</h4>
     <el-tag type="info" class="tag">Mean: {{chartData.sql.mean || 0}} ms</el-tag>
     <el-tag type="info" class="tag">Std: {{chartData.sql.std || 0}} ms</el-tag>
     <el-tag type="info" class="tag">Worst: {{chartData.sql.worst || 0}} ms</el-tag>

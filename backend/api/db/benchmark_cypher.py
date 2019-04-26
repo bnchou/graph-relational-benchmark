@@ -11,7 +11,7 @@ data = load_data()
 
 raw_queries = {
     'get': {
-        'documents': ('The query being benchmarked here returns all deals with the specified history type', '''
+        'histories_type': ('The query being benchmarked here returns all deals with the specified history type', '''
             MATCH (d: Deal)<-[:PART_OF]-(h: History),
             (h)<-[:ATTENDED]-(co: Coworker),
             (h)<-[:ATTENDED]-(p: Person),
@@ -112,7 +112,7 @@ raw_queries = {
 
 queries = {
     'get_top_deal': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['top_deal'], [random_entry(data, 'deals', 'probability')])),
-    'get_documents': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['documents'], [random_entry(data, 'histories', 'type')])),
+    'get_histories_type': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories_type'], [random_entry(data, 'histories', 'type')])),
     'get_persons': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['persons'], [random_entry(data, 'companies', 'id')])),
     'get_histories': lambda session: get_stats(lambda: run_query(session.read_transaction, raw_queries['get']['histories'], [
         random_entry(data, 'persons', 'name')[:1],

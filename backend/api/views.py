@@ -22,9 +22,9 @@ def command(request, action):
             database.save_amount_to_file(request.body.decode('utf-8'))
         return JsonResponse({"amount": database.get_amount_from_file()})
 
-    print('\nBenchmarking Cypher...')
+    print('\nBenchmarking Neo4j...')
     cypher = benchmark_cypher.run(action)
-    print('\nBenchmarking SQL...')
+    print('\nBenchmarking MS SQL...')
     sql = benchmark_sql.run(action)
     return JsonResponse({
         'cypher': cypher,

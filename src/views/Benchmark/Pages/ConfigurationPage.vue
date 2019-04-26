@@ -9,20 +9,6 @@
         <el-button type="primary" native-type="submit" @click="onSubmit">Save</el-button>
       </el-form-item>
     </el-form>
-
-    <h3>Database size</h3>
-    <div class="div-padding">
-      <el-button plain>Small</el-button>
-      <span>~10,000 entries</span>
-    </div>
-    <div class="div-padding">
-      <el-button plain>Medium</el-button>
-      <span>~100,000 entries</span>
-    </div>
-    <div>
-      <el-button plain>Large</el-button>
-      <span>~4,000,000 entries</span>
-    </div>
   </div>
 </template>
 

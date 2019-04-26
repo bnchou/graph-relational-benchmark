@@ -106,10 +106,9 @@ export default new Vuex.Store({
         case "deal":
         case "deals":
           return "handshake";
-        case "documents":
-          return "file";
         case "history":
         case "histories":
+        case "histories_type":
         case "filter_histories":
           return "history";
         default:

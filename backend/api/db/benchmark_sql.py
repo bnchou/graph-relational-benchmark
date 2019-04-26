@@ -15,7 +15,7 @@ data = load_data()
 
 raw_queries = {
     'get': {
-        'documents': ('The query being benchmarked here returns all deals with the specified history type', '''
+        'histories_type': ('The query being benchmarked here returns all deals with the specified history type', '''
             SELECT TOP 10000 h.date, co.name, h.type, p.name, c.name, d.name
             FROM histories AS h
             LEFT JOIN deals AS d ON h.deal_id = d.id
@@ -119,7 +119,7 @@ raw_queries = {
 
 queries = {
     'get_top_deal': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['top_deal'], [random_entry(data, 'deals', 'probability')])),
-    'get_documents': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['documents'], [random_entry(data, 'histories', 'type')])),
+    'get_histories_type': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['histories_type'], [random_entry(data, 'histories', 'type')])),
     'get_persons': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['persons'], [random_entry(data, 'companies', 'id')])),
     'get_filter_histories': lambda: get_stats(lambda: run_query(cursor.execute, raw_queries['get']['filter_histories'], [
         random_entry(data, 'deals', 'id'),
