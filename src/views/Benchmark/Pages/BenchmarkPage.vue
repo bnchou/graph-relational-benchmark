@@ -15,7 +15,7 @@
           :loading="isLoading"
         ></el-button>
       </h1>
-      <span>This pane shows a benchmark comparison for the {{$_.lowerCase(key)}} query between Neo4j and MS SQL.</span>
+      <span>{{query.sql[0]}}</span>
       <benchmark-pane :data="`${method}_${key}`" :query="query" :reset="reset"/>
     </el-tab-pane>
   </el-tabs>
