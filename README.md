@@ -52,12 +52,13 @@ The web app will automatically connect to the Neo4j database that is currently r
 
 > **! Important**: Remove (comment out) the config option: `dbms.directories.import=import` from Neo4j -> Database -> Settings before population the graph database with fake data.
 
-To populate the databases with fake data, run the following scripts while standing in the backend/api/db directory
+To populate the databases with fake data, run the following
 
 ```
-./reset_sql.sh -u
-./reset_cypher.sh
+npm run setup
 ```
+
+This script runs `reset_sql.sh -u && reset_cypher.sh` in the `backend/api/db` folder.
 
 > **Note**: Only the first data population command needs the argument -u, as it creates the data which will be used to populate both databases. Nothing bad will happen if -u is provided to both scripts, the process will just take twice as long.
 
