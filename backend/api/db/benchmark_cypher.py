@@ -170,7 +170,7 @@ def run_query(transaction, query, inputs=[]):
     return transaction(execute)
 
 
-def get_stats(exec, amount=500):
+def get_stats(exec, amount=250):
     if(os.path.isfile('amount.txt')):
         for line in open('amount.txt', 'r'):
             if(line.strip()):

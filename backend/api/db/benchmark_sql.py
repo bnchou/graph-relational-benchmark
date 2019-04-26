@@ -178,7 +178,7 @@ def run_query(execute, query, inputs=[]):
     return (t2 - t1) * 1000
 
 
-def get_stats(exec, amount=500):
+def get_stats(exec, amount=250):
     if(os.path.isfile('amount.txt')):
         for line in open('amount.txt', 'r'):
             if(line.strip()):
