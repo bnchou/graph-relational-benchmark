@@ -1,4 +1,4 @@
-# graph-relational-benchmark
+# graph-relational-benchmark [![DOI](https://zenodo.org/badge/167941993.svg)](https://zenodo.org/badge/latestdoi/167941993)
 
 This project enables you to benchmark graph and relational databases to compare their performance.
 
