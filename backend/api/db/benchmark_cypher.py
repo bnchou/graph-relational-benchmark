@@ -5,7 +5,7 @@ import os
 from .database import random_entry, load_data
 
 uri = "bolt://localhost:7687"
-driver = GraphDatabase.driver(uri, auth=("neo4j", "password"))
+driver = GraphDatabase.driver(uri, auth=("neo4j", "password"), encrypted = False)
 
 data = load_data()
 

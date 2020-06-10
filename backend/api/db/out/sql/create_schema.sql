@@ -7,13 +7,70 @@ USE LimeDB;
 -- GO Signals end of batch (send to server)
 -- Decide whether each table creations should be sent separately or all at once.
 
-DROP TABLE IF EXISTS histories;
-DROP TABLE IF EXISTS documents;
-DROP TABLE IF EXISTS deals;
-DROP TABLE IF EXISTS persons;
-DROP TABLE IF EXISTS coworkers;
-DROP TABLE IF EXISTS offices;
-DROP TABLE IF EXISTS companies;
+-- IF EXISTS is not a valid MSSQL command
+--DROP TABLE IF EXISTS histories;
+--DROP TABLE IF EXISTS documents;
+--DROP TABLE IF EXISTS deals;
+--DROP TABLE IF EXISTS persons;
+--DROP TABLE IF EXISTS coworkers;
+--DROP TABLE IF EXISTS offices;
+--DROP TABLE IF EXISTS companies;
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'LimeDB' 
+                 AND  TABLE_NAME = 'histories'))
+BEGIN
+    DROP TABLE IF EXISTS histories;
+END
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'LimeDB' 
+                 AND  TABLE_NAME = 'documents'))
+BEGIN
+    DROP TABLE IF EXISTS documents;
+END
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'LimeDB' 
+                 AND  TABLE_NAME = 'deals'))
+BEGIN
+    DROP TABLE IF EXISTS deals;
+END
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'LimeDB' 
+                 AND  TABLE_NAME = 'persons'))
+BEGIN
+    DROP TABLE IF EXISTS persons;
+END
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'LimeDB' 
+                 AND  TABLE_NAME = 'coworkers'))
+BEGIN
+    DROP TABLE IF EXISTS coworkers;
+END
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'LimeDB' 
+                 AND  TABLE_NAME = 'offices'))
+BEGIN
+    DROP TABLE IF EXISTS offices;
+END
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'LimeDB' 
+                 AND  TABLE_NAME = 'companies'))
+BEGIN
+    DROP TABLE IF EXISTS companies;
+END
 
 GO
 
