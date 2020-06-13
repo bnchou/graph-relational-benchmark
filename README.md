@@ -1,5 +1,11 @@
 # graph-relational-benchmark [![DOI](https://zenodo.org/badge/167941993.svg)](https://zenodo.org/badge/latestdoi/167941993)
 
+A fork to use docker for the deployment, there will be three containers :
+- the benchmark web application
+- the neo4j database
+- the sql server database
+It will be launch through a docker-compose
+
 This project enables you to benchmark graph and relational databases to compare their performance.
 
 ## Getting Started
