@@ -7,7 +7,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server": "python manage.py runserver",
+    "server": "python3 manage.py runserver",
     "setup": "cd backend/api/db && reset_sql.sh -u && reset_cypher.sh"
   },
   "repository": {
